@@ -1,0 +1,40 @@
+providers:
+  telegram:
+    type: telegram
+    env_keys: ["TELEGRAM_BOT_TOKEN"]
+    enabled: true
+    base_url: "https://api.telegram.org"
+
+  discord:
+    type: discord
+    env_keys: ["DISCORD_BOT_TOKEN"]
+    enabled: false
+    base_url: "https://discord.com/api/v10"
+
+  slack:
+    type: slack
+    env_keys: ["SLACK_BOT_TOKEN", "SLACK_SIGNING_SECRET"]
+    enabled: false
+    base_url: "https://slack.com/api"
+
+  feishu:
+    type: feishu
+    env_keys: ["FEISHU_APP_ID", "FEISHU_APP_SECRET"]
+    enabled: false
+    base_url: "https://open.feishu.cn/open-apis"
+
+defaults:
+  provider: telegram
+
+inbound:
+  verify_signatures: true
+  rate_limit_per_minute: 60
+  max_timestamp_drift_seconds: 300
+
+outbound:
+  retry_attempts: 2
+  timeout_seconds: 10
+
+failover:
+  chains:
+    default: [telegram, slack, discord]

@@ -1,0 +1,115 @@
+providers:
+  mock:
+    type: mock
+    description: "Mock provider for testing without API key"
+
+  deepseek:
+    type: openai_compatible
+    base_url: "https://api.deepseek.com/v1"
+    model: "deepseek-chat"
+    env_keys: ["DEEPSEEK_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+  llamacpp:
+    type: openai_compatible
+    base_url: "http://localhost:6880/v1"
+    model: "Qwen3.5-9B-Q4_K_M.gguf"
+    max_tokens: 2048
+    temperature: 0.1
+    timeout: 10
+    extra_body:
+      chat_template_kwargs:
+        enable_thinking: false
+
+  openrouter:
+    type: openai_compatible
+    base_url: "https://openrouter.ai/api/v1"
+    model: "anthropic/claude-sonnet-4-20250514"
+    env_keys: ["OPENROUTER_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+  openai:
+    type: openai_compatible
+    base_url: "https://api.openai.com/v1"
+    model: "gpt-4o"
+    env_keys: ["OPENAI_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+  anthropic:
+    type: anthropic
+    model: "claude-sonnet-4-20250514"
+    env_keys: ["ANTHROPIC_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+    timeout: 120
+    thinking:
+      enabled: false
+      budget_tokens: 10000
+
+  ollama:
+    type: ollama
+    base_url: "http://localhost:11434"
+    model: "qwen3:8b"
+    max_tokens: 2048
+    temperature: 0.1
+    timeout: 120
+
+  gemini:
+    type: gemini
+    model: "gemini-2.0-flash"
+    env_keys: ["GEMINI_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+    timeout: 120
+
+  # ── 国产模型 (OpenAI 兼容接口) ──
+
+  glm:
+    type: openai_compatible
+    base_url: "https://open.bigmodel.cn/api/paas/v4"
+    model: "glm-4-flash"
+    env_keys: ["ZHIPUAI_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+  kimi:
+    type: openai_compatible
+    base_url: "https://api.moonshot.cn/v1"
+    model: "moonshot-v1-8k"
+    env_keys: ["MOONSHOT_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+  doubao:
+    type: openai_compatible
+    base_url: "https://ark.cn-beijing.volces.com/api/v3"
+    model: "doubao-pro-32k"
+    env_keys: ["DOUBAO_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+  qwen:
+    type: openai_compatible
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    model: "qwen-turbo"
+    env_keys: ["DASHSCOPE_API_KEY"]
+    max_tokens: 4096
+    temperature: 0.1
+
+defaults:
+  provider: deepseek
+  timeout: 120
+  max_retries: 2
+
+failover:
+  chains:
+    default: [llamacpp, deepseek, glm, kimi]
+    premium: [anthropic, openrouter, deepseek, glm]
+
+smart_routing:
+  enabled: false
+  cheap_provider: llamacpp
+  cheap_max_tokens: 512

@@ -1,0 +1,50 @@
+edition: enterprise
+name: Enterprise Edition
+description: Enterprise-grade controlled Agent platform
+
+tools:
+  enabled:
+    - browser.open
+    - browser.click
+    - browser.extract_text
+    - browser.screenshot
+    - file.write_docx
+    - file.write_markdown
+    - file.read
+    - file.list
+  disabled:
+    - shell.run
+    - desktop.control
+    - system.modify
+
+policy:
+  max_risk_level: medium
+  require_approval_for:
+    - high
+  forbidden_tools:
+    - shell.run
+    - desktop.control
+  forbidden_paths:
+    - /etc
+    - /root
+    - C:\Windows
+    - C:\Program Files
+  allowed_url_patterns:
+    - "https?://.*"
+  forbidden_url_patterns:
+    - "https?://localhost.*"
+    - "https?://127\\.0\\.0\\..*"
+    - "https?://192\\.168\\..*"
+    - "https?://10\\..*"
+
+memory:
+  types:
+    - execution_experience
+    - workflow_pattern
+    - domain_knowledge
+    - error_solution
+  retention_days: 90
+
+approval:
+  auto_approve_low_risk: true
+  require_reason: true

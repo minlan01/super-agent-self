@@ -1,0 +1,23 @@
+skills:
+  # Auto-extract skills from successful tasks
+  auto_extract: true
+
+  # Skill lifecycle states
+  states:
+    - candidate
+    - stable
+    - disabled
+    - deprecated
+
+  # Approval required before becoming stable
+  approval_required: true
+
+  # Metrics and degradation
+  degradation:
+    consecutive_failures: 3
+    min_success_rate: 0.7
+    action: disable  # disable | downgrade
+
+  # Version management
+  max_versions: 5
+  auto_rollback_on_failure: false

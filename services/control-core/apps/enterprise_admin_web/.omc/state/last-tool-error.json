@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__plugin_omc-fusion_t__lsp_diagnostics",
+  "tool_input_preview": "{\"file\":\"F:\\\\Agents\\\\myself-agent\\\\apps\\\\enterprise_admin_web\\\\src\\\\i18n\\\\locales\\\\zh.ts\",\"severity\":\"error\"}",
+  "error": "Language server 'typescript-language-server' not found.\nInstall with: npm install -g typescript-language-server typescript",
+  "timestamp": "2026-05-25T03:36:27.538Z",
+  "retry_count": 12
+}

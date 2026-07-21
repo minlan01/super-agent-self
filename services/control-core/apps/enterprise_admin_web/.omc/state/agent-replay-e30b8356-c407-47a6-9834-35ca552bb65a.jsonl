@@ -1,0 +1,4 @@
+{"t":0,"agent":"a8efbfb","agent_type":"omc-fusion:executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"aba2b02","agent_type":"omc-fusion:executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a8efbfb","agent_type":"omc-fusion:executor","event":"agent_stop","success":true,"duration_ms":260349}
+{"t":0,"agent":"aba2b02","agent_type":"omc-fusion:executor","event":"agent_stop","success":true,"duration_ms":814589}

@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Ruff lint check
+        run: ruff check . --statistics
+
+      - name: Run unit tests
+        run: pytest -m unit -v --tb=short -q
+
+      - name: Run integration tests
+        run: pytest -m integration -v --tb=short -q
+
+      - name: Run tests with coverage
+        run: pytest --cov=packages --cov=apps --cov-report=xml --cov-fail-under=60 -v --tb=short -q
+
+      - name: Check alembic migration drift
+        run: alembic check
+
+      - name: Test summary
+        if: always()
+        run: pytest tests/ --co -q 2>/dev/null | tail -1

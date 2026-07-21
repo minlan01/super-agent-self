@@ -1,0 +1,478 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779678788725,
+  "projectRoot": "F:\\Agents\\myself-agent",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "alembic": {
+      "path": "alembic",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779678788704,
+      "keyFiles": [
+        "env.py",
+        "script.py.mako"
+      ]
+    },
+    "apps": {
+      "path": "apps",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779678788705,
+      "keyFiles": [
+        "__init__.py"
+      ]
+    },
+    "configs": {
+      "path": "configs",
+      "purpose": null,
+      "fileCount": 13,
+      "lastAccessed": 1779678788705,
+      "keyFiles": [
+        "app.yaml",
+        "cache.yaml",
+        "cron.yaml",
+        "mcp.yaml",
+        "memory.yaml"
+      ]
+    },
+    "controlled_agent_platform.egg-info": {
+      "path": "controlled_agent_platform.egg-info",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1779678788705,
+      "keyFiles": [
+        "dependency_links.txt",
+        "PKG-INFO",
+        "requires.txt",
+        "SOURCES.txt",
+        "top_level.txt"
+      ]
+    },
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 2,
+      "lastAccessed": 1779678788706,
+      "keyFiles": [
+        "agent.db",
+        "agent_platform.db"
+      ]
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 10,
+      "lastAccessed": 1779678788706,
+      "keyFiles": [
+        "2026-05-21-critical-bugfix-plan.md",
+        "2026-05-22-round3-fix-plan.md",
+        "api_reference.md",
+        "architecture.md",
+        "deployment.md"
+      ]
+    },
+    "monitoring": {
+      "path": "monitoring",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779678788707,
+      "keyFiles": [
+        "docker-compose.monitoring.yml"
+      ]
+    },
+    "packages": {
+      "path": "packages",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1779678788707,
+      "keyFiles": [
+        "config.py",
+        "__init__.py"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 4,
+      "lastAccessed": 1779678788708,
+      "keyFiles": [
+        "init_db.py",
+        "run_api.py",
+        "run_enterprise_demo.py",
+        "seed_demo_data.py"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 2,
+      "lastAccessed": 1779678788708,
+      "keyFiles": [
+        "conftest.py",
+        "__init__.py"
+      ]
+    },
+    "workspace": {
+      "path": "workspace",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779678788708,
+      "keyFiles": [
+        "test.txt"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 23,
+      "lastAccessed": 1779698774218,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src",
+      "accessCount": 22,
+      "lastAccessed": 1779696660575,
+      "type": "directory"
+    },
+    {
+      "path": "packages\\db\\models.py",
+      "accessCount": 11,
+      "lastAccessed": 1779698729459,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes",
+      "accessCount": 10,
+      "lastAccessed": 1779698752645,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\stores\\auth.ts",
+      "accessCount": 9,
+      "lastAccessed": 1779688114986,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\webhooks.py",
+      "accessCount": 9,
+      "lastAccessed": 1779698769138,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\conversation_repo.py",
+      "accessCount": 8,
+      "lastAccessed": 1779698746933,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\auth.py",
+      "accessCount": 7,
+      "lastAccessed": 1779698748229,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\task_dependency_repo.py",
+      "accessCount": 6,
+      "lastAccessed": 1779698767016,
+      "type": "file"
+    },
+    {
+      "path": "packages\\memory\\retriever.py",
+      "accessCount": 6,
+      "lastAccessed": 1779698767419,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\search.py",
+      "accessCount": 6,
+      "lastAccessed": 1779698779345,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\ws\\ws_routes.py",
+      "accessCount": 5,
+      "lastAccessed": 1779678847231,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\composables\\useWebSocket.ts",
+      "accessCount": 5,
+      "lastAccessed": 1779688101899,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\api\\index.ts",
+      "accessCount": 5,
+      "lastAccessed": 1779697076679,
+      "type": "directory"
+    },
+    {
+      "path": "packages\\db\\repositories\\skill_repo.py",
+      "accessCount": 5,
+      "lastAccessed": 1779698746366,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\rbac_repo.py",
+      "accessCount": 5,
+      "lastAccessed": 1779698746862,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories",
+      "accessCount": 4,
+      "lastAccessed": 1779698741626,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\api_server\\routes\\tasks.py",
+      "accessCount": 4,
+      "lastAccessed": 1779698769265,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\admin.py",
+      "accessCount": 4,
+      "lastAccessed": 1779698769388,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\api",
+      "accessCount": 3,
+      "lastAccessed": 1779679669067,
+      "type": "directory"
+    },
+    {
+      "path": "configs\\rate_limits.yaml",
+      "accessCount": 3,
+      "lastAccessed": 1779691663477,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\audit_repo.py",
+      "accessCount": 3,
+      "lastAccessed": 1779698746715,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\export.py",
+      "accessCount": 3,
+      "lastAccessed": 1779698777099,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\pagination.py",
+      "accessCount": 3,
+      "lastAccessed": 1779698777155,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\chat.py",
+      "accessCount": 3,
+      "lastAccessed": 1779698779633,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db",
+      "accessCount": 2,
+      "lastAccessed": 1779688090819,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\types\\index.ts",
+      "accessCount": 2,
+      "lastAccessed": 1779688099631,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\composables\\useNotificationWS.ts",
+      "accessCount": 2,
+      "lastAccessed": 1779688125752,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\task_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698745829,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\memory_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698745917,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\messaging_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698746436,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\notification_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698746659,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\auth_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698748727,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\approval_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698767115,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\template_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698768077,
+      "type": "file"
+    },
+    {
+      "path": "packages\\db\\repositories\\edition_repo.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698768138,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\files.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698769309,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\dependencies.py",
+      "accessCount": 2,
+      "lastAccessed": 1779698778967,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\stores",
+      "accessCount": 1,
+      "lastAccessed": 1779679620323,
+      "type": "directory"
+    },
+    {
+      "path": "packages\\memory",
+      "accessCount": 1,
+      "lastAccessed": 1779688071482,
+      "type": "directory"
+    },
+    {
+      "path": "packages\\notification",
+      "accessCount": 1,
+      "lastAccessed": 1779688071612,
+      "type": "directory"
+    },
+    {
+      "path": "apps\\api_server\\main.py",
+      "accessCount": 1,
+      "lastAccessed": 1779688079776,
+      "type": "file"
+    },
+    {
+      "path": "alembic\\versions\\f1a2b3c4d5e6_add_missing_indexes_and_user_updated_at.py",
+      "accessCount": 1,
+      "lastAccessed": 1779688081183,
+      "type": "file"
+    },
+    {
+      "path": "packages",
+      "accessCount": 1,
+      "lastAccessed": 1779688089601,
+      "type": "directory"
+    },
+    {
+      "path": "packages\\memory\\memory_service.py",
+      "accessCount": 1,
+      "lastAccessed": 1779688099764,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\composables\\useExponentialBackoff.ts",
+      "accessCount": 1,
+      "lastAccessed": 1779688099881,
+      "type": "file"
+    },
+    {
+      "path": "apps\\api_server\\routes\\plugins.py",
+      "accessCount": 1,
+      "lastAccessed": 1779688101600,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\composables\\useEchartsChart.ts",
+      "accessCount": 1,
+      "lastAccessed": 1779688101715,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\composables\\useControlWS.ts",
+      "accessCount": 1,
+      "lastAccessed": 1779688101779,
+      "type": "file"
+    },
+    {
+      "path": "apps\\enterprise_admin_web\\src\\composables\\useAsyncData.ts",
+      "accessCount": 1,
+      "lastAccessed": 1779688101793,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

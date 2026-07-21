@@ -1,0 +1,3 @@
+{"t":0,"agent":"system","event":"skill_invoked","skill_name":"omc-fusion:cancel"}
+{"t":0,"agent":"a9130b6","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"a61a960","agent_type":"unknown","event":"agent_stop","success":true}

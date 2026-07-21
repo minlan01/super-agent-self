@@ -1,0 +1,40 @@
+policy:
+  # Global risk levels: low, medium, high, critical
+  max_allowed_risk: high
+
+  # Auto-reject rules
+  forbidden_tools:
+    - shell.run
+    - desktop.control
+    - system.modify
+
+  # Path security
+  workspace_only: true
+  forbidden_path_prefixes:
+    - /etc/
+    - /root/
+    - C:\Windows\
+    - C:\Program Files\
+    - C:\Users\
+
+  # URL security
+  forbidden_url_patterns:
+    - "https?://localhost(:\\d+)?(/.*)?$"
+    - "https?://127\\.0\\.0\\.\\d+(:\\d+)?(/.*)?$"
+    - "https?://192\\.168\\.\\d+\\.\\d+(:\\d+)?(/.*)?$"
+    - "https?://10\\.\\d+\\.\\d+\\.\\d+(:\\d+)?(/.*)?$"
+
+  # Shell execution safety
+  shell:
+    max_timeout: 120
+    require_workspace_workdir: true
+
+  # Approval rules
+  require_approval_risk_levels:
+    - high
+
+  # Token settings
+  token:
+    algorithm: "HS256"
+    expire_minutes: 5
+    max_uses: 1

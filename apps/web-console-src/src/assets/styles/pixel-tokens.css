@@ -1,0 +1,150 @@
+/* ============================================
+   Agent Command Center — Pixel-Archive Design Tokens
+   Unified Naive UI theming for OpenClaw-Admin
+   ============================================ */
+
+/* === Design Tokens (default: midnight) === */
+:root,
+:root[data-theme="midnight"] {
+  /* Background layers — 5-tier dark */
+  --bg-deepest: #080d11;
+  --bg-deep: #0a1115;
+  --bg-mid: #0e1418;
+  --bg-upper: #12171b;
+  --bg-surface: #16191d;
+
+  /* Panel backgrounds — frosted glass */
+  --panel: rgba(10, 25, 23, 0.35);
+  --panel-strong: rgba(10, 24, 22, 0.56);
+  --panel-hover: rgba(14, 32, 30, 0.48);
+
+  /* Text hierarchy */
+  --ink: rgba(236, 247, 243, 0.92);
+  --ink-secondary: rgba(203, 229, 221, 0.82);
+  --muted: rgba(152, 181, 172, 0.9);
+  --dim: rgba(115, 144, 136, 0.7);
+
+  /* Borders */
+  --line: rgba(171, 218, 201, 0.14);
+  --line-strong: rgba(171, 218, 201, 0.28);
+  --line-glow: rgba(171, 218, 201, 0.46);
+
+  /* Accent */
+  --accent: #45d1b3;
+  --accent-glow: rgba(69, 209, 179, 0.25);
+
+  /* Semantic 6-tone palette */
+  --tone-active: #64d7b0;    /* Green — running/online */
+  --tone-cool: #59d0ff;      /* Cyan/Blue — thinking */
+  --tone-violet: #a58aff;    /* Purple — cancelled */
+  --tone-warm: #ffb16b;      /* Amber/Orange — pending */
+  --tone-danger: #ff7b7b;    /* Red — error */
+  --tone-calm: #7ce6c7;      /* Teal/Mint — completed */
+
+  /* Agent type partition colors */
+  --color-general: #98f59d;
+  --color-codegen: #59d0ff;
+  --color-data: #ffc17a;
+  --color-domain: #a58aff;
+
+  /* ClawLibrary room partition colors (8 rooms) */
+  --room-agent: #98f59d;
+  --room-gateway: #59d0ff;
+  --room-memory: #a58aff;
+  --room-skills: #7ce6c7;
+  --room-document: #81a8ff;
+  --room-images: #ffc17a;
+  --room-log: #ff8aa5;
+  --room-alarm: #ff6978;
+  --room-schedule: #f4d06f;
+  --room-mcp: #5fe3ff;
+  --room-task_queues: #ffb16b;
+  --room-break_room: #bec6db;
+
+  /* Shadows */
+  --shadow-sm: rgba(0, 0, 0, 0.28);
+  --shadow-md: rgba(0, 0, 0, 0.34);
+  --shadow-lg: rgba(0, 0, 0, 0.42);
+
+  /* Typography */
+  --font-display: "VT323", "Courier New", monospace;
+  --font-mono: "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  /* Spacing & radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-pill: 999px;
+
+  /* Transitions */
+  --ease-fast: 120ms ease;
+  --ease-normal: 200ms ease;
+  --blur-panel: 10px;
+  --blur-modal: 14px;
+}
+
+/* === Amber Theme === */
+:root[data-theme="amber"] {
+  --bg-deepest: #1a1408;
+  --bg-deep: #1e180c;
+  --bg-mid: #221a0e;
+  --bg-upper: #261e10;
+  --bg-surface: #2a2410;
+
+  --panel: rgba(40, 30, 10, 0.40);
+  --panel-strong: rgba(45, 35, 15, 0.60);
+  --panel-hover: rgba(50, 38, 18, 0.52);
+
+  --ink: rgba(255, 242, 200, 0.92);
+  --ink-secondary: rgba(255, 232, 180, 0.82);
+  --muted: rgba(210, 190, 140, 0.88);
+  --dim: rgba(170, 155, 110, 0.68);
+
+  --line: rgba(255, 200, 100, 0.15);
+  --line-strong: rgba(255, 200, 100, 0.30);
+  --line-glow: rgba(255, 200, 100, 0.50);
+
+  --accent: #ffb16b;
+  --accent-glow: rgba(255, 177, 107, 0.25);
+}
+
+/* === Jade Theme === */
+:root[data-theme="jade"] {
+  --bg-deepest: #081a14;
+  --bg-deep: #0c1e18;
+  --bg-mid: #10221a;
+  --bg-upper: #14261e;
+  --bg-surface: #102a20;
+
+  --panel: rgba(10, 40, 30, 0.38);
+  --panel-strong: rgba(15, 45, 35, 0.58);
+  --panel-hover: rgba(20, 50, 38, 0.50);
+
+  --ink: rgba(200, 255, 230, 0.92);
+  --ink-secondary: rgba(180, 240, 210, 0.83);
+  --muted: rgba(140, 200, 175, 0.88);
+  --dim: rgba(100, 160, 140, 0.68);
+
+  --line: rgba(100, 220, 170, 0.15);
+  --line-strong: rgba(100, 220, 170, 0.30);
+  --line-glow: rgba(100, 220, 170, 0.50);
+
+  --accent: #7ce6c7;
+  --accent-glow: rgba(124, 230, 199, 0.25);
+}
+
+/* === Body — Multi-layer dark gradient === */
+body {
+  background:
+    linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-upper) 24%, var(--bg-mid) 52%, var(--bg-deep) 78%, var(--bg-deepest) 100%),
+    linear-gradient(135deg, rgba(72, 95, 108, 0.08) 0%, transparent 40%),
+    linear-gradient(225deg, var(--accent-glow) 0%, transparent 50%);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  image-rendering: auto;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

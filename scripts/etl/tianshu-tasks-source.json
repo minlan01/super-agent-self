@@ -1,0 +1,550 @@
+[
+  {
+    "id": "TS-20260324-001",
+    "title": "????:?? Hello World ??",
+    "priority": "normal",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "Auto-advance to Done",
+    "output": "任务完成，已回奏",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T01:09:39.555888+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：????:?? Hello World ??"
+      },
+      {
+        "at": "2026-03-24T01:35:20.573696+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T01:36:34.882048+00:00",
+        "from": "调度监",
+        "to": "tianshu-receiver",
+        "remark": "🔄 停滞1598秒，自动重试第1次"
+      },
+      {
+        "at": "2026-03-24T01:38:03.954699+00:00",
+        "from": "调度监",
+        "to": "tianshu-review",
+        "remark": "⬆️ 停滞升级至审核院协调"
+      },
+      {
+        "at": "2026-03-24T01:39:02.867658+00:00",
+        "from": "调度监",
+        "to": "tianshu-dispatch",
+        "remark": "⬆️ 停滞升级至调度监协调"
+      },
+      {
+        "at": "2026-03-24T04:39:00.731302+00:00",
+        "from": "皇上",
+        "to": "中书局",
+        "remark": "推进到Planning"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398219+00:00",
+        "from": "中书局",
+        "to": "审核院",
+        "remark": "✅ 需求分析完成，推进到Reviewing"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618792+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "Auto: Reviewing -> Assigned"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326923+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T07:05:47.997338+00:00",
+        "from": "工艺局",
+        "to": "汇总阁",
+        "remark": "Auto: Doing -> Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398221+00:00",
+        "action": "需求分析",
+        "output": "## 需求分析\n\n### 功能点\n- 功能 1\n- 功能 2\n\n### 任务拆解\n1. 子任务 1\n2. 子任务 2\n\n### 预估工时\n4 小时",
+        "processing_time": 10
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398223+00:00",
+      "lastRetryAt": "2026-03-24T01:36:34.882038+00:00",
+      "lastDispatchStatus": "success",
+      "lastDispatchError": "",
+      "lastEscalatedAt": "2026-03-24T01:39:02.867644+00:00"
+    },
+    "createdAt": "2026-03-24T01:09:39.555905+00:00",
+    "updatedAt": "2026-03-24T07:05:47.997326+00:00"
+  },
+  {
+    "id": "TS-20260324-002",
+    "title": "测试任务：编写 Hello World 文档",
+    "priority": "normal",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "Auto-advance to Done",
+    "output": "任务完成，已回奏",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T01:10:18.337482+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：测试任务：编写 Hello World 文档"
+      },
+      {
+        "at": "2026-03-24T03:40:27.421667+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T03:41:50.244321+00:00",
+        "from": "调度监",
+        "to": "tianshu-receiver",
+        "remark": "🔄 停滞9062秒，自动重试第1次"
+      },
+      {
+        "at": "2026-03-24T03:42:42.511951+00:00",
+        "from": "调度监",
+        "to": "tianshu-review",
+        "remark": "⬆️ 停滞升级至审核院协调"
+      },
+      {
+        "at": "2026-03-24T03:43:32.166395+00:00",
+        "from": "调度监",
+        "to": "tianshu-dispatch",
+        "remark": "⬆️ 停滞升级至调度监协调"
+      },
+      {
+        "at": "2026-03-24T03:43:48.124915+00:00",
+        "from": "皇上",
+        "to": "中书局",
+        "remark": "推进到Planning"
+      },
+      {
+        "at": "2026-03-24T03:45:29.772519+00:00",
+        "from": "皇上",
+        "to": "审核院",
+        "remark": "推进到Reviewing"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398275+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "✅ 三审制完成，推进到Assigned"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618800+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326932+00:00",
+        "from": "工艺局",
+        "to": "汇总阁",
+        "remark": "Auto: Doing -> Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398277+00:00",
+        "action": "三审制",
+        "output": "## 审核结果\n\n✅ 初审通过 - 文档完整\n✅ 复审通过 - 方案可行\n✅ 终审通过 - 质量达标\n\n**准奏**：转交调度监派发",
+        "processing_time": 8
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398278+00:00",
+      "lastRetryAt": "2026-03-24T03:41:50.244311+00:00",
+      "lastDispatchStatus": "success",
+      "lastDispatchError": "",
+      "lastEscalatedAt": "2026-03-24T03:43:32.166380+00:00"
+    },
+    "createdAt": "2026-03-24T01:10:18.337494+00:00",
+    "updatedAt": "2026-03-24T05:17:10.326930+00:00"
+  },
+  {
+    "id": "TS-20260324-003",
+    "title": "编写helloword代码程序",
+    "priority": "critical",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "Auto-advance to Done",
+    "output": "任务完成，已回奏",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T04:39:21.768404+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：编写helloword代码程序"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398314+00:00",
+        "from": "承旨司",
+        "to": "承旨司",
+        "remark": "✅ 接旨分拣完成，推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618805+00:00",
+        "from": "承旨司",
+        "to": "中书局",
+        "remark": "Auto: Receiving -> Planning"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326937+00:00",
+        "from": "中书局",
+        "to": "审核院",
+        "remark": "Auto: Planning -> Reviewing"
+      },
+      {
+        "at": "2026-03-24T07:05:47.997346+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "Auto: Reviewing -> Assigned"
+      },
+      {
+        "at": "2026-03-24T07:53:46.103317+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T07:55:47.074535+00:00",
+        "from": "工艺局",
+        "to": "汇总阁",
+        "remark": "Auto: Doing -> Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398315+00:00",
+        "action": "接旨分拣",
+        "output": "✅ 已接收旨意，意图识别完成，转交中书局",
+        "processing_time": 5
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398316+00:00"
+    },
+    "createdAt": "2026-03-24T04:39:21.768414+00:00",
+    "updatedAt": "2026-03-24T07:55:47.074524+00:00"
+  },
+  {
+    "id": "TS-20260324-004",
+    "title": "编写helloword代码程序",
+    "priority": "critical",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "Auto-advance to Done",
+    "output": "任务完成，已回奏",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T04:39:47.628018+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：编写helloword代码程序"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398345+00:00",
+        "from": "承旨司",
+        "to": "承旨司",
+        "remark": "✅ 接旨分拣完成，推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618808+00:00",
+        "from": "承旨司",
+        "to": "中书局",
+        "remark": "Auto: Receiving -> Planning"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326941+00:00",
+        "from": "中书局",
+        "to": "审核院",
+        "remark": "Auto: Planning -> Reviewing"
+      },
+      {
+        "at": "2026-03-24T07:05:47.997351+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "Auto: Reviewing -> Assigned"
+      },
+      {
+        "at": "2026-03-24T07:53:46.103324+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T07:55:47.074543+00:00",
+        "from": "工艺局",
+        "to": "汇总阁",
+        "remark": "Auto: Doing -> Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398353+00:00",
+        "action": "接旨分拣",
+        "output": "✅ 已接收旨意，意图识别完成，转交中书局",
+        "processing_time": 5
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398354+00:00"
+    },
+    "createdAt": "2026-03-24T04:39:47.628027+00:00",
+    "updatedAt": "2026-03-24T07:55:47.074541+00:00"
+  },
+  {
+    "id": "TS-20260324-005",
+    "title": "编写helloword代码程序",
+    "priority": "critical",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "已推进到Done",
+    "output": "开发完成，测试通过",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T04:40:01.039290+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：编写helloword代码程序"
+      },
+      {
+        "at": "2026-03-24T04:45:41.499369+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398387+00:00",
+        "from": "承旨司",
+        "to": "中书局",
+        "remark": "✅ 接旨分拣完成，推进到Planning"
+      },
+      {
+        "at": "2026-03-24T04:52:59.950889+00:00",
+        "from": "皇上",
+        "to": "审核院",
+        "remark": "推进到Reviewing"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618811+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "Auto: Reviewing -> Assigned"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326944+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T07:02:01.961073+00:00",
+        "from": "皇上",
+        "to": "汇总阁",
+        "remark": "推进到Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398390+00:00",
+        "action": "接旨分拣",
+        "output": "✅ 已接收旨意，意图识别完成，转交中书局",
+        "processing_time": 5
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398391+00:00"
+    },
+    "createdAt": "2026-03-24T04:40:01.039304+00:00",
+    "updatedAt": "2026-03-24T07:02:01.961060+00:00"
+  },
+  {
+    "id": "TS-20260324-006",
+    "title": "????",
+    "priority": "normal",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "Auto-advance to Done",
+    "output": "任务完成，已回奏",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T04:42:00.807000+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：????"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398419+00:00",
+        "from": "???",
+        "to": "承旨司",
+        "remark": "✅ 代码开发完成，推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T04:52:42.976052+00:00",
+        "from": "皇上",
+        "to": "中书局",
+        "remark": "推进到Planning"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618814+00:00",
+        "from": "中书局",
+        "to": "审核院",
+        "remark": "Auto: Planning -> Reviewing"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326947+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "Auto: Reviewing -> Assigned"
+      },
+      {
+        "at": "2026-03-24T07:05:47.997354+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T07:53:46.103330+00:00",
+        "from": "工艺局",
+        "to": "汇总阁",
+        "remark": "Auto: Doing -> Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398421+00:00",
+        "action": "代码开发",
+        "output": "## 开发完成\n\n### 实现内容\n- ✅ 功能实现\n- ✅ 单元测试\n- ✅ 代码审查\n\n### 输出\n- 源代码\n- 测试报告",
+        "processing_time": 30
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398422+00:00"
+    },
+    "createdAt": "2026-03-24T04:42:00.807014+00:00",
+    "updatedAt": "2026-03-24T07:53:46.103329+00:00"
+  },
+  {
+    "id": "TS-20260324-007",
+    "title": "Test",
+    "priority": "normal",
+    "org": "汇总阁",
+    "state": "Done",
+    "now": "Auto-advance to Done",
+    "output": "任务完成，已回奏",
+    "block": "",
+    "flow_log": [
+      {
+        "at": "2026-03-24T04:42:25.778451+00:00",
+        "from": "皇上",
+        "to": "承旨司",
+        "remark": "下旨：Test"
+      },
+      {
+        "at": "2026-03-24T04:50:31.398447+00:00",
+        "from": "承旨司",
+        "to": "承旨司",
+        "remark": "✅ 接旨分拣完成，推进到Receiving"
+      },
+      {
+        "at": "2026-03-24T04:52:26.042806+00:00",
+        "from": "皇上",
+        "to": "中书局",
+        "remark": "推进到Planning"
+      },
+      {
+        "at": "2026-03-24T05:06:11.618818+00:00",
+        "from": "中书局",
+        "to": "审核院",
+        "remark": "Auto: Planning -> Reviewing"
+      },
+      {
+        "at": "2026-03-24T05:17:10.326949+00:00",
+        "from": "审核院",
+        "to": "调度监",
+        "remark": "Auto: Reviewing -> Assigned"
+      },
+      {
+        "at": "2026-03-24T07:05:47.997357+00:00",
+        "from": "调度监",
+        "to": "工艺局",
+        "remark": "Auto: Assigned -> Doing"
+      },
+      {
+        "at": "2026-03-24T07:53:46.103333+00:00",
+        "from": "工艺局",
+        "to": "汇总阁",
+        "remark": "Auto: Doing -> Done"
+      }
+    ],
+    "progress_log": [
+      {
+        "at": "2026-03-24T04:50:31.398449+00:00",
+        "action": "接旨分拣",
+        "output": "✅ 已接收旨意，意图识别完成，转交中书局",
+        "processing_time": 5
+      }
+    ],
+    "_scheduler": {
+      "enabled": true,
+      "stallThresholdSec": 180,
+      "maxRetry": 1,
+      "retryCount": 0,
+      "escalationLevel": 0,
+      "lastProgressAt": "2026-03-24T04:50:31.398450+00:00"
+    },
+    "createdAt": "2026-03-24T04:42:25.778461+00:00",
+    "updatedAt": "2026-03-24T07:53:46.103332+00:00"
+  }
+]

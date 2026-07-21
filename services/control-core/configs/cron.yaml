@@ -1,0 +1,4 @@
+scheduler:
+  tick_interval: 60
+  max_concurrent_jobs: 3
+  job_store_path: "data/cron/jobs.json"

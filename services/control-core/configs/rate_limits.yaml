@@ -1,0 +1,80 @@
+# Per-route rate limiting configuration.
+# Loaded by apps/api_server/main.py and passed to RateLimiter middleware.
+
+rate_limits:
+  default:
+    max_requests: 60
+    window_seconds: 60
+  routes:
+    "/api/v1/auth":
+      max_requests: 10
+      window_seconds: 60
+    "/api/v1/chat":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/admin":
+      max_requests: 5
+      window_seconds: 60
+    "/api/v1/tasks":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/webhooks":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/marketplace":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/search":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/analytics":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/export":
+      max_requests: 10
+      window_seconds: 60
+    "/api/v1/rbac":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/skills":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/notifications":
+      max_requests: 60
+      window_seconds: 60
+    "/api/v1/cron":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/conversations":
+      max_requests: 40
+      window_seconds: 60
+    "/api/v1/desktop":
+      max_requests: 10
+      window_seconds: 60
+    "/api/v1/files":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/voice":
+      max_requests: 10
+      window_seconds: 60
+    "/api/v1/vision":
+      max_requests: 10
+      window_seconds: 60
+    "/api/v1/graphql":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/plugins":
+      max_requests: 10
+      window_seconds: 60
+    "/api/v1/messaging":
+      max_requests: 20
+      window_seconds: 60
+    "/api/v1/agents":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/personal":
+      max_requests: 30
+      window_seconds: 60
+    "/api/v1/templates":
+      max_requests: 30
+      window_seconds: 60

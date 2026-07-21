@@ -1,0 +1,48 @@
+memory:
+  types:
+    execution_experience:
+      description: "Experience from task execution"
+      auto_create: true
+    workflow_pattern:
+      description: "Discovered workflow patterns"
+      auto_create: true
+    domain_knowledge:
+      description: "Domain-specific knowledge"
+      auto_create: false
+    error_solution:
+      description: "Error and solution pairs"
+      auto_create: true
+    user_preference:
+      description: "User preferences (Personal edition)"
+      edition: personal
+      auto_create: true
+    personal_project:
+      description: "Personal project context (Personal edition)"
+      edition: personal
+      auto_create: false
+    file_knowledge:
+      description: "Knowledge from files (Personal edition)"
+      edition: personal
+      auto_create: true
+    reminder:
+      description: "Reminders (Personal edition)"
+      edition: personal
+      auto_create: false
+    daily_context:
+      description: "Daily context (Personal edition)"
+      edition: personal
+      auto_create: true
+
+  retrieval:
+    max_results: 5
+    max_total_tokens: 1500
+    min_importance: 0.3
+    min_confidence: 0.5
+    strategies:
+      - keyword
+      - recent_task
+      # - vector  # Phase 2: FAISS/Qdrant
+
+  summarization:
+    provider: llm  # llm | rule_based
+    max_summary_length: 500

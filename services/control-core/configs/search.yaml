@@ -1,0 +1,12 @@
+default_engine: duckduckgo
+
+engines:
+  duckduckgo:
+    max_results: 5
+
+  brave:
+    api_key_env: BRAVE_API_KEY
+    max_results: 10
+
+  searxng:
+    base_url: "http://localhost:8888"

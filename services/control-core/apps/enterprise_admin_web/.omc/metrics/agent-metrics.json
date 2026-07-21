@@ -1,0 +1,84 @@
+{
+  "agents": {
+    "omc-fusion:executor": {
+      "agentName": "omc-fusion:executor",
+      "invocations": 4,
+      "completions": 5,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T03:14:41.362Z",
+      "lastUpdated": "2026-05-25T03:36:55.325Z"
+    },
+    "a9130b6dd316be38c": {
+      "agentName": "a9130b6dd316be38c",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T03:04:36.735Z",
+      "lastUpdated": "2026-05-21T03:04:36.735Z"
+    },
+    "a61a9606732e5e4dc": {
+      "agentName": "a61a9606732e5e4dc",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T03:05:23.273Z",
+      "lastUpdated": "2026-05-21T03:05:23.273Z"
+    },
+    "ad902021a8a2cd9aa": {
+      "agentName": "ad902021a8a2cd9aa",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T03:33:31.032Z",
+      "lastUpdated": "2026-05-25T03:33:31.032Z"
+    },
+    "ab7b441d5d9aa4ea0": {
+      "agentName": "ab7b441d5d9aa4ea0",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T03:36:10.577Z",
+      "lastUpdated": "2026-05-25T03:36:10.577Z"
+    },
+    "a0fcbfa5870e4b4df": {
+      "agentName": "a0fcbfa5870e4b4df",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T03:37:03.671Z",
+      "lastUpdated": "2026-05-25T03:37:03.671Z"
+    },
+    "ac3e654d040984754": {
+      "agentName": "ac3e654d040984754",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T08:18:54.177Z",
+      "lastUpdated": "2026-05-25T08:18:54.177Z"
+    },
+    "a4ed77617fe1ef815": {
+      "agentName": "a4ed77617fe1ef815",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T08:30:34.070Z",
+      "lastUpdated": "2026-05-25T08:30:34.070Z"
+    }
+  }
+}

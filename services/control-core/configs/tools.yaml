@@ -1,0 +1,118 @@
+# Tool registry configuration.
+#
+# Code-backed tools (those with @tool_registry.register()) provide their
+# description, emoji, and params_schema from the decorator.  This YAML only
+# needs to specify **policy overrides**: risk_level, enabled, edition.
+#
+# Placeholder entries (no code class) keep their full definition so the
+# policy engine can still recognise and block them.
+
+tools:
+  # ── Browser tools ────────────────────────────────────────────────────
+  browser.open:
+    category: browser
+    risk_level: low
+
+  browser.click:
+    category: browser
+    risk_level: low
+
+  browser.extract_text:
+    category: browser
+    risk_level: low
+
+  browser.screenshot:
+    category: browser
+    risk_level: low
+
+  # ── File tools ───────────────────────────────────────────────────────
+  file.write_docx:
+    category: file
+    risk_level: low
+
+  file.write_markdown:
+    category: file
+    risk_level: low
+
+  file.read:
+    category: file
+    risk_level: low
+
+  file.list:
+    category: file
+    risk_level: low
+
+  file.search:
+    category: file
+    risk_level: low
+    edition: [personal]
+
+  file.summarize:
+    category: file
+    risk_level: low
+    edition: [personal]
+
+  # ── System tools ─────────────────────────────────────────────────────
+  shell.execute:
+    category: system
+    risk_level: high
+
+  # ── Web tools ────────────────────────────────────────────────────────
+  web.search:
+    category: web
+    risk_level: low
+
+  # ── Agent tools ──────────────────────────────────────────────────────
+  delegate.task:
+    category: agent
+    risk_level: medium
+
+  # ── Messaging tools ──────────────────────────────────────────────────
+  message.send:
+    category: messaging
+    risk_level: medium
+    edition: [personal]
+
+  # ── Disabled placeholder tools (no code class) ───────────────────────
+  shell.run:
+    description: "Execute shell command (DISABLED)"
+    category: system
+    risk_level: critical
+    enabled: false
+    params_schema:
+      type: object
+      required: [command]
+      properties:
+        command:
+          type: string
+      additionalProperties: false
+
+  desktop.click:
+    category: desktop
+    risk_level: medium
+
+  desktop.type:
+    category: desktop
+    risk_level: medium
+
+  desktop.screenshot:
+    category: desktop
+    risk_level: low
+
+  desktop.files:
+    category: desktop
+    risk_level: medium
+
+  desktop.windows:
+    category: desktop
+    risk_level: low
+
+  system.modify:
+    description: "Modify system settings (DISABLED)"
+    category: system
+    risk_level: critical
+    enabled: false
+    params_schema:
+      type: object
+      properties: {}
+      additionalProperties: false

@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# Database
+*.db
+*.sqlite3
+data/*.db
+data/*.sqlite3
+
+# Environment
+.env
+.env.local
+.env.production
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Node
+node_modules/
+apps/enterprise_admin_web/node_modules/
+apps/enterprise_admin_web/dist/
+
+# OMC state
+.omc/state/
+.omc/autopilot/
+
+# Build artifacts
+*.pyc
+
+# Test temp files
+.pytest_tmp/
+
+# Ruff cache
+.ruff_cache/
+
+# Database backups
+data/backups/
+
+# Egg info
+*.egg-info/

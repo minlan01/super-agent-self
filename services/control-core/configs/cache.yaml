@@ -1,0 +1,17 @@
+# Cache configuration for the agent platform.
+# Loaded by packages/cache/manager.py.
+
+cache:
+  enabled: true
+  backend: memory          # "memory" or "redis"
+  redis_url: redis://localhost:6379/0
+  max_size: 1000           # max entries in memory backend
+  default_ttl: 300         # seconds (5 minutes)
+
+  namespaces:
+    tasks:
+      ttl: 60              # 1 minute — task lists change often
+    dashboard:
+      ttl: 30              # 30 seconds — dashboard stats refresh
+    skills:
+      ttl: 120             # 2 minutes — skills are relatively stable

@@ -1,0 +1,57 @@
+edition: personal
+name: Personal Jarvis Edition
+description: Personal AI assistant with extended capabilities (Phase 2+)
+
+tools:
+  enabled:
+    - browser.open
+    - browser.click
+    - browser.extract_text
+    - browser.screenshot
+    - file.write_docx
+    - file.write_markdown
+    - file.read
+    - file.list
+    - file.search
+    - file.summarize
+  disabled:
+    - shell.run
+    - desktop.control
+    - system.modify
+
+policy:
+  max_risk_level: medium
+  require_approval_for:
+    - high
+    - medium
+  forbidden_tools:
+    - shell.run
+    - desktop.control
+  forbidden_paths:
+    - /etc
+    - /root
+    - C:\Windows
+    - C:\Program Files
+  allowed_url_patterns:
+    - "https?://.*"
+  forbidden_url_patterns:
+    - "https?://localhost.*"
+
+memory:
+  types:
+    - execution_experience
+    - user_preference
+    - personal_project
+    - file_knowledge
+    - reminder
+    - daily_context
+    - workflow_pattern
+  retention_days: 365
+
+approval:
+  auto_approve_low_risk: true
+  require_reason: false
+  confirm_before:
+    - file.delete
+    - message.send
+    - form.submit

@@ -1,0 +1,53 @@
+{
+  "agents": [
+    {
+      "agent_id": "a8efbfb6aa9cf04a7",
+      "agent_type": "omc-fusion:executor",
+      "started_at": "2026-05-19T03:14:41.379Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-19T03:19:01.728Z",
+      "duration_ms": 260349
+    },
+    {
+      "agent_id": "aba2b0275414fb0ca",
+      "agent_type": "omc-fusion:executor",
+      "started_at": "2026-05-19T03:14:41.443Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-19T03:28:16.032Z",
+      "duration_ms": 814589
+    },
+    {
+      "agent_id": "a952818fa8a645b76",
+      "agent_type": "omc-fusion:executor",
+      "started_at": "2026-05-25T03:33:12.987Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-25T03:35:53.866Z",
+      "duration_ms": 160879
+    },
+    {
+      "agent_id": "ad7f3d5b04c1e0c30",
+      "agent_type": "omc-fusion:executor",
+      "started_at": "2026-05-25T03:33:13.264Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-25T03:36:42.597Z",
+      "duration_ms": 209333
+    },
+    {
+      "agent_id": "aa713f4e36f48a328",
+      "agent_type": "omc-fusion:executor",
+      "started_at": "2026-05-25T03:33:13.367Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-25T03:36:55.321Z",
+      "duration_ms": 221954
+    }
+  ],
+  "total_spawned": 3,
+  "total_completed": 5,
+  "total_failed": 0,
+  "last_updated": "2026-05-25T08:30:34.207Z"
+}

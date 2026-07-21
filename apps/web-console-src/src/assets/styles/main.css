@@ -1,0 +1,116 @@
+/* ============================================
+   App utility classes — pixel base styles in pixel-tokens.css
+   Keep only app-specific toolbar/card/page utilities
+   ============================================ */
+
+:root {
+  --card-radius-xl: 16px;
+  --toolbar-btn-height: 38px;
+  --toolbar-btn-radius: 11px;
+  --toolbar-refresh-bg: var(--bg-upper, #12171b);
+  --toolbar-refresh-bg-hover: var(--bg-surface, #16191d);
+  --toolbar-refresh-border: var(--line, rgba(171, 218, 201, 0.14));
+  --toolbar-refresh-text: var(--ink, rgba(236, 247, 243, 0.92));
+  --toolbar-refresh-shadow: 0 6px 14px rgba(15, 23, 42, 0.1);
+  --toolbar-refresh-shadow-hover: 0 10px 18px rgba(15, 23, 42, 0.14);
+  --toolbar-save-shadow: 0 8px 18px rgba(5, 150, 105, 0.26);
+  --toolbar-save-shadow-hover: 0 12px 22px rgba(5, 150, 105, 0.32);
+  --toolbar-apply-shadow: 0 8px 18px rgba(245, 158, 11, 0.26);
+  --toolbar-apply-shadow-hover: 0 12px 22px rgba(245, 158, 11, 0.32);
+  --link-color: #34d399;
+  --link-color-hover: #6ee7b7;
+  --link-underline: rgba(52, 211, 153, 0.3);
+  --md-bullet-color: #6b7280;
+  --md-bullet-nested-color: #4b5563;
+  --md-blockquote-bg: rgba(160, 160, 176, 0.07);
+  --md-blockquote-border: #3f3f46;
+  --md-code-bg: rgba(160, 160, 176, 0.1);
+  --md-code-border: rgba(160, 160, 176, 0.12);
+  --md-pre-bg: rgba(0, 0, 0, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  height: 100%;
+  width: 100%;
+}
+
+/* App card */
+.app-card.n-card {
+  border-radius: var(--card-radius-xl);
+}
+
+/* Toolbar buttons */
+.app-toolbar {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.app-toolbar-btn.n-button {
+  min-width: 112px;
+  height: var(--toolbar-btn-height);
+  border-radius: var(--toolbar-btn-radius);
+  padding: 0 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 0.14s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.app-toolbar-btn .n-icon {
+  font-size: 16px;
+}
+
+.app-toolbar-btn:not(.n-button--disabled):hover {
+  transform: translateY(-1px);
+}
+
+.app-toolbar-btn:not(.n-button--disabled):active {
+  transform: translateY(0);
+}
+
+.app-toolbar-btn--refresh.n-button {
+  background: var(--toolbar-refresh-bg) !important;
+  border: 1px solid var(--toolbar-refresh-border) !important;
+  color: var(--toolbar-refresh-text) !important;
+  box-shadow: var(--toolbar-refresh-shadow);
+}
+
+.app-toolbar-btn--refresh.n-button:not(.n-button--disabled):hover {
+  border-color: var(--toolbar-refresh-border) !important;
+  background: var(--toolbar-refresh-bg-hover) !important;
+  box-shadow: var(--toolbar-refresh-shadow-hover);
+}
+
+.app-toolbar-btn--save.n-button {
+  background: linear-gradient(135deg, #16a34a 0%, #059669 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: var(--toolbar-save-shadow);
+}
+
+.app-toolbar-btn--save.n-button:not(.n-button--disabled):hover {
+  filter: brightness(1.04);
+  box-shadow: var(--toolbar-save-shadow-hover);
+}
+
+.app-toolbar-btn--apply.n-button {
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  box-shadow: var(--toolbar-apply-shadow);
+}
+
+.app-toolbar-btn--apply.n-button:not(.n-button--disabled):hover {
+  filter: brightness(1.04);
+  box-shadow: var(--toolbar-apply-shadow-hover);
+}
+
+.app-toolbar-btn.n-button.n-button--disabled {
+  opacity: 0.7;
+  box-shadow: none !important;
+}

@@ -1,0 +1,45 @@
+# Version control
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_tmp/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OMC / Claude
+.omc/
+.claude/
+
+# Data & runtime
+data/
+workspace/
+*.db
+*.sqlite3
+
+# Environment
+.env
+.env.local
+
+# Docker
+docker-compose*.yml
+Dockerfile
+
+# Docs
+*.md
+!README.md

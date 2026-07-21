@@ -1,0 +1,103 @@
+/* ============================================
+   Theme CSS Variables — Light (default)
+   ============================================ */
+:root {
+  /* General */
+  --theme-bg: #f0f2f5;
+  --theme-bg-page: #f0f2f5;
+  --theme-text-primary: #303133;
+  --theme-text-regular: #606266;
+  --theme-text-secondary: #909399;
+  --theme-text-placeholder: #c0c4cc;
+  --theme-border: #e6e6e6;
+  --theme-border-light: #ebeef5;
+  --theme-border-lighter: #f0f0f0;
+
+  /* Sidebar */
+  --theme-sidebar-bg: #304156;
+  --theme-sidebar-text: #bfcbd9;
+  --theme-sidebar-active: #409eff;
+
+  /* Header */
+  --theme-header-bg: #fff;
+  --theme-header-border: #e6e6e6;
+
+  /* Cards & Surfaces */
+  --theme-card-bg: #fff;
+  --theme-hover-bg: #f5f7fa;
+  --theme-active-bg: #ecf5ff;
+  --theme-active-hover-bg: #d9ecff;
+
+  /* Accent colors (semantic — same in both themes) */
+  --theme-color-primary: #409eff;
+  --theme-color-success: #67c23a;
+  --theme-color-warning: #e6a23c;
+  --theme-color-danger: #f56c6c;
+  --theme-color-info: #909399;
+
+  /* Chat bubbles */
+  --theme-chat-user-bg: #409eff;
+  --theme-chat-user-text: #fff;
+  --theme-chat-assistant-bg: #f4f4f5;
+  --theme-chat-assistant-text: #303133;
+
+  /* Status bars */
+  --theme-status-connecting-bg: #fdf6ec;
+  --theme-status-connecting-text: #e6a23c;
+  --theme-status-disconnected-bg: #fef0f0;
+  --theme-status-disconnected-text: #f56c6c;
+
+  /* Stat value */
+  --theme-stat-value-color: #409eff;
+
+  /* Chart border color (pie border) */
+  --theme-chart-border: #fff;
+}
+
+/* ============================================
+   Dark Theme Overrides
+   ============================================ */
+html.dark {
+  --theme-bg: #141414;
+  --theme-bg-page: #141414;
+  --theme-text-primary: #e5eaf3;
+  --theme-text-regular: #cfd3dc;
+  --theme-text-secondary: #a3a6ad;
+  --theme-text-placeholder: #6c6e72;
+  --theme-border: #414243;
+  --theme-border-light: #363637;
+  --theme-border-lighter: #2e2e2f;
+
+  /* Sidebar */
+  --theme-sidebar-bg: #1d1e1f;
+  --theme-sidebar-text: #cfd3dc;
+  --theme-sidebar-active: #409eff;
+
+  /* Header */
+  --theme-header-bg: #1d1e1f;
+  --theme-header-border: #414243;
+
+  /* Cards & Surfaces */
+  --theme-card-bg: #1d1e1f;
+  --theme-hover-bg: #262727;
+  --theme-active-bg: #1a3a5c;
+  --theme-active-hover-bg: #1e4a72;
+
+  /* Chat bubbles */
+  --theme-chat-user-bg: #3375b9;
+  --theme-chat-user-text: #fff;
+  --theme-chat-assistant-bg: #2c2e2f;
+  --theme-chat-assistant-text: #e5eaf3;
+
+  /* Status bars */
+  --theme-status-connecting-bg: #3a2e1a;
+  --theme-status-connecting-text: #e6a23c;
+  --theme-status-disconnected-bg: #3a1a1a;
+  --theme-status-disconnected-text: #f56c6c;
+
+  /* Stat value */
+  --theme-stat-value-color: #66b1ff;
+
+  /* Chart border color */
+  --theme-chart-border: #1d1e1f;
+}

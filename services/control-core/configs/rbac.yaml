@@ -1,0 +1,99 @@
+# RBAC Configuration — Role-Based Access Control
+# Default roles and permissions are seeded via RBACRepository.seed_default_roles_and_permissions()
+
+rbac:
+  # Enable RBAC (when false, all authenticated users get full access)
+  enabled: true
+
+  # Cache settings for permission checks (avoid DB query on every request)
+  cache:
+    enabled: true
+    ttl_seconds: 300  # 5 minutes
+
+  # Default role assigned to new users
+  default_role: "user"
+
+  # Super admin bypass — users with legacy UserRole.ADMIN get all permissions
+  # WARNING: setting this to true bypasses RBAC for admin users — use only for legacy compat
+  legacy_admin_bypass: false
+
+  # Permission format: resource:action
+  # Resources: tasks, memory, skills, audit, approvals, users, roles, system,
+  #            analytics, export, chat, notifications, marketplace, cron,
+  #            templates, voice, search, files, health, editions, webhooks,
+  #            conversations, messaging, desktop, plugins, agents
+  # Actions: read, write, execute, admin
+
+  # Route-to-permission mapping
+  route_permissions:
+    # Public routes (no auth required)
+    public:
+      - "GET:/api/v1/health"
+      - "GET:/api/v1/auth/login"
+      - "POST:/api/v1/auth/login"
+      - "POST:/api/v1/auth/register"
+      - "GET:/api/v1/auth/sso/login"
+      - "GET:/api/v1/auth/sso/callback"
+      - "GET:/api/v1/metrics/prometheus"
+
+    # Authenticated-only routes (any logged-in user)
+    authenticated:
+      - "GET:/api/v1/auth/me"
+      - "WS:/ws/tasks/*"
+      - "WS:/ws/chat"
+      - "WS:/ws/notifications"
+
+  # Resource action mapping for auto-permission resolution
+  # Method -> default action: GET=read, POST/PUT=write, DELETE=admin
+  method_action_map:
+    GET: "read"
+    POST: "write"
+    PUT: "write"
+    PATCH: "write"
+    DELETE: "admin"
+
+# SSO Configuration
+sso:
+  # Enable SSO login
+  enabled: false
+
+  # OIDC Configuration (generic — works with Okta, Azure AD, Google, Keycloak, etc.)
+  oidc:
+    # Provider display name
+    provider: ""
+
+    # OIDC endpoints (auto-discovered from issuer if using well-known)
+    issuer: ""
+    authorization_endpoint: ""
+    token_endpoint: ""
+    userinfo_endpoint: ""
+    jwks_uri: ""
+
+    # Client credentials
+    client_id: ""
+    client_secret: ""
+
+    # Redirect URI (will be constructed from server config if empty)
+    redirect_uri: ""
+
+    # Scopes
+    scopes:
+      - "openid"
+      - "profile"
+      - "email"
+
+    # User provisioning
+    auto_create_users: true  # JIT provisioning on first SSO login
+    default_role_on_create: "user"  # Role assigned to auto-created users
+
+    # Token settings
+    nonce_enabled: true
+    pkce_enabled: true
+
+  # SAML Configuration (placeholder for future)
+  saml:
+    enabled: false
+    entry_point: ""
+    issuer: ""
+    cert_file: ""
+    acs_url: ""

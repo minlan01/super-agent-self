@@ -1,0 +1,794 @@
+{
+  "agents": {
+    "omc-fusion:executor": {
+      "agentName": "omc-fusion:executor",
+      "invocations": 39,
+      "completions": 47,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T01:51:46.912Z",
+      "lastUpdated": "2026-05-25T01:58:10.401Z"
+    },
+    "omc-fusion:explore": {
+      "agentName": "omc-fusion:explore",
+      "invocations": 7,
+      "completions": 10,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T02:58:22.486Z",
+      "lastUpdated": "2026-05-25T08:13:44.831Z"
+    },
+    "ad8772e93bcd6bdf7": {
+      "agentName": "ad8772e93bcd6bdf7",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T05:54:40.230Z",
+      "lastUpdated": "2026-05-19T05:54:40.230Z"
+    },
+    "aa8aa603845d7347d": {
+      "agentName": "aa8aa603845d7347d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T05:55:00.240Z",
+      "lastUpdated": "2026-05-19T05:55:00.240Z"
+    },
+    "a270fac831dad78b7": {
+      "agentName": "a270fac831dad78b7",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:01:30.608Z",
+      "lastUpdated": "2026-05-19T06:01:30.608Z"
+    },
+    "omc-fusion:code-reviewer": {
+      "agentName": "omc-fusion:code-reviewer",
+      "invocations": 2,
+      "completions": 3,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:02:49.433Z",
+      "lastUpdated": "2026-05-25T08:49:13.292Z"
+    },
+    "omc-fusion:verifier": {
+      "agentName": "omc-fusion:verifier",
+      "invocations": 1,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:02:49.950Z",
+      "lastUpdated": "2026-05-19T06:08:40.026Z"
+    },
+    "omc-fusion:security-reviewer": {
+      "agentName": "omc-fusion:security-reviewer",
+      "invocations": 2,
+      "completions": 2,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:02:50.268Z",
+      "lastUpdated": "2026-05-25T08:49:24.753Z"
+    },
+    "omc-fusion:architect": {
+      "agentName": "omc-fusion:architect",
+      "invocations": 6,
+      "completions": 6,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:07:54.153Z",
+      "lastUpdated": "2026-05-25T05:50:30.742Z"
+    },
+    "a16590d089a33428b": {
+      "agentName": "a16590d089a33428b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:37:02.587Z",
+      "lastUpdated": "2026-05-19T06:37:02.587Z"
+    },
+    "a32baa611a59d9678": {
+      "agentName": "a32baa611a59d9678",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:38:02.477Z",
+      "lastUpdated": "2026-05-19T06:38:02.477Z"
+    },
+    "omc-fusion:executor-high": {
+      "agentName": "omc-fusion:executor-high",
+      "invocations": 4,
+      "completions": 4,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-19T06:46:47.580Z",
+      "lastUpdated": "2026-05-19T06:59:17.664Z"
+    },
+    "ab99938e9928c9a9a": {
+      "agentName": "ab99938e9928c9a9a",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T02:19:59.389Z",
+      "lastUpdated": "2026-05-20T02:19:59.389Z"
+    },
+    "a0a23df0b606f8a23": {
+      "agentName": "a0a23df0b606f8a23",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T02:24:51.288Z",
+      "lastUpdated": "2026-05-20T02:24:51.288Z"
+    },
+    "aa5d72c353aa5ae25": {
+      "agentName": "aa5d72c353aa5ae25",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T02:31:10.600Z",
+      "lastUpdated": "2026-05-20T02:31:10.600Z"
+    },
+    "a890e5f35798d15ac": {
+      "agentName": "a890e5f35798d15ac",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T02:31:49.653Z",
+      "lastUpdated": "2026-05-20T02:31:49.653Z"
+    },
+    "a633e692af44b1dac": {
+      "agentName": "a633e692af44b1dac",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:04:47.302Z",
+      "lastUpdated": "2026-05-20T03:04:47.302Z"
+    },
+    "a91fb8a237debbb14": {
+      "agentName": "a91fb8a237debbb14",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:08:27.437Z",
+      "lastUpdated": "2026-05-20T03:08:27.437Z"
+    },
+    "a7e738c23c8723c6a": {
+      "agentName": "a7e738c23c8723c6a",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:15:58.006Z",
+      "lastUpdated": "2026-05-20T03:15:58.006Z"
+    },
+    "a3ec60bee3f719d8b": {
+      "agentName": "a3ec60bee3f719d8b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:17:30.841Z",
+      "lastUpdated": "2026-05-20T03:17:30.841Z"
+    },
+    "a6583cc95d182f7e5": {
+      "agentName": "a6583cc95d182f7e5",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:18:00.146Z",
+      "lastUpdated": "2026-05-20T03:18:00.146Z"
+    },
+    "a2be2cbd91eda935d": {
+      "agentName": "a2be2cbd91eda935d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:18:28.566Z",
+      "lastUpdated": "2026-05-20T03:18:28.566Z"
+    },
+    "a7048432a363fc59c": {
+      "agentName": "a7048432a363fc59c",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:22:18.036Z",
+      "lastUpdated": "2026-05-20T03:22:18.036Z"
+    },
+    "af8a5e256907a595b": {
+      "agentName": "af8a5e256907a595b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:36:55.518Z",
+      "lastUpdated": "2026-05-20T03:36:55.518Z"
+    },
+    "aec0c9f6cde5fd998": {
+      "agentName": "aec0c9f6cde5fd998",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:41:33.611Z",
+      "lastUpdated": "2026-05-20T03:41:33.611Z"
+    },
+    "a4917726790902e23": {
+      "agentName": "a4917726790902e23",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:45:41.019Z",
+      "lastUpdated": "2026-05-20T03:45:41.019Z"
+    },
+    "a83fdba32344db89d": {
+      "agentName": "a83fdba32344db89d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T03:47:31.746Z",
+      "lastUpdated": "2026-05-20T03:47:31.746Z"
+    },
+    "Explore": {
+      "agentName": "Explore",
+      "invocations": 1,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T08:21:41.024Z",
+      "lastUpdated": "2026-05-20T08:23:57.116Z"
+    },
+    "aac5cd128971914ab": {
+      "agentName": "aac5cd128971914ab",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T08:31:54.036Z",
+      "lastUpdated": "2026-05-20T08:31:54.036Z"
+    },
+    "aa5472e24e521a78a": {
+      "agentName": "aa5472e24e521a78a",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T08:38:30.689Z",
+      "lastUpdated": "2026-05-20T08:38:30.689Z"
+    },
+    "ac21c3712cf733898": {
+      "agentName": "ac21c3712cf733898",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:05:04.416Z",
+      "lastUpdated": "2026-05-20T09:05:04.416Z"
+    },
+    "a60bd881b2327017b": {
+      "agentName": "a60bd881b2327017b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:06:30.127Z",
+      "lastUpdated": "2026-05-20T09:06:30.127Z"
+    },
+    "a0fd0bdeeb78f8b05": {
+      "agentName": "a0fd0bdeeb78f8b05",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:21:29.072Z",
+      "lastUpdated": "2026-05-20T09:21:29.072Z"
+    },
+    "a3c1166f2d2d0360e": {
+      "agentName": "a3c1166f2d2d0360e",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:23:10.733Z",
+      "lastUpdated": "2026-05-20T09:23:10.733Z"
+    },
+    "a87cdd1eb86fb33bb": {
+      "agentName": "a87cdd1eb86fb33bb",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:24:53.421Z",
+      "lastUpdated": "2026-05-20T09:24:53.421Z"
+    },
+    "a25286c636b17a37b": {
+      "agentName": "a25286c636b17a37b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:26:05.407Z",
+      "lastUpdated": "2026-05-20T09:26:05.407Z"
+    },
+    "afbe2594b63ef011d": {
+      "agentName": "afbe2594b63ef011d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:28:45.195Z",
+      "lastUpdated": "2026-05-20T09:28:45.195Z"
+    },
+    "a0d2df2b26ed5ecb2": {
+      "agentName": "a0d2df2b26ed5ecb2",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:31:13.571Z",
+      "lastUpdated": "2026-05-20T09:31:13.571Z"
+    },
+    "aed02ce705e97a104": {
+      "agentName": "aed02ce705e97a104",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:42:14.455Z",
+      "lastUpdated": "2026-05-20T09:42:14.455Z"
+    },
+    "a64e690cfe5982bf8": {
+      "agentName": "a64e690cfe5982bf8",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:49:54.022Z",
+      "lastUpdated": "2026-05-20T09:49:54.022Z"
+    },
+    "a5bfbd83814c08958": {
+      "agentName": "a5bfbd83814c08958",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:50:49.548Z",
+      "lastUpdated": "2026-05-20T09:50:49.548Z"
+    },
+    "a4ea7fc98a1ac93d2": {
+      "agentName": "a4ea7fc98a1ac93d2",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:52:42.706Z",
+      "lastUpdated": "2026-05-20T09:52:42.706Z"
+    },
+    "a22a57b39f8c98b9c": {
+      "agentName": "a22a57b39f8c98b9c",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T09:58:42.620Z",
+      "lastUpdated": "2026-05-20T09:58:42.620Z"
+    },
+    "a4c7eaea3d7c1928d": {
+      "agentName": "a4c7eaea3d7c1928d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:02:46.658Z",
+      "lastUpdated": "2026-05-20T10:02:46.658Z"
+    },
+    "abc3c253e21792d70": {
+      "agentName": "abc3c253e21792d70",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:11:38.052Z",
+      "lastUpdated": "2026-05-20T10:11:38.052Z"
+    },
+    "adf54601c9ea05c46": {
+      "agentName": "adf54601c9ea05c46",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:13:17.948Z",
+      "lastUpdated": "2026-05-20T10:13:17.948Z"
+    },
+    "ae8e94917b3f77f50": {
+      "agentName": "ae8e94917b3f77f50",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:14:47.162Z",
+      "lastUpdated": "2026-05-20T10:14:47.162Z"
+    },
+    "a28f9deec8a74e764": {
+      "agentName": "a28f9deec8a74e764",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:22:22.833Z",
+      "lastUpdated": "2026-05-20T10:22:22.833Z"
+    },
+    "a731c9cd49b7102a7": {
+      "agentName": "a731c9cd49b7102a7",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:23:30.359Z",
+      "lastUpdated": "2026-05-20T10:23:30.359Z"
+    },
+    "a3ab558bca8431acb": {
+      "agentName": "a3ab558bca8431acb",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:24:59.383Z",
+      "lastUpdated": "2026-05-20T10:24:59.383Z"
+    },
+    "adaab53c9d5e40a3d": {
+      "agentName": "adaab53c9d5e40a3d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:25:34.081Z",
+      "lastUpdated": "2026-05-20T10:25:34.081Z"
+    },
+    "a315b1e73182e1332": {
+      "agentName": "a315b1e73182e1332",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:26:36.231Z",
+      "lastUpdated": "2026-05-20T10:26:36.231Z"
+    },
+    "ad805224bc6e73ebb": {
+      "agentName": "ad805224bc6e73ebb",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:27:30.743Z",
+      "lastUpdated": "2026-05-20T10:27:30.743Z"
+    },
+    "a5bff2bf61478441a": {
+      "agentName": "a5bff2bf61478441a",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:30:27.562Z",
+      "lastUpdated": "2026-05-20T10:30:27.562Z"
+    },
+    "a61783a2bded5561e": {
+      "agentName": "a61783a2bded5561e",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-20T10:31:31.729Z",
+      "lastUpdated": "2026-05-20T10:31:31.729Z"
+    },
+    "omc-fusion:executor-low": {
+      "agentName": "omc-fusion:executor-low",
+      "invocations": 2,
+      "completions": 2,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T02:50:19.025Z",
+      "lastUpdated": "2026-05-21T02:51:34.828Z"
+    },
+    "a368729f141948140": {
+      "agentName": "a368729f141948140",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T03:37:16.979Z",
+      "lastUpdated": "2026-05-21T03:37:16.979Z"
+    },
+    "omc-fusion:architect-medium": {
+      "agentName": "omc-fusion:architect-medium",
+      "invocations": 2,
+      "completions": 2,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T03:52:24.752Z",
+      "lastUpdated": "2026-05-25T08:49:25.270Z"
+    },
+    "omc-fusion:security-reviewer-low": {
+      "agentName": "omc-fusion:security-reviewer-low",
+      "invocations": 1,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T03:52:24.763Z",
+      "lastUpdated": "2026-05-21T04:22:36.347Z"
+    },
+    "a96e5f77c28c49b5b": {
+      "agentName": "a96e5f77c28c49b5b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T04:23:47.300Z",
+      "lastUpdated": "2026-05-21T04:23:47.300Z"
+    },
+    "a7e23878517a7a109": {
+      "agentName": "a7e23878517a7a109",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-21T04:24:17.865Z",
+      "lastUpdated": "2026-05-21T04:24:17.865Z"
+    },
+    "a7f5841ee20352c86": {
+      "agentName": "a7f5841ee20352c86",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T02:09:37.415Z",
+      "lastUpdated": "2026-05-25T02:09:37.415Z"
+    },
+    "aca6267885f84d60d": {
+      "agentName": "aca6267885f84d60d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T02:09:57.048Z",
+      "lastUpdated": "2026-05-25T02:09:57.048Z"
+    },
+    "aacb924e9d32441f8": {
+      "agentName": "aacb924e9d32441f8",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T02:48:42.137Z",
+      "lastUpdated": "2026-05-25T02:48:42.137Z"
+    },
+    "a08b62656c8fa7b2b": {
+      "agentName": "a08b62656c8fa7b2b",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T03:38:02.949Z",
+      "lastUpdated": "2026-05-25T03:38:02.949Z"
+    },
+    "a14c93099aa819595": {
+      "agentName": "a14c93099aa819595",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T05:46:22.173Z",
+      "lastUpdated": "2026-05-25T05:46:22.173Z"
+    },
+    "a124198144c6ecc22": {
+      "agentName": "a124198144c6ecc22",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T05:47:54.765Z",
+      "lastUpdated": "2026-05-25T05:47:54.765Z"
+    },
+    "a984fdb1ccd546c23": {
+      "agentName": "a984fdb1ccd546c23",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T05:50:17.797Z",
+      "lastUpdated": "2026-05-25T05:50:17.797Z"
+    },
+    "ab988ddb02e396572": {
+      "agentName": "ab988ddb02e396572",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T05:50:45.517Z",
+      "lastUpdated": "2026-05-25T05:50:45.517Z"
+    },
+    "afa8c24049329f849": {
+      "agentName": "afa8c24049329f849",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:01:39.448Z",
+      "lastUpdated": "2026-05-25T06:01:39.448Z"
+    },
+    "ad2247c4862630a17": {
+      "agentName": "ad2247c4862630a17",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:23:35.361Z",
+      "lastUpdated": "2026-05-25T06:23:35.361Z"
+    },
+    "a1ab04bb9fb53a9da": {
+      "agentName": "a1ab04bb9fb53a9da",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:38:47.225Z",
+      "lastUpdated": "2026-05-25T06:38:47.225Z"
+    },
+    "ae2e25c146cf136af": {
+      "agentName": "ae2e25c146cf136af",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:39:57.343Z",
+      "lastUpdated": "2026-05-25T06:39:57.343Z"
+    },
+    "glm-plan-usage:usage-query-agent": {
+      "agentName": "glm-plan-usage:usage-query-agent",
+      "invocations": 1,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:41:13.917Z",
+      "lastUpdated": "2026-05-25T06:41:35.158Z"
+    },
+    "a401317a97be11a0d": {
+      "agentName": "a401317a97be11a0d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:41:44.845Z",
+      "lastUpdated": "2026-05-25T06:41:44.845Z"
+    },
+    "a62ccabdf0753d54c": {
+      "agentName": "a62ccabdf0753d54c",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T06:58:01.424Z",
+      "lastUpdated": "2026-05-25T06:58:01.424Z"
+    },
+    "a7f85d097051cda6e": {
+      "agentName": "a7f85d097051cda6e",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T07:18:18.429Z",
+      "lastUpdated": "2026-05-25T07:18:18.429Z"
+    },
+    "a34450ad73b9e150d": {
+      "agentName": "a34450ad73b9e150d",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T08:44:21.666Z",
+      "lastUpdated": "2026-05-25T08:44:21.666Z"
+    },
+    "a396d18f0f18c7794": {
+      "agentName": "a396d18f0f18c7794",
+      "invocations": 0,
+      "completions": 1,
+      "failures": 0,
+      "retries": 0,
+      "escalations": 0,
+      "firstSeen": "2026-05-25T08:45:29.018Z",
+      "lastUpdated": "2026-05-25T08:45:29.018Z"
+    }
+  }
+}

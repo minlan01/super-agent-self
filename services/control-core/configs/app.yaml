@@ -1,0 +1,72 @@
+app:
+  name: Controlled Agent Platform
+  version: "3.11.0"
+  edition: enterprise  # enterprise | personal
+  debug: false
+  log_level: INFO
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+
+database:
+  url: "sqlite:///./data/agent_platform.db"
+  echo: false
+
+llm:
+  provider: deepseek  # mock | deepseek | openrouter | openai
+  timeout: 60
+  max_retries: 1
+
+security:
+  secret_key: "change-me-in-production"
+  token_expire_minutes: 60
+  max_plan_steps: 20
+
+cors:
+  allow_origins:
+    - "http://localhost:5173"
+    - "http://localhost:8000"
+    - "http://127.0.0.1:5173"
+  allow_credentials: true
+
+workspace:
+  root: "./workspace"
+  outputs_dir: "outputs"
+  screenshots_dir: "screenshots"
+  raw_dir: "raw"
+  max_file_size_mb: 50
+
+browser:
+  headless: true
+  timeout: 30000
+  screenshot_on_step: true
+
+memory:
+  max_inject_count: 5
+  max_inject_tokens: 1500
+  importance_threshold: 0.3
+
+skills:
+  auto_extract: true
+  degradation_failure_streak: 3
+  degradation_success_rate: 0.7
+
+rbac:
+  enabled: true
+  cache_ttl_seconds: 300
+
+sso:
+  enabled: false
+  oidc:
+    provider: ""
+    issuer: ""
+    client_id: ""
+    client_secret: ""
+    redirect_uri: ""
+    scopes:
+      - "openid"
+      - "profile"
+      - "email"
+    auto_create_users: true

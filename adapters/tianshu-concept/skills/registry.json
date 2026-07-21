@@ -1,0 +1,204 @@
+{
+  "skills": [
+    {
+      "id": "message-classify",
+      "name": "消息分类",
+      "description": "将输入消息分类为旨意/闲聊/咨询/紧急",
+      "category": "input",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "intent-recognition",
+      "name": "意图识别",
+      "description": "识别用户意图并提取关键信息",
+      "category": "input",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "priority-detection",
+      "name": "优先级检测",
+      "description": "根据关键词和上下文判断任务优先级",
+      "category": "input",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "task-create",
+      "name": "任务创建",
+      "description": "创建标准化任务对象",
+      "category": "input",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "requirement-analysis",
+      "name": "需求分析",
+      "description": "分析需求并提取功能点",
+      "category": "planning",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "task-decomposition",
+      "name": "任务拆解",
+      "description": "将大任务拆解为可执行的子任务",
+      "category": "planning",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "solution-design",
+      "name": "方案设计",
+      "description": "设计技术解决方案",
+      "category": "planning",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "effort-estimation",
+      "name": "工时评估",
+      "description": "评估任务所需工时",
+      "category": "planning",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "completeness-check",
+      "name": "完整性审查",
+      "description": "检查方案文档完整性",
+      "category": "review",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "feasibility-review",
+      "name": "可行性审查",
+      "description": "评估技术方案可行性",
+      "category": "review",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "quality-audit",
+      "name": "质量审计",
+      "description": "质量检查和规范符合性验证",
+      "category": "review",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "risk-assessment",
+      "name": "风险评估",
+      "description": "识别和评估潜在风险",
+      "category": "review",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "skill-matching",
+      "name": "技能匹配",
+      "description": "根据任务类型匹配执行部门",
+      "category": "dispatch",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "load-balancing",
+      "name": "负载均衡",
+      "description": "平衡各部门工作负载",
+      "category": "dispatch",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "parallel-optimization",
+      "name": "并行优化",
+      "description": "优化任务并行执行策略",
+      "category": "dispatch",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "progress-tracking",
+      "name": "进度追踪",
+      "description": "追踪任务执行进度",
+      "category": "dispatch",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "technical-writing",
+      "name": "技术写作",
+      "description": "编写技术文档",
+      "category": "execution",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "documentation",
+      "name": "文档编制",
+      "description": "创建标准化文档",
+      "category": "execution",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "coding",
+      "name": "代码开发",
+      "description": "编写和调试代码",
+      "category": "execution",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "test-design",
+      "name": "测试设计",
+      "description": "设计测试用例",
+      "category": "execution",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "security-scan",
+      "name": "安全扫描",
+      "description": "安全漏洞扫描",
+      "category": "execution",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "result-aggregation",
+      "name": "结果汇总",
+      "description": "汇总多个执行结果",
+      "category": "output",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "summarization",
+      "name": "自动摘要",
+      "description": "生成执行结果摘要",
+      "category": "output",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "report-merge",
+      "name": "报告合并",
+      "description": "合并多个报告",
+      "category": "output",
+      "version": "1.0.0",
+      "enabled": true
+    }
+  ],
+  "categories": [
+    {"id": "input", "name": "输入处理", "icon": "📥"},
+    {"id": "planning", "name": "规划", "icon": "📝"},
+    {"id": "review", "name": "审核", "icon": "⚖️"},
+    {"id": "dispatch", "name": "调度", "icon": "🎯"},
+    {"id": "execution", "name": "执行", "icon": "🔧"},
+    {"id": "output", "name": "输出", "icon": "📤"}
+  ]
+}
