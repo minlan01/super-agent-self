@@ -1,0 +1,51 @@
+# Broken git backups
+.git.broken-backup-*/
+
+# Archive of legacy assets (S.6)
+archive/
+
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+
+# Env (never commit)
+.env
+.env.*
+!.env.example
+
+# Local data
+data/
+workspace/
+*.sqlite
+*.sqlite3
+*.db
+
+# Test/cache
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tool state (process artifacts, not source)
+.zcode/
+.workbuddy/
+.agents/
