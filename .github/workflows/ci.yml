@@ -1,0 +1,151 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: services/control-core
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Protocol + Platform contract tests — pure Python, fast, cross-platform
+  # ---------------------------------------------------------------------------
+  protocol-platform:
+    name: Protocol & Platform (${{ matrix.os }} / py${{ matrix.python-version }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12", "3.14"]
+        exclude:
+          # 3.14 is the dev machine version; test it on Linux only to catch
+          # bleeding-edge issues without slowing Windows/macOS jobs.
+          - os: windows-latest
+            python-version: "3.14"
+          - os: macos-latest
+            python-version: "3.14"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: services/control-core/pyproject.toml
+
+      - name: Install control-core (deps only — no optional platform packages)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+        working-directory: services/control-core
+
+      - name: Protocol v1 schema tests
+        run: python -m pytest packages/protocol/tests/ -v --tb=short
+        working-directory: services/control-core
+
+      - name: Platform contract tests
+        run: python -m pytest packages/platform/tests/ -v --tb=short
+        working-directory: services/control-core
+
+      - name: Cross-platform IPC smoke test
+        run: |
+          python -m pytest ../../tests/ipc_smoke/ -v --tb=short
+        working-directory: services/control-core
+
+  # ---------------------------------------------------------------------------
+  # Full control-core unit tests — the existing myself-agent suite
+  # ---------------------------------------------------------------------------
+  control-core-unit:
+    name: Control Core unit tests (${{ matrix.os }} / py${{ matrix.python-version }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.12"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: services/control-core/pyproject.toml
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+        working-directory: services/control-core
+
+      - name: Ruff lint
+        run: ruff check . --statistics
+        working-directory: services/control-core
+        continue-on-error: true  # P0: don't block on existing lint debt
+
+      - name: Run unit tests
+        run: python -m pytest tests/unit -v --tb=short -q
+        working-directory: services/control-core
+        env:
+          TESTING: "1"
+
+      - name: Check alembic migration head
+        run: alembic check
+        working-directory: services/control-core
+        env:
+          TESTING: "1"
+
+  # ---------------------------------------------------------------------------
+  # macOS smoke — import + protocol only (no full suite yet, P5/P6)
+  # ---------------------------------------------------------------------------
+  macos-smoke:
+    name: macOS smoke (import + protocol)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: services/control-core/pyproject.toml
+
+      - name: Install control-core
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+        working-directory: services/control-core
+
+      - name: Protocol + platform tests (macOS smoke)
+        run: |
+          python -m pytest packages/protocol/tests/ packages/platform/tests/ ../../tests/ipc_smoke/ -v --tb=short
+        working-directory: services/control-core
+
+  # ---------------------------------------------------------------------------
+  # Frontend lint (operator-console) — non-blocking for now
+  # ---------------------------------------------------------------------------
+  frontend-smoke:
+    name: Operator Console smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/web-console-src/package-lock.json
+
+      - name: Check package.json parseable
+        run: |
+          node -e "const p = require('./package.json'); console.log(p.name, p.version)"
+        working-directory: apps/web-console-src
