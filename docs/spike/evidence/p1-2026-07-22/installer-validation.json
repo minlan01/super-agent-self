@@ -1,0 +1,41 @@
+{
+  "install": {
+    "version": "0.1.0",
+    "exit_code": 0,
+    "elapsed_s": 10.068,
+    "mode": "currentUser",
+    "installed_files": 19,
+    "installed_sidecar_files": 17,
+    "sidecar_sha256": "46B9D47043FAF586D240AA9B063E48A68AB5455ABE50378DBF4D8FEF497F6BC5",
+    "passed": true
+  },
+  "installed_runtime": {
+    "startup_s": 3.595,
+    "ipc_samples": 100,
+    "ipc_failures": 0,
+    "ipc_p50_ms": 1.747,
+    "ipc_p95_ms": 4.176,
+    "ipc_max_ms": 27.363,
+    "nonce_bound": true,
+    "normal_close_cleanup": true,
+    "passed": true
+  },
+  "upgrade": {
+    "from": "0.1.0",
+    "to": "0.1.1",
+    "exit_code": 0,
+    "elapsed_s": 4.962,
+    "registry_version": "0.1.1",
+    "sidecar_hash_unchanged": true,
+    "passed": true
+  },
+  "uninstall": {
+    "exit_code": 0,
+    "elapsed_s": 2.564,
+    "install_directory_removed": true,
+    "registry_entry_removed": true,
+    "processes_removed": true,
+    "port_released": true,
+    "passed": true
+  }
+}

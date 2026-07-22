@@ -1,0 +1,8 @@
+﻿{
+    "sidecar":  "D:\\agent\\sidecar-demo\\dist-final\\sidecar.dist\\sidecar.exe",
+    "startup":  "D:\\agent\\evidence\\p1-2026-07-22\\nuitka-startup.json",
+    "lifecycle":  "D:\\agent\\evidence\\p1-2026-07-22\\nuitka-lifecycle.json",
+    "powershell_ipc":  "D:\\agent\\evidence\\p1-2026-07-22\\nuitka-ipc-powershell.json",
+    "rust_ipc":  "D:\\agent\\evidence\\p1-2026-07-22\\nuitka-ipc-rust.json",
+    "passed":  true
+}

@@ -1,0 +1,10 @@
+     Running BeforeDevCommand (`npm run dev`)
+        Warn Waiting for your frontend dev server to start on http://localhost:1420/...
+     Running DevCommand (`cargo  run --no-default-features --color always --`)
+[1m[92mnote[0m[1m[97m: did not finalize incremental compilation session directory `\\?\D:\agent\tauri-demo\src-tauri\target\debug\incremental\tauri_demo_lib-0wdg331zw7tkm\s-hkmkvmeiy7-0p5skyv-working`: 拒绝访问。 (os error 5)[0m
+  [1m[96m|[0m
+  [1m[96m= [0m[1m[97mhelp[0m: the next build will not be able to reuse work from this compilation
+
+[1m[92m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 3.51s
+[1m[92m     Running[0m `target\debug\tauri-demo.exe`
+[1m[91merror[0m: process didn't exit successfully: `target\debug\tauri-demo.exe` (exit code: 0xffffffff)

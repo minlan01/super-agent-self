@@ -1,0 +1,16 @@
+:root {
+  font-family: Inter, Segoe UI, sans-serif;
+  color: #17202a;
+  background: #eef2f5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body { margin: 0; }
+.container { max-width: 680px; margin: 0 auto; padding: 72px 24px; }
+.row { display: flex; gap: 8px; }
+input, button { font: inherit; padding: 10px 14px; border: 1px solid #aeb8c2; border-radius: 6px; }
+input { flex: 1; min-width: 0; }
+button { cursor: pointer; background: #fff; }
+button:hover { border-color: #1769aa; }
+p { min-height: 24px; overflow-wrap: anywhere; }

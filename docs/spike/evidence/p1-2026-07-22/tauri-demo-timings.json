@@ -1,0 +1,22 @@
+﻿[
+    {
+        "run":  "incremental-warmup",
+        "elapsed_s":  16.467,
+        "app_pid":  6856,
+        "window_ready":  true,
+        "close_sent":  true,
+        "forced_close":  true,
+        "stdout":  "D:\\agent\\evidence\\p1-2026-07-22\\tauri-demo-incremental-warmup.stdout.log",
+        "stderr":  "D:\\agent\\evidence\\p1-2026-07-22\\tauri-demo-incremental-warmup.stderr.log"
+    },
+    {
+        "run":  "incremental-measured",
+        "elapsed_s":  15.38,
+        "app_pid":  21672,
+        "window_ready":  true,
+        "close_sent":  true,
+        "forced_close":  false,
+        "stdout":  "D:\\agent\\evidence\\p1-2026-07-22\\tauri-demo-incremental-measured.stdout.log",
+        "stderr":  "D:\\agent\\evidence\\p1-2026-07-22\\tauri-demo-incremental-measured.stderr.log"
+    }
+]

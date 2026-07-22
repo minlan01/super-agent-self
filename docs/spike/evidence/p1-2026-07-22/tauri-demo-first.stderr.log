@@ -1,0 +1,250 @@
+     Running BeforeDevCommand (`npm run dev`)
+        Warn Waiting for your frontend dev server to start on http://localhost:1420/...
+     Running DevCommand (`cargo  run --no-default-features --color always --`)
+[1m[92m    Updating[0m crates.io index
+[1m[96m       Fetch[0m 0 complete; 1 pending             [1m[96m       Fetch[0m 2 complete; 4 pending             [1m[96m       Fetch[0m 6 complete; 54 pending            [1m[96m       Fetch[0m 18 complete; 42 pending           [1m[96m       Fetch[0m 45 complete; 15 pending           [1m[96m       Fetch[0m 60 complete; 123 pending          [1m[96m       Fetch[0m 81 complete; 102 pending          [1m[96m       Fetch[0m 101 complete; 82 pending          [1m[96m       Fetch[0m 143 complete; 40 pending          [1m[96m       Fetch[0m 145 complete; 38 pending          [1m[96m       Fetch[0m 183 complete; 134 pending         [1m[96m       Fetch[0m 291 complete; 26 pending          [1m[96m       Fetch[0m 316 complete; 1 pending           [1m[96m       Fetch[0m 317 complete; 60 pending          [1m[96m       Fetch[0m 377 complete; 25 pending          [1m[96m       Fetch[0m 402 complete; 14 pending          [1m[96m       Fetch[0m 416 complete; 2 pending                                                            [1m[92m     Locking[0m 459 packages to latest compatible versions
+[1m[92m      Adding[0m generic-array v0.14.7 [1m[93m(available: v0.14.9)[0m
+[1m[92m      Adding[0m toml v0.8.2 [1m[93m(available: v0.8.23)[0m
+[1m[92m      Adding[0m toml_datetime v0.6.3 [1m[93m(available: v0.6.11)[0m
+[1m[92m      Adding[0m toml_edit v0.20.2 [1m[93m(available: v0.20.7)[0m
+[1m[92m   Compiling[0m proc-macro2 v1.0.107
+[1m[92m   Compiling[0m unicode-ident v1.0.24
+[1m[92m   Compiling[0m quote v1.0.47
+[1m[92m   Compiling[0m serde_core v1.0.229
+[1m[92m   Compiling[0m windows-link v0.2.1
+[1m[92m   Compiling[0m smallvec v1.15.2
+[1m[92m   Compiling[0m cfg-if v1.0.4
+[1m[92m   Compiling[0m siphasher v1.0.3
+[1m[96m    Building[0m [                          ] 0/360                                                 [1m[92m   Compiling[0m writeable v0.6.3
+[1m[96m    Building[0m [                          ] 1/360                                                 [1m[92m   Compiling[0m litemap v0.8.2
+[1m[96m    Building[0m [                          ] 2/360                                                 [1m[92m   Compiling[0m phf_shared v0.13.1
+[1m[92m   Compiling[0m memchr v2.8.3
+[1m[96m    Building[0m [                          ] 4/360                                                 [1m[92m   Compiling[0m fastrand v2.5.0
+[1m[96m    Building[0m [                          ] 5/360[1m[96m    Building[0m [                          ] 6/360[1m[96m    Building[0m [                          ] 7/360[1m[96m    Building[0m [                          ] 8/360                                                 [1m[92m   Compiling[0m utf8_iter v1.0.4
+[1m[96m    Building[0m [                          ] 9/360                                                 [1m[92m   Compiling[0m stable_deref_trait v1.2.1
+[1m[96m    Building[0m [                         ] 10/360                                                 [1m[92m   Compiling[0m itoa v1.0.18
+[1m[96m    Building[0m [                         ] 11/360                                                 [1m[92m   Compiling[0m phf_generator v0.13.1
+[1m[96m    Building[0m [                         ] 12/360                                                 [1m[92m   Compiling[0m icu_properties_data v2.2.0
+[1m[96m    Building[0m [                         ] 13/360[1m[96m    Building[0m [                         ] 14/360[1m[96m    Building[0m [>                        ] 15/360                                                 [1m[92m   Compiling[0m icu_normalizer_data v2.2.0
+[1m[96m    Building[0m [>                        ] 16/360                                                 [1m[92m   Compiling[0m zmij v1.0.23
+[1m[96m    Building[0m [>                        ] 17/360[1m[96m    Building[0m [>                        ] 18/360                                                 [1m[92m   Compiling[0m thiserror v2.0.19
+[1m[96m    Building[0m [>                        ] 19/360[1m[96m    Building[0m [>                        ] 20/360                                                 [1m[92m   Compiling[0m serde v1.0.229
+[1m[96m    Building[0m [>                        ] 21/360[1m[96m    Building[0m [>                        ] 22/360[1m[96m    Building[0m [>                        ] 23/360[1m[96m    Building[0m [>                        ] 24/360[1m[96m    Building[0m [>                        ] 25/360[1m[96m    Building[0m [>                        ] 26/360[1m[96m    Building[0m [>                        ] 27/360[1m[96m    Building[0m [>                        ] 28/360[1m[96m    Building[0m [=>                       ] 29/360[1m[96m    Building[0m [=>                       ] 30/360[1m[96m    Building[0m [=>                       ] 31/360                                                 [1m[92m   Compiling[0m syn v2.0.119
+[1m[96m    Building[0m [=>                       ] 32/360                                                 [1m[92m   Compiling[0m syn v3.0.3
+[1m[96m    Building[0m [=>                       ] 33/360                                                 [1m[92m   Compiling[0m num-conv v0.2.2
+[1m[96m    Building[0m [=>                       ] 34/360                                                 [1m[92m   Compiling[0m time-core v0.1.9
+[1m[96m    Building[0m [=>                       ] 35/360                                                 [1m[92m   Compiling[0m winnow v1.0.4
+[1m[96m    Building[0m [=>                       ] 36/360                                                 [1m[92m   Compiling[0m parking_lot_core v0.9.12
+[1m[96m    Building[0m [=>                       ] 37/360                                                 [1m[92m   Compiling[0m phf_codegen v0.13.1
+[1m[96m    Building[0m [=>                       ] 38/360                                                 [1m[92m   Compiling[0m strsim v0.11.1
+[1m[96m    Building[0m [=>                       ] 39/360                                                 [1m[92m   Compiling[0m toml_parser v1.1.2+spec-1.1.0
+[1m[92m   Compiling[0m deranged v0.5.8
+[1m[96m    Building[0m [=>                       ] 41/360[1m[96m    Building[0m [=>                       ] 42/360                                                 [1m[92m   Compiling[0m ident_case v1.0.1
+[1m[96m    Building[0m [=>                       ] 43/360                                                 [1m[92m   Compiling[0m powerfmt v0.2.0
+[1m[96m    Building[0m [==>                      ] 44/360                                                 [1m[92m   Compiling[0m scopeguard v1.2.0
+[1m[96m    Building[0m [==>                      ] 45/360                                                 [1m[92m   Compiling[0m typeid v1.0.3
+[1m[96m    Building[0m [==>                      ] 46/360                                                 [1m[92m   Compiling[0m toml_writer v1.1.2+spec-1.1.0
+[1m[96m    Building[0m [==>                      ] 47/360                                                 [1m[92m   Compiling[0m lock_api v0.4.14
+[1m[96m    Building[0m [==>                      ] 48/360[1m[96m    Building[0m [==>                      ] 49/360                                                 [1m[92m   Compiling[0m log v0.4.33
+[1m[96m    Building[0m [==>                      ] 50/360[1m[96m    Building[0m [==>                      ] 51/360                                                 [1m[92m   Compiling[0m erased-serde v0.4.10
+[1m[96m    Building[0m [==>                      ] 52/360                                                 [1m[92m   Compiling[0m byteorder v1.5.0
+[1m[96m    Building[0m [==>                      ] 53/360                                                 [1m[92m   Compiling[0m parking_lot v0.12.5
+[1m[96m    Building[0m [==>                      ] 54/360                                                 [1m[92m   Compiling[0m aho-corasick v1.1.4
+[1m[96m    Building[0m [==>                      ] 55/360[1m[96m    Building[0m [==>                      ] 56/360                                                 [1m[92m   Compiling[0m unic-char-range v0.9.0
+[1m[96m    Building[0m [==>                      ] 57/360                                                 [1m[92m   Compiling[0m regex-syntax v0.8.11
+[1m[96m    Building[0m [===>                     ] 59/360                                                 [1m[92m   Compiling[0m serde_derive v1.0.229
+[1m[96m    Building[0m [===>                     ] 60/360                                                 [1m[92m   Compiling[0m thiserror-impl v2.0.19
+[1m[96m    Building[0m [===>                     ] 61/360[1m[96m    Building[0m [===>                     ] 62/360                                                 [1m[92m   Compiling[0m thiserror v1.0.69
+[1m[96m    Building[0m [===>                     ] 63/360                                                 [1m[92m   Compiling[0m synstructure v0.13.2
+[1m[96m    Building[0m [===>                     ] 64/360                                                 [1m[92m   Compiling[0m darling_core v0.23.0
+[1m[96m    Building[0m [===>                     ] 65/360                                                 [1m[92m   Compiling[0m unic-common v0.9.0
+[1m[96m    Building[0m [===>                     ] 66/360                                                 [1m[92m   Compiling[0m fnv v1.0.7
+[1m[96m    Building[0m [===>                     ] 67/360                                                 [1m[92m   Compiling[0m new_debug_unreachable v1.0.6
+[1m[96m    Building[0m [===>                     ] 68/360                                                 [1m[92m   Compiling[0m unic-ucd-version v0.9.0
+[1m[96m    Building[0m [===>                     ] 69/360                                                 [1m[92m   Compiling[0m regex-automata v0.4.16
+[1m[96m    Building[0m [===>                     ] 70/360[1m[96m    Building[0m [===>                     ] 71/360[1m[96m    Building[0m [====>                    ] 72/360                                                 [1m[92m   Compiling[0m unic-char-property v0.9.0
+[1m[96m    Building[0m [====>                    ] 73/360                                                 [1m[92m   Compiling[0m string_cache_codegen v0.6.1
+[1m[96m    Building[0m [====>                    ] 74/360                                                 [1m[92m   Compiling[0m bytes v1.12.1
+[1m[96m    Building[0m [====>                    ] 75/360                                                 [1m[92m   Compiling[0m zerofrom-derive v0.1.7
+[1m[96m    Building[0m [====>                    ] 76/360                                                 [1m[92m   Compiling[0m yoke-derive v0.8.2
+[1m[96m    Building[0m [====>                    ] 77/360                                                 [1m[92m   Compiling[0m zerovec-derive v0.11.3
+[1m[96m    Building[0m [====>                    ] 78/360                                                 [1m[92m   Compiling[0m displaydoc v0.2.6
+[1m[96m    Building[0m [====>                    ] 79/360                                                 [1m[92m   Compiling[0m phf_macros v0.13.1
+[1m[92m   Compiling[0m darling_macro v0.23.0
+[1m[96m    Building[0m [====>                    ] 81/360[1m[96m    Building[0m [====>                    ] 82/360                                                 [1m[92m   Compiling[0m thiserror-impl v1.0.69
+[1m[96m    Building[0m [====>                    ] 83/360                                                 [1m[92m   Compiling[0m darling v0.23.0
+[1m[96m    Building[0m [====>                    ] 84/360                                                 [1m[92m   Compiling[0m equivalent v1.0.2
+[1m[96m    Building[0m [====>                    ] 85/360                                                 [1m[92m   Compiling[0m serde_json v1.0.151
+[1m[96m    Building[0m [====>                    ] 86/360                                                 [1m[92m   Compiling[0m precomputed-hash v0.1.1
+[1m[96m    Building[0m [=====>                   ] 87/360                                                 [1m[92m   Compiling[0m hashbrown v0.17.1
+[1m[96m    Building[0m [=====>                   ] 88/360                                                 [1m[92m   Compiling[0m zerofrom v0.1.8
+[1m[96m    Building[0m [=====>                   ] 89/360                                                 [1m[92m   Compiling[0m getrandom v0.4.3
+[1m[96m    Building[0m [=====>                   ] 90/360                                                 [1m[92m   Compiling[0m alloc-no-stdlib v2.0.4
+[1m[96m    Building[0m [=====>                   ] 91/360                                                 [1m[92m   Compiling[0m yoke v0.8.3
+[1m[96m    Building[0m [=====>                   ] 92/360[1m[96m    Building[0m [=====>                   ] 93/360                                                 [1m[92m   Compiling[0m dunce v1.0.5
+[1m[92m   Compiling[0m phf v0.13.1
+[1m[96m    Building[0m [=====>                   ] 95/360[1m[96m    Building[0m [=====>                   ] 96/360                                                 [1m[92m   Compiling[0m zerovec v0.11.6
+[1m[96m    Building[0m [=====>                   ] 97/360                                                 [1m[92m   Compiling[0m zerotrie v0.2.4
+[1m[96m    Building[0m [=====>                   ] 98/360                                                 [1m[92m   Compiling[0m indexmap v2.14.0
+[1m[96m    Building[0m [=====>                   ] 99/360                                                 [1m[92m   Compiling[0m alloc-stdlib v0.2.4
+[1m[96m    Building[0m [=====>                  ] 100/360[1m[96m    Building[0m [=====>                  ] 101/360                                                 [1m[92m   Compiling[0m serde_with_macros v3.21.0
+[1m[96m    Building[0m [=====>                  ] 102/360[1m[96m    Building[0m [=====>                  ] 103/360                                                 [1m[92m   Compiling[0m regex v1.13.1
+[1m[96m    Building[0m [=====>                  ] 104/360                                                 [1m[92m   Compiling[0m web_atoms v0.2.5
+[1m[96m    Building[0m [======>                 ] 105/360                                                 [1m[92m   Compiling[0m unic-ucd-ident v0.9.0
+[1m[96m    Building[0m [======>                 ] 106/360                                                 [1m[92m   Compiling[0m tinystr v0.8.3
+[1m[96m    Building[0m [======>                 ] 107/360                                                 [1m[92m   Compiling[0m potential_utf v0.1.5
+[1m[96m    Building[0m [======>                 ] 108/360                                                 [1m[92m   Compiling[0m serde_spanned v1.1.1
+[1m[96m    Building[0m [======>                 ] 109/360                                                 [1m[92m   Compiling[0m quick-xml v0.41.0
+[1m[96m    Building[0m [======>                 ] 110/360                                                 [1m[92m   Compiling[0m icu_locale_core v2.2.0
+[1m[96m    Building[0m [======>                 ] 111/360                                                 [1m[92m   Compiling[0m windows-sys v0.61.2
+[1m[96m    Building[0m [======>                 ] 112/360                                                 [1m[92m   Compiling[0m icu_collections v2.2.0
+[1m[96m    Building[0m [======>                 ] 113/360                                                 [1m[92m   Compiling[0m base64 v0.22.1
+[1m[96m    Building[0m [======>                 ] 114/360                                                 [1m[92m   Compiling[0m anyhow v1.0.104
+[1m[96m    Building[0m [======>                 ] 115/360[1m[96m    Building[0m [======>                 ] 116/360[1m[96m    Building[0m [======>                 ] 117/360[1m[96m    Building[0m [======>                 ] 118/360[1m[96m    Building[0m [======>                 ] 119/360                                                 [1m[92m   Compiling[0m icu_provider v2.2.0
+[1m[96m    Building[0m [=======>                ] 120/360[1m[96m    Building[0m [=======>                ] 121/360                                                 [1m[92m   Compiling[0m icu_properties v2.2.0
+[1m[92m   Compiling[0m icu_normalizer v2.2.0
+[1m[96m    Building[0m [=======>                ] 123/360                                                 [1m[92m   Compiling[0m brotli-decompressor v5.0.3
+[1m[96m    Building[0m [=======>                ] 124/360[1m[96m    Building[0m [=======>                ] 125/360[1m[96m    Building[0m [=======>                ] 126/360                                                 [1m[92m   Compiling[0m string_cache v0.9.0
+[1m[96m    Building[0m [=======>                ] 127/360                                                 [1m[92m   Compiling[0m http v1.4.2
+[1m[96m    Building[0m [=======>                ] 128/360                                                 [1m[92m   Compiling[0m semver v1.0.28
+[1m[96m    Building[0m [=======>                ] 129/360                                                 [1m[92m   Compiling[0m autocfg v1.5.1
+[1m[96m    Building[0m [=======>                ] 130/360                                                 [1m[92m   Compiling[0m windows_x86_64_msvc v0.52.6
+[1m[96m    Building[0m [=======>                ] 131/360                                                 [1m[92m   Compiling[0m version_check v0.9.5
+[1m[96m    Building[0m [=======>                ] 132/360                                                 [1m[92m   Compiling[0m dtoa v1.0.11
+[1m[96m    Building[0m [=======>                ] 133/360                                                 [1m[92m   Compiling[0m percent-encoding v2.3.2
+[1m[96m    Building[0m [=======>                ] 134/360                                                 [1m[92m   Compiling[0m ctor-proc-macro v0.0.7
+[1m[96m    Building[0m [========>               ] 135/360                                                 [1m[92m   Compiling[0m idna_adapter v1.2.2
+[1m[96m    Building[0m [========>               ] 136/360                                                 [1m[92m   Compiling[0m dtoa-short v0.3.5
+[1m[96m    Building[0m [========>               ] 137/360[1m[96m    Building[0m [========>               ] 138/360                                                 [1m[92m   Compiling[0m indexmap v1.9.3
+[1m[96m    Building[0m [========>               ] 139/360                                                 [1m[92m   Compiling[0m form_urlencoded v1.2.2
+[1m[96m    Building[0m [========>               ] 140/360                                                 [1m[92m   Compiling[0m idna v1.1.0
+[1m[96m    Building[0m [========>               ] 141/360                                                 [1m[92m   Compiling[0m brotli v8.0.4
+[1m[96m    Building[0m [========>               ] 142/360[1m[96m    Building[0m [========>               ] 143/360                                                 [1m[92m   Compiling[0m ctor v0.8.0
+[1m[96m    Building[0m [========>               ] 144/360                                                 [1m[92m   Compiling[0m uuid v1.24.0
+[1m[96m    Building[0m [========>               ] 145/360[1m[96m    Building[0m [========>               ] 146/360[1m[96m    Building[0m [========>               ] 147/360                                                 [1m[92m   Compiling[0m cssparser-macros v0.6.1
+[1m[96m    Building[0m [========>               ] 148/360                                                 [1m[92m   Compiling[0m derive_more-impl v2.1.1
+[1m[96m    Building[0m [========>               ] 149/360                                                 [1m[92m   Compiling[0m tendril v0.5.1
+[1m[96m    Building[0m [=========>              ] 150/360                                                 [1m[92m   Compiling[0m selectors v0.36.1
+[1m[96m    Building[0m [=========>              ] 151/360                                                 [1m[92m   Compiling[0m toml_datetime v1.1.1+spec-1.1.0
+[1m[96m    Building[0m [=========>              ] 152/360                                                 [1m[92m   Compiling[0m glob v0.3.4
+[1m[96m    Building[0m [=========>              ] 153/360                                                 [1m[92m   Compiling[0m libc v0.2.189
+[1m[96m    Building[0m [=========>              ] 154/360                                                 [1m[92m   Compiling[0m camino v1.2.4
+[1m[96m    Building[0m [=========>              ] 155/360                                                 [1m[92m   Compiling[0m windows-link v0.1.3
+[1m[96m    Building[0m [=========>              ] 156/360                                                 [1m[92m   Compiling[0m toml v1.1.3+spec-1.1.0
+[1m[96m    Building[0m [=========>              ] 157/360[1m[96m    Building[0m [=========>              ] 158/360                                                 [1m[92m   Compiling[0m markup5ever v0.38.0
+[1m[96m    Building[0m [=========>              ] 159/360[1m[96m    Building[0m [=========>              ] 160/360                                                 [1m[92m   Compiling[0m cssparser v0.36.0
+[1m[96m    Building[0m [=========>              ] 162/360                                                 [1m[92m   Compiling[0m url v2.5.8
+[1m[96m    Building[0m [=========>              ] 163/360                                                 [1m[92m   Compiling[0m derive_more v2.1.1
+[1m[96m    Building[0m [=========>              ] 164/360[1m[96m    Building[0m [==========>             ] 165/360[1m[96m    Building[0m [==========>             ] 166/360                                                 [1m[92m   Compiling[0m winapi-util v0.1.11
+[1m[96m    Building[0m [==========>             ] 167/360                                                 [1m[92m   Compiling[0m serde_derive_internals v0.29.1
+[1m[96m    Building[0m [==========>             ] 168/360                                                 [1m[92m   Compiling[0m servo_arc v0.4.3
+[1m[96m    Building[0m [==========>             ] 169/360                                                 [1m[92m   Compiling[0m schemars v0.8.22
+[1m[96m    Building[0m [==========>             ] 170/360                                                 [1m[92m   Compiling[0m bitflags v2.13.1
+[1m[96m    Building[0m [==========>             ] 171/360                                                 [1m[92m   Compiling[0m hashbrown v0.12.3
+[1m[96m    Building[0m [==========>             ] 172/360                                                 [1m[92m   Compiling[0m bit-vec v0.8.0
+[1m[96m    Building[0m [==========>             ] 173/360                                                 [1m[92m   Compiling[0m shlex v2.0.1
+[1m[96m    Building[0m [==========>             ] 174/360                                                 [1m[92m   Compiling[0m find-msvc-tools v0.1.9
+[1m[96m    Building[0m [==========>             ] 175/360                                                 [1m[92m   Compiling[0m rustc-hash v2.1.3
+[1m[96m    Building[0m [==========>             ] 176/360                                                 [1m[92m   Compiling[0m bit-set v0.8.0
+[1m[96m    Building[0m [==========>             ] 177/360[1m[96m    Building[0m [==========>             ] 178/360[1m[96m    Building[0m [==========>             ] 179/360                                                 [1m[92m   Compiling[0m same-file v1.0.6
+[1m[96m    Building[0m [===========>            ] 180/360[1m[96m    Building[0m [===========>            ] 181/360                                                 [1m[92m   Compiling[0m windows-targets v0.52.6
+[1m[96m    Building[0m [===========>            ] 182/360                                                 [1m[92m   Compiling[0m cc v1.3.0
+[1m[96m    Building[0m [===========>            ] 183/360[1m[96m    Building[0m [===========>            ] 184/360                                                 [1m[92m   Compiling[0m schemars_derive v0.8.22
+[1m[96m    Building[0m [===========>            ] 185/360[1m[96m    Building[0m [===========>            ] 186/360                                                 [1m[92m   Compiling[0m html5ever v0.38.0
+[1m[96m    Building[0m [===========>            ] 187/360                                                 [1m[92m   Compiling[0m cfb v0.7.3
+[1m[96m    Building[0m [===========>            ] 188/360[1m[96m    Building[0m [===========>            ] 189/360                                                 [1m[92m   Compiling[0m jsonptr v0.6.3
+[1m[96m    Building[0m [===========>            ] 190/360                                                 [1m[92m   Compiling[0m cargo-platform v0.1.9
+[1m[96m    Building[0m [===========>            ] 191/360[1m[96m    Building[0m [===========>            ] 192/360                                                 [1m[92m   Compiling[0m time v0.3.54
+[1m[96m    Building[0m [===========>            ] 193/360                                                 [1m[92m   Compiling[0m foldhash v0.2.0
+[1m[96m    Building[0m [===========>            ] 194/360                                                 [1m[92m   Compiling[0m dyn-clone v1.0.20
+[1m[96m    Building[0m [============>           ] 195/360                                                 [1m[92m   Compiling[0m infer v0.19.0
+[1m[96m    Building[0m [============>           ] 196/360                                                 [1m[92m   Compiling[0m dom_query v0.27.0
+[1m[96m    Building[0m [============>           ] 197/360                                                 [1m[92m   Compiling[0m serde-untagged v0.1.9
+[1m[96m    Building[0m [============>           ] 198/360                                                 [1m[92m   Compiling[0m cargo_metadata v0.19.2
+[1m[96m    Building[0m [============>           ] 199/360                                                 [1m[92m   Compiling[0m vswhom-sys v0.1.3
+[1m[96m    Building[0m [============>           ] 200/360                                                 [1m[92m   Compiling[0m json-patch v3.0.1
+[1m[96m    Building[0m [============>           ] 201/360[1m[96m    Building[0m [============>           ] 202/360[1m[96m    Building[0m [============>           ] 203/360                                                 [1m[92m   Compiling[0m walkdir v2.5.0
+[1m[96m    Building[0m [============>           ] 204/360                                                 [1m[92m   Compiling[0m urlpattern v0.3.0
+[1m[96m    Building[0m [============>           ] 205/360                                                 [1m[92m   Compiling[0m windows-result v0.3.4
+[1m[96m    Building[0m [============>           ] 206/360                                                 [1m[92m   Compiling[0m windows-strings v0.4.2
+[1m[96m    Building[0m [============>           ] 207/360                                                 [1m[92m   Compiling[0m plist v1.10.0
+[1m[96m    Building[0m [============>           ] 208/360[1m[96m    Building[0m [============>           ] 209/360                                                 [1m[92m   Compiling[0m serde_with v3.21.0
+[1m[96m    Building[0m [=============>          ] 210/360[1m[96m    Building[0m [=============>          ] 211/360                                                 [1m[92m   Compiling[0m windows-implement v0.60.2
+[1m[96m    Building[0m [=============>          ] 212/360                                                 [1m[92m   Compiling[0m windows-interface v0.59.3
+[1m[96m    Building[0m [=============>          ] 213/360[1m[96m    Building[0m [=============>          ] 214/360[1m[96m    Building[0m [=============>          ] 215/360[1m[96m    Building[0m [=============>          ] 216/360[1m[96m    Building[0m [=============>          ] 217/360                                                 [1m[92m   Compiling[0m option-ext v0.2.0
+[1m[96m    Building[0m [=============>          ] 218/360                                                 [1m[92m   Compiling[0m windows-sys v0.59.0
+[1m[96m    Building[0m [=============>          ] 219/360[1m[96m    Building[0m [=============>          ] 220/360[1m[96m    Building[0m [=============>          ] 221/360                                                 [1m[92m   Compiling[0m windows-threading v0.1.0
+[1m[96m    Building[0m [=============>          ] 222/360                                                 [1m[92m   Compiling[0m windows-core v0.61.2
+[1m[96m    Building[0m [=============>          ] 223/360                                                 [1m[92m   Compiling[0m generic-array v0.14.7
+[1m[96m    Building[0m [=============>          ] 224/360[1m[96m    Building[0m [==============>         ] 225/360                                                 [1m[92m   Compiling[0m tauri-utils v2.9.3
+[1m[96m    Building[0m [==============>         ] 226/360                                                 [1m[92m   Compiling[0m vswhom v0.1.0
+[1m[96m    Building[0m [==============>         ] 227/360                                                 [1m[92m   Compiling[0m rustc_version v0.4.1
+[1m[96m    Building[0m [==============>         ] 228/360                                                 [1m[92m   Compiling[0m toml_datetime v0.7.5+spec-1.1.0
+[1m[96m    Building[0m [==============>         ] 229/360                                                 [1m[92m   Compiling[0m winnow v0.7.15
+[1m[96m    Building[0m [==============>         ] 230/360[1m[96m    Building[0m [==============>         ] 231/360[1m[96m    Building[0m [==============>         ] 232/360[1m[96m    Building[0m [==============>         ] 233/360                                                 [1m[92m   Compiling[0m windows-collections v0.2.0
+[1m[96m    Building[0m [==============>         ] 234/360                                                 [1m[92m   Compiling[0m windows-future v0.2.1
+[1m[96m    Building[0m [==============>         ] 235/360[1m[96m    Building[0m [==============>         ] 236/360                                                 [1m[92m   Compiling[0m windows-numerics v0.2.0
+[1m[96m    Building[0m [==============>         ] 237/360                                                 [1m[92m   Compiling[0m dirs-sys v0.5.0
+[1m[96m    Building[0m [==============>         ] 238/360                                                 [1m[92m   Compiling[0m time-macros v0.2.32
+[1m[96m    Building[0m [==============>         ] 239/360                                                 [1m[92m   Compiling[0m toml v0.9.12+spec-1.1.0
+[1m[96m    Building[0m [===============>        ] 240/360                                                 [1m[92m   Compiling[0m heck v0.5.0
+[1m[96m    Building[0m [===============>        ] 241/360                                                 [1m[92m   Compiling[0m typenum v1.20.1
+[1m[96m    Building[0m [===============>        ] 242/360                                                 [1m[92m   Compiling[0m crc32fast v1.5.0
+[1m[96m    Building[0m [===============>        ] 243/360                                                 [1m[92m   Compiling[0m winreg v0.55.0
+[1m[96m    Building[0m [===============>        ] 244/360[1m[96m    Building[0m [===============>        ] 245/360                                                 [1m[92m   Compiling[0m embed-resource v3.0.11
+[1m[96m    Building[0m [===============>        ] 246/360                                                 [1m[92m   Compiling[0m simd-adler32 v0.3.10
+[1m[96m    Building[0m [===============>        ] 247/360[1m[96m    Building[0m [===============>        ] 248/360                                                 [1m[92m   Compiling[0m tauri-winres v0.3.6
+[1m[96m    Building[0m [===============>        ] 249/360[1m[96m    Building[0m [===============>        ] 250/360                                                 [1m[92m   Compiling[0m cargo_toml v0.22.3
+[1m[96m    Building[0m [===============>        ] 251/360[1m[96m    Building[0m [===============>        ] 252/360                                                 [1m[92m   Compiling[0m windows v0.61.3
+[1m[96m    Building[0m [===============>        ] 253/360                                                 [1m[92m   Compiling[0m dirs v6.0.0
+[1m[96m    Building[0m [===============>        ] 254/360[1m[96m    Building[0m [================>       ] 255/360[1m[96m    Building[0m [================>       ] 256/360[1m[96m    Building[0m [================>       ] 257/360                                                 [1m[92m   Compiling[0m webview2-com-sys v0.38.2
+[1m[96m    Building[0m [================>       ] 258/360                                                 [1m[92m   Compiling[0m adler2 v2.0.1
+[1m[96m    Building[0m [================>       ] 259/360                                                 [1m[92m   Compiling[0m crossbeam-utils v0.8.22
+[1m[96m    Building[0m [================>       ] 260/360                                                 [1m[92m   Compiling[0m raw-window-handle v0.6.2
+[1m[96m    Building[0m [================>       ] 261/360[1m[96m    Building[0m [================>       ] 262/360[1m[96m    Building[0m [================>       ] 263/360                                                 [1m[92m   Compiling[0m miniz_oxide v0.8.9
+[1m[96m    Building[0m [================>       ] 264/360[1m[96m    Building[0m [================>       ] 265/360[1m[96m    Building[0m [================>       ] 266/360[1m[96m    Building[0m [================>       ] 267/360                                                 [1m[92m   Compiling[0m dpi v0.1.2
+[1m[96m    Building[0m [================>       ] 268/360                                                 [1m[92m   Compiling[0m cookie v0.18.1
+[1m[96m    Building[0m [================>       ] 269/360[1m[96m    Building[0m [=================>      ] 270/360[1m[96m    Building[0m [=================>      ] 271/360                                                 [1m[92m   Compiling[0m flate2 v1.1.9
+[1m[96m    Building[0m [=================>      ] 272/360[1m[96m    Building[0m [=================>      ] 273/360[1m[96m    Building[0m [=================>      ] 274/360[1m[96m    Building[0m [=================>      ] 275/360[1m[96m    Building[0m [=================>      ] 276/360                                                 [1m[92m   Compiling[0m block-buffer v0.10.4
+[1m[96m    Building[0m [=================>      ] 277/360                                                 [1m[92m   Compiling[0m crypto-common v0.1.7
+[1m[96m    Building[0m [=================>      ] 278/360                                                 [1m[92m   Compiling[0m fdeflate v0.3.7
+[1m[96m    Building[0m [=================>      ] 279/360                                                 [1m[92m   Compiling[0m webview2-com-macros v0.8.1
+[1m[96m    Building[0m [=================>      ] 280/360[1m[96m    Building[0m [=================>      ] 281/360[1m[96m    Building[0m [=================>      ] 282/360[1m[96m    Building[0m [=================>      ] 283/360[1m[96m    Building[0m [=================>      ] 284/360[1m[96m    Building[0m [==================>     ] 285/360                                                 [1m[92m   Compiling[0m windows-version v0.1.7
+[1m[96m    Building[0m [==================>     ] 286/360                                                 [1m[92m   Compiling[0m tauri-build v2.6.3
+[1m[96m    Building[0m [==================>     ] 287/360                                                 [1m[92m   Compiling[0m pin-project-lite v0.2.17
+[1m[96m    Building[0m [==================>     ] 288/360                                                 [1m[92m   Compiling[0m bitflags v1.3.2
+[1m[96m    Building[0m [==================>     ] 289/360                                                 [1m[92m   Compiling[0m unicode-segmentation v1.13.3
+[1m[96m    Building[0m [==================>     ] 290/360                                                 [1m[92m   Compiling[0m once_cell v1.21.4
+[1m[96m    Building[0m [==================>     ] 291/360[1m[96m    Building[0m [==================>     ] 292/360[1m[96m    Building[0m [==================>     ] 293/360                                                 [1m[92m   Compiling[0m png v0.17.16
+[1m[96m    Building[0m [==================>     ] 294/360[1m[96m    Building[0m [==================>     ] 295/360[1m[96m    Building[0m [==================>     ] 296/360[1m[96m    Building[0m [==================>     ] 297/360                                                 [1m[92m   Compiling[0m digest v0.10.7
+[1m[96m    Building[0m [==================>     ] 298/360                                                 [1m[92m   Compiling[0m crossbeam-channel v0.5.16
+[1m[96m    Building[0m [==================>     ] 299/360[1m[96m    Building[0m [===================>    ] 300/360[1m[96m    Building[0m [===================>    ] 301/360[1m[96m    Building[0m [===================>    ] 302/360[1m[96m    Building[0m [===================>    ] 303/360[1m[96m    Building[0m [===================>    ] 304/360                                                 [1m[92m   Compiling[0m wry v0.55.1
+[1m[96m    Building[0m [===================>    ] 305/360                                                 [1m[92m   Compiling[0m tauri-runtime v2.11.3
+[1m[96m    Building[0m [===================>    ] 306/360[1m[96m    Building[0m [===================>    ] 307/360                                                 [1m[92m   Compiling[0m tracing-core v0.1.36
+[1m[96m    Building[0m [===================>    ] 308/360                                                 [1m[92m   Compiling[0m cpufeatures v0.2.17
+[1m[96m    Building[0m [===================>    ] 309/360[1m[96m    Building[0m [===================>    ] 310/360                                                 [1m[92m   Compiling[0m sha2 v0.10.9
+[1m[96m    Building[0m [===================>    ] 311/360[1m[96m    Building[0m [===================>    ] 312/360                                                 [1m[92m   Compiling[0m tracing v0.1.44
+[1m[96m    Building[0m [===================>    ] 313/360                                                 [1m[92m   Compiling[0m ico v0.5.0
+[1m[96m    Building[0m [===================>    ] 314/360[1m[96m    Building[0m [====================>   ] 315/360                                                 [1m[92m   Compiling[0m tauri-plugin v2.6.3
+[1m[96m    Building[0m [====================>   ] 316/360                                                 [1m[92m   Compiling[0m tauri-runtime-wry v2.11.4
+[1m[96m    Building[0m [====================>   ] 317/360                                                 [1m[92m   Compiling[0m getrandom v0.3.4
+[1m[96m    Building[0m [====================>   ] 318/360                                                 [1m[92m   Compiling[0m softbuffer v0.4.8
+[1m[96m    Building[0m [====================>   ] 319/360[1m[96m    Building[0m [====================>   ] 320/360                                                 [1m[92m   Compiling[0m tauri-codegen v2.6.3
+[1m[96m    Building[0m [====================>   ] 321/360[1m[96m    Building[0m [====================>   ] 322/360                                                 [1m[92m   Compiling[0m keyboard-types v0.7.0
+[1m[96m    Building[0m [====================>   ] 323/360[1m[96m    Building[0m [====================>   ] 324/360[1m[96m    Building[0m [====================>   ] 325/360                                                 [1m[92m   Compiling[0m serialize-to-javascript-impl v0.1.2
+[1m[96m    Building[0m [====================>   ] 326/360[1m[96m    Building[0m [====================>   ] 327/360[1m[96m    Building[0m [====================>   ] 328/360                                                 [1m[92m   Compiling[0m muda v0.19.3
+[1m[96m    Building[0m [====================>   ] 329/360                                                 [1m[92m   Compiling[0m window-vibrancy v0.6.0
+[1m[96m    Building[0m [=====================>  ] 330/360                                                 [1m[92m   Compiling[0m serialize-to-javascript v0.1.2
+[1m[96m    Building[0m [=====================>  ] 331/360                                                 [1m[92m   Compiling[0m tokio v1.53.1
+[1m[92m   Compiling[0m serde_repr v0.1.21
+[1m[96m    Building[0m [=====================>  ] 333/360                                                 [1m[92m   Compiling[0m mime v0.3.17
+[1m[96m    Building[0m [=====================>  ] 334/360                                                 [1m[92m   Compiling[0m open v5.4.0
+[1m[96m    Building[0m [=====================>  ] 335/360[1m[96m    Building[0m [=====================>  ] 336/360[1m[96m    Building[0m [=====================>  ] 337/360[1m[96m    Building[0m [=====================>  ] 338/360[1m[96m    Building[0m [=====================>  ] 339/360                                                 [1m[92m   Compiling[0m tauri v2.11.5
+[1m[92m   Compiling[0m tauri-plugin-opener v2.5.4
+[1m[92m   Compiling[0m tauri-macros v2.6.3
+[1m[92m   Compiling[0m tauri-demo v0.1.0 (D:\agent\tauri-demo\src-tauri)
+[1m[96m    Building[0m [=====================>  ] 340/360[1m[96m    Building[0m [=====================>  ] 341/360[1m[96m    Building[0m [=====================>  ] 342/360[1m[96m    Building[0m [=====================>  ] 343/360[1m[96m    Building[0m [=====================>  ] 344/360[1m[96m    Building[0m [======================> ] 345/360[1m[96m    Building[0m [======================> ] 346/360[1m[96m    Building[0m [======================> ] 347/360[1m[96m    Building[0m [======================> ] 348/360[1m[96m    Building[0m [======================> ] 349/360                                                 [1m[92m   Compiling[0m tao v0.35.3
+[1m[96m    Building[0m [======================> ] 349/360                                                 [1m[92m   Compiling[0m webview2-com v0.38.2
+[1m[96m    Building[0m [======================> ] 349/360[1m[96m    Building[0m [======================> ] 350/360[1m[96m    Building[0m [======================> ] 351/360[1m[96m    Building[0m [======================> ] 352/360[1m[96m    Building[0m [======================> ] 353/360[1m[96m    Building[0m [======================> ] 354/360[1m[96m    Building[0m [======================> ] 355/360[1m[96m    Building[0m [======================> ] 356/360[1m[96m    Building[0m [======================> ] 357/360[1m[96m    Building[0m [======================> ] 358/360[1m[96m    Building[0m [======================> ] 359/360                                                 [1m[92m    Finished[0m `dev` profile [unoptimized + debuginfo] target(s) in 13m 04s
+[1m[92m     Running[0m `target\debug\tauri-demo.exe`
+[1m[91merror[0m: process didn't exit successfully: `target\debug\tauri-demo.exe` (exit code: 0xffffffff)

@@ -1,0 +1,27 @@
+{
+  "date": "2026-07-22",
+  "decision": "GO with follow-up",
+  "desktop_shell": "Tauri 2",
+  "core_delivery": "Python 3.12 Nuitka standalone sidecar",
+  "p1_1_development_startup": {
+    "target_s": 10,
+    "measured_s": 15.38,
+    "status": "WAIVED",
+    "approved_by": "project owner",
+    "reason": "Development-only command-to-window timing; installed product startup is 3.595s and all product-facing hard metrics pass."
+  },
+  "p1_4_clean_windows_10": {
+    "status": "FOLLOW_UP",
+    "blocking_p1": false,
+    "reason": "The manual permits research-only completion when no VM is available."
+  },
+  "p1_5_git_commit": {
+    "status": "N/A",
+    "reason": "The Windows spike workspace is intentionally not a Git repository."
+  },
+  "release_follow_up": [
+    "Clean Windows 10 22H2 WebView2-absent online/offline test",
+    "Production signing and timestamping",
+    "IPC ACL, hard timeout, concurrency, live-unhealthy, and Job Object startup-race hardening"
+  ]
+}

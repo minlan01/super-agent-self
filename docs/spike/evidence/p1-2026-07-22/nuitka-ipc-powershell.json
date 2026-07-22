@@ -1,0 +1,9 @@
+﻿{
+    "samples":  100,
+    "successes":  100,
+    "failures":  0,
+    "p50_ms":  0.514,
+    "p95_ms":  1.032,
+    "max_ms":  1.579,
+    "passed":  true
+}
