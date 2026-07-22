@@ -117,14 +117,30 @@ class PolicyEngine:
         # Determine if approval needed
         requires_approval = tool.risk_level in self.require_approval_risk_levels
 
-        # Issue capability token
-        token = self.token_issuer.issue(task_id, step_id, tool_name, args)
+        # P0.5 (G-02 fix): do NOT issue a capability token when approval is
+        # required. The token must only be issued AFTER the approval is
+        # resolved (by ApprovalService / Orchestrator.resume_after_approval).
+        # Previously this was unconditional, allowing high-risk tools to
+        # execute before approval — see spec v1.1 §0.2 E-01/E-02.
+        if requires_approval:
+            logger.info(
+                "Policy WAIT_APPROVAL: %s (risk=%s) — token withheld pending approval",
+                tool_name, tool.risk_level,
+            )
+            return PolicyResult(
+                allowed=False,   # NOT executable yet
+                risk_level=tool.risk_level,
+                requires_approval=True,
+                reason=f"Tool '{tool_name}' (risk={tool.risk_level}) requires approval before execution",
+            )
 
-        logger.info("Policy approved: %s (risk=%s, approval=%s)", tool_name, tool.risk_level, requires_approval)
+        # Low/medium risk: issue token immediately
+        token = self.token_issuer.issue(task_id, step_id, tool_name, args)
+        logger.info("Policy GRANT: %s (risk=%s)", tool_name, tool.risk_level)
         return PolicyResult(
             allowed=True,
             risk_level=tool.risk_level,
-            requires_approval=requires_approval,
+            requires_approval=False,
             token=token,
         )
 

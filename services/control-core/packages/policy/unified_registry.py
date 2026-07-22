@@ -277,13 +277,23 @@ class UnifiedToolRegistry:
 
     # ── Tool instance access ────────────────────────────────────────────
 
-    def get_tool_instance(self, name: str) -> Any | None:
+    def get_tool_instance(self, name: str, *, _skip_enabled_check: bool = False) -> Any | None:
         """Lazily instantiate and cache a ToolBase instance by name.
 
-        Returns None if the tool is not registered or has no code class.
+        Returns None if the tool is not registered, has no code class, or is
+        disabled (enabled=False). The enabled check closes the G-08a gap where
+        ``enabled`` was a declaration-only flag that did not prevent
+        instantiation via SubAgentRunner / CLI / routes.
+
+        ``_skip_enabled_check`` is reserved for ToolRunner's internal use (the
+        policy engine has already verified enabled at that point); external
+        callers must not pass it.
         """
         registered = self._tools.get(name)
         if registered is None or registered.tool_cls is None:
+            return None
+
+        if not _skip_enabled_check and not registered.enabled:
             return None
 
         if name not in self._instances:

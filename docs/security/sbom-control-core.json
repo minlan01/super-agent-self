@@ -1,0 +1,314 @@
+{
+  "sbom_version": "1.0",
+  "generated_at": "2026-07-22",
+  "project": "zcode-control-core",
+  "language": "python",
+  "python_version": ">=3.11",
+  "summary": {
+    "direct_dependencies": 17,
+    "dev_dependencies": 7,
+    "total_installed": 68
+  },
+  "direct_dependencies": [
+    "alembic>=1.13,<2.0",
+    "bcrypt>=4.0,<5.0",
+    "fastapi>=0.110,<1.0",
+    "httpx>=0.27,<1.0",
+    "prompt_toolkit>=3.0,<4.0",
+    "psycopg2-binary>=2.9,<3.0",
+    "pydantic-settings>=2.2,<3.0",
+    "pydantic>=2.5,<3.0",
+    "python-dotenv>=1.0,<2.0",
+    "python-multipart>=0.0.6,<1.0",
+    "pyyaml>=6.0,<7.0",
+    "rich>=13.0,<14.0",
+    "sqlalchemy>=2.0,<3.0",
+    "strawberry-graphql>=0.230,<1.0",
+    "structlog>=24.1,<25.0",
+    "typer>=0.12,<1.0",
+    "uvicorn[standard]>=0.29,<1.0"
+  ],
+  "dev_dependencies": [
+    "bandit[toml]",
+    "httpx>=0.27",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "pytest-playwright>=0.5.0",
+    "pytest>=8.0",
+    "ruff>=0.3"
+  ],
+  "all_installed": [
+    {
+      "name": "Mako",
+      "version": "1.3.12"
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.3"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.20.0"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.51"
+    },
+    {
+      "name": "alembic",
+      "version": "1.18.5"
+    },
+    {
+      "name": "annotated-doc",
+      "version": "0.0.4"
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.7.0"
+    },
+    {
+      "name": "anyio",
+      "version": "4.14.2"
+    },
+    {
+      "name": "bandit",
+      "version": "1.9.4"
+    },
+    {
+      "name": "bcrypt",
+      "version": "4.3.0"
+    },
+    {
+      "name": "certifi",
+      "version": "2026.6.17"
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.4.9"
+    },
+    {
+      "name": "click",
+      "version": "8.4.2"
+    },
+    {
+      "name": "controlled-agent-platform",
+      "version": "3.11.0"
+    },
+    {
+      "name": "coverage",
+      "version": "7.15.2"
+    },
+    {
+      "name": "cross-web",
+      "version": "0.7.0"
+    },
+    {
+      "name": "fastapi",
+      "version": "0.139.2"
+    },
+    {
+      "name": "graphql-core",
+      "version": "3.2.11"
+    },
+    {
+      "name": "greenlet",
+      "version": "3.5.3"
+    },
+    {
+      "name": "grimp",
+      "version": "3.15"
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0"
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9"
+    },
+    {
+      "name": "httptools",
+      "version": "0.8.0"
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1"
+    },
+    {
+      "name": "idna",
+      "version": "3.18"
+    },
+    {
+      "name": "import-linter",
+      "version": "2.13"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0"
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0"
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2"
+    },
+    {
+      "name": "packaging",
+      "version": "26.2"
+    },
+    {
+      "name": "pip",
+      "version": "26.1.2"
+    },
+    {
+      "name": "playwright",
+      "version": "1.61.0"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0"
+    },
+    {
+      "name": "prompt_toolkit",
+      "version": "3.0.52"
+    },
+    {
+      "name": "psycopg2-binary",
+      "version": "2.9.12"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.13.4"
+    },
+    {
+      "name": "pydantic-settings",
+      "version": "2.14.2"
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.46.4"
+    },
+    {
+      "name": "pyee",
+      "version": "13.0.1"
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "name": "pytest-asyncio",
+      "version": "1.4.0"
+    },
+    {
+      "name": "pytest-base-url",
+      "version": "2.1.0"
+    },
+    {
+      "name": "pytest-cov",
+      "version": "7.1.0"
+    },
+    {
+      "name": "pytest-playwright",
+      "version": "0.8.0"
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0"
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.2"
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.32"
+    },
+    {
+      "name": "python-slugify",
+      "version": "8.0.4"
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2"
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0"
+    },
+    {
+      "name": "ruff",
+      "version": "0.15.22"
+    },
+    {
+      "name": "shellingham",
+      "version": "1.5.4"
+    },
+    {
+      "name": "six",
+      "version": "1.17.0"
+    },
+    {
+      "name": "starlette",
+      "version": "1.3.1"
+    },
+    {
+      "name": "stevedore",
+      "version": "5.9.0"
+    },
+    {
+      "name": "strawberry-graphql",
+      "version": "0.322.2"
+    },
+    {
+      "name": "structlog",
+      "version": "24.4.0"
+    },
+    {
+      "name": "text-unidecode",
+      "version": "1.3"
+    },
+    {
+      "name": "typer",
+      "version": "0.27.0"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.2"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0"
+    },
+    {
+      "name": "urllib3",
+      "version": "2.7.0"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.51.0"
+    },
+    {
+      "name": "uvloop",
+      "version": "0.22.1"
+    },
+    {
+      "name": "watchfiles",
+      "version": "1.2.0"
+    },
+    {
+      "name": "wcwidth",
+      "version": "0.8.2"
+    },
+    {
+      "name": "websockets",
+      "version": "16.1.1"
+    }
+  ]
+}

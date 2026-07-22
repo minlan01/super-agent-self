@@ -89,7 +89,7 @@ tools:
 
   desktop.click:
     category: desktop
-    risk_level: medium
+    risk_level: high   # was medium; aligned with decorator (desktop_tools.py) and spec §6 (keyboard/mouse = High)
 
   desktop.type:
     category: desktop
@@ -116,3 +116,33 @@ tools:
       type: object
       properties: {}
       additionalProperties: false
+
+  # ── G-08a 修正：补登记此前脱管/漏登记的工具 ──────────────────────────
+  # registry 已注册但 tools.yaml 缺失 → 运维无法经配置收敛 risk/enabled
+  browser.bookmark:
+    category: browser
+    risk_level: low
+
+  browser.monitor:
+    category: browser
+    risk_level: medium
+
+  # 视觉三工具是 ToolBase 子类但从未注册进 registry（完全脱管）。
+  # P0 阶段显式占位禁用：routes/vision.py 的直接 new + execute 旁路由 P0.5 修复。
+  screen.capture:
+    description: "Screen capture (DISABLED until registered via P0.5)"
+    category: vision
+    risk_level: medium
+    enabled: false
+
+  image.ocr:
+    description: "Image OCR (DISABLED until registered via P0.5)"
+    category: vision
+    risk_level: low
+    enabled: false
+
+  image.analyze:
+    description: "Image understanding (DISABLED until registered via P0.5)"
+    category: vision
+    risk_level: medium
+    enabled: false

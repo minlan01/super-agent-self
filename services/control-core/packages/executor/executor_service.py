@@ -216,6 +216,50 @@ class ExecutorService:
         )
 
         if not policy_result.allowed:
+            # P0.5 (G-02 fix): distinguish "denied" from "needs approval".
+            # Previously, requires_approval was a returned field that the
+            # executor ignored — high-risk tools executed immediately.
+            # Now policy_engine returns allowed=False with requires_approval=True
+            # for high-risk tools, and we suspend the step instead of rejecting.
+            if policy_result.requires_approval:
+                # Suspend step: mark AWAITING_APPROVAL, broadcast, do NOT execute.
+                # Orchestrator.resume_after_approval (P1) will re-enter here
+                # after the approval is resolved.
+                await ra(
+                    TaskRepository.update_step, step.id, TaskStepUpdate(
+                        status=StepStatus.PENDING,  # awaiting approval; P1 adds AWAITING_APPROVAL
+                        requires_approval=True,
+                        error=policy_result.reason,
+                    )
+                )
+                await ra(
+                    AuditRepository.create, AuditEventCreate(
+                        task_id=task_id, step_id=step.id,
+                        event_type=AuditEventType.POLICY_APPROVED,  # policy passed, awaiting human
+                        detail={
+                            "tool_name": plan_step.tool_name,
+                            "requires_approval": True,
+                            "risk_level": policy_result.risk_level,
+                        },
+                    )
+                )
+                await _ws_broadcast(task_id, "step_awaiting_approval", {
+                    "step_id": step.id, "tool": plan_step.tool_name,
+                    "risk_level": policy_result.risk_level,
+                    "reason": policy_result.reason,
+                })
+                logger.info(
+                    "Step %s suspended awaiting approval (tool=%s risk=%s)",
+                    step.id, plan_step.tool_name, policy_result.risk_level,
+                )
+                return {
+                    "step": plan_step.step_id,
+                    "tool": plan_step.tool_name,
+                    "status": "awaiting_approval",
+                    "reason": policy_result.reason,
+                }, True  # should_fail=True stops the plan loop; resume re-enters
+
+            # Genuinely denied by policy
             await ra(
                 TaskRepository.update_step, step.id, TaskStepUpdate(
                     status=StepStatus.REJECTED,
