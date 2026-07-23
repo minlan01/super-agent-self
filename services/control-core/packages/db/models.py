@@ -168,6 +168,7 @@ class Task(_TimestampMixin, Base):
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default", index=True)
     user_id: Mapped[str] = mapped_column(String(100), default="default", index=True)
     edition: Mapped[Edition] = mapped_column(Enum(Edition), default=Edition.ENTERPRISE)
     goal: Mapped[str] = mapped_column(Text, nullable=False)
@@ -193,6 +194,7 @@ class TaskStep(_TimestampMixin, Base):
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default", index=True)
     task_id: Mapped[str] = mapped_column(String(36), ForeignKey("tasks.id", ondelete="CASCADE"), nullable=False)
     step_order: Mapped[int] = mapped_column(Integer, nullable=False)
     tool_name: Mapped[str] = mapped_column(String(100), nullable=False)
@@ -442,6 +444,7 @@ class User(Base):
     )
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default", index=True)
     username: Mapped[str] = mapped_column(String(100), nullable=False)
     email: Mapped[str | None] = mapped_column(String(255), nullable=True)
     hashed_password: Mapped[str] = mapped_column(String(128), nullable=False)

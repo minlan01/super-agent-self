@@ -59,7 +59,11 @@ class PaginatedResponse(BaseModel):
 class TaskCreate(BaseModel):
     goal: str = Field(..., min_length=1, max_length=5000, description="Task goal description")
     edition: Edition = Edition.ENTERPRISE
-    user_id: str = Field("default", min_length=1, max_length=100, pattern=r"^[a-zA-Z0-9_\-]+$")
+    # P1.3 (G E-04): user_id is DEPRECATED for client input.
+    # It's accepted for backward compat but MUST be overwritten by the route
+    # from ActorScope (get_current_actor_scope). Clients that still send it
+    # will have it silently ignored. Spec §2.3 forbids accepting forgeable identity.
+    user_id: str | None = Field(None, description="DEPRECATED — overwritten by ActorScope")
 
     @field_validator("goal")
     @classmethod

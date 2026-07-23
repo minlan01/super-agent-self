@@ -5,7 +5,13 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from apps.api_server.dependencies import CommonQueryParams, get_db, get_orchestrator, require_permission
+from apps.api_server.dependencies import (
+    CommonQueryParams,
+    get_current_actor_scope,
+    get_db,
+    get_orchestrator,
+    require_permission,
+)
 from packages.agent_core.schemas import (
     AuditEventCreate,
     AuditEventResponse,
@@ -36,8 +42,17 @@ router = APIRouter(dependencies=[Depends(require_permission("tasks", "read"))])
     description="Submit a new task with a goal description. The task starts in 'pending' status.",
     dependencies=[Depends(require_permission("tasks", "write"))],
 )
-def create_task(body: TaskCreate, db: Session = Depends(get_db)):
-    """Create a new task."""
+def create_task(
+    body: TaskCreate,
+    db: Session = Depends(get_db),
+    scope=Depends(get_current_actor_scope),
+):
+    """Create a new task.
+
+    P1.3 (G E-04): user_id comes from ActorScope (JWT-validated), NEVER from
+    request body. The deprecated body.user_id is silently overwritten.
+    """
+    body.user_id = scope.principal_id  # anti-forgery: ignore any client-supplied value
     task = TaskRepository.create(db, body)
 
     AuditRepository.create(
@@ -64,9 +79,14 @@ def list_tasks(
     status: TaskStatus | None = None,
     edition: str | None = None,
     db: Session = Depends(get_db),
+    scope=Depends(get_current_actor_scope),
 ):
-    """List tasks with pagination and optional filters."""
-    stmt = select(Task).order_by(Task.created_at.desc())
+    """List tasks with pagination and optional filters.
+
+    P1.2 (G I-01): tenant_id is强制 from ActorScope — never from query/body.
+    Users can only see their own tenant's tasks.
+    """
+    stmt = select(Task).where(Task.tenant_id == scope.tenant_id).order_by(Task.created_at.desc())
     if status is not None:
         stmt = stmt.where(Task.status == status)
     if edition is not None:
@@ -90,10 +110,17 @@ def list_tasks(
     summary="Get task detail",
     description="Retrieve a single task by ID, including all associated execution steps.",
 )
-def get_task(task_id: str, db: Session = Depends(get_db)):
-    """Get task detail with all steps."""
+def get_task(
+    task_id: str,
+    db: Session = Depends(get_db),
+    scope=Depends(get_current_actor_scope),
+):
+    """Get task detail with all steps.
+
+    P1.2 (G I-01): cross-tenant access returns 404 (not 403, to avoid leaking existence).
+    """
     task = TaskRepository.get_by_id(db, task_id)
-    if task is None:
+    if task is None or task.tenant_id != scope.tenant_id:
         raise HTTPException(status_code=404, detail="Task not found")
 
     resp = TaskResponse.model_validate(task)

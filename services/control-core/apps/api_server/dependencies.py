@@ -22,6 +22,7 @@ __all__ = [
     "get_db", "CommonQueryParams", "get_orchestrator", "get_provider_router",
     "get_current_user", "get_user_edition",
     "require_permission", "get_rbac_service",
+    "get_current_actor_scope",
 ]
 
 
@@ -148,6 +149,66 @@ def _resolve_current_user(
 
 # Re-export as the public name used by route modules
 get_current_user = _resolve_current_user
+
+
+# ── ActorScope binding (P1.1, G S-05) ────────────────────────────────────
+
+
+async def get_current_actor_scope(
+    user: User | None = Depends(_resolve_current_user),
+    db: Session = Depends(get_db),
+) -> "ActorScope":
+    """Resolve the authenticated user into an ActorScope and bind it to the
+    request ContextVar.
+
+    This is the canonical way routes obtain identity. The returned ActorScope
+    is also bound via ``bind_actor_scope`` so Repositories can read
+    ``get_current_actor_scope()`` without explicit threading.
+
+    Anti-forgery (spec §2.3): the ActorScope is derived from the JWT-validated
+    User, NEVER from the request body. Routes that previously accepted a
+    ``user_id`` field in their body must switch to ``Depends(get_current_actor_scope)``.
+    """
+    from packages.auth.actor_scope import ActorScope, bind_actor_scope
+
+    # Determine identity. When auth is disabled (dev mode), use a default.
+    if user is None:
+        # Auth required but no valid token → 401
+        from fastapi import HTTPException
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    # Resolve roles/permissions via RBAC
+    roles: frozenset[str] = frozenset()
+    permissions: frozenset[str] = frozenset()
+    try:
+        from packages.auth.rbac import RBACService
+        rbac = RBACService(db)
+        role_names = rbac.get_user_roles(user.id)
+        roles = frozenset(role_names)
+        permissions = frozenset(
+            rbac.get_role_permissions(r) for r in role_names
+        ) if role_names else frozenset()
+    except Exception:
+        # RBAC not configured → at least carry the role from User.role
+        roles = frozenset({str(user.role.value) if hasattr(user.role, "value") else str(user.role)})
+
+    # tenant_id resolution: P1 uses "default" tenant for single-user personal Profile.
+    # P3+ will introduce real multi-tenancy. This is the ONLY place tenant_id
+    # is derived — never accept it from request body.
+    tenant_id = getattr(user, "tenant_id", None) or "default"
+
+    scope = ActorScope(
+        tenant_id=tenant_id,
+        principal_id=str(user.id),
+        workspace_id=getattr(user, "workspace_id", None) or "default",
+        roles=roles,
+        permissions=permissions,
+        auth_method=getattr(user, "auth_method", "local").value
+        if hasattr(getattr(user, "auth_method", None), "value")
+        else str(getattr(user, "auth_method", "local")),
+    )
+    bind_actor_scope(scope)
+    return scope
 
 
 # ── Edition context dependency ────────────────────────────────────────────

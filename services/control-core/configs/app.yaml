@@ -20,7 +20,10 @@ llm:
   max_retries: 1
 
 security:
-  secret_key: "change-me-in-production"
+  # P1.4 (G T-05): secret_key MUST come from SECRET_KEY env var, not hardcoded.
+  # null → config.py uses env var first, then insecure-default fallback (which warns).
+  # Set via: export SECRET_KEY=$(openssl rand -hex 32)
+  secret_key: null
   token_expire_minutes: 60
   max_plan_steps: 20
 

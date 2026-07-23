@@ -49,18 +49,24 @@ class TaskRepository:
     @staticmethod
     def list_tasks(
         db: Session,
+        *,
+        tenant_id: str,
         status=None,
         edition=None,
         skip: int = 0,
         limit: int = 20,
         include_steps: bool = False,
     ) -> list[Task]:
-        """List tasks with optional filters.
+        """List tasks with mandatory tenant filter.
+
+        P1.2 (G I-01): tenant_id is a required keyword argument. Callers must
+        obtain it from ActorScope (get_current_actor_scope), never from the
+        request body. Previously this method leaked all tenants' tasks.
 
         By default steps are **not** loaded to avoid N+1 queries on list views.
         Set *include_steps* to True when steps data is needed.
         """
-        stmt = select(Task).order_by(Task.created_at.desc())
+        stmt = select(Task).where(Task.tenant_id == tenant_id).order_by(Task.created_at.desc())
         if include_steps:
             stmt = stmt.options(selectinload(Task.steps))
         if status is not None:
@@ -71,8 +77,8 @@ class TaskRepository:
         return list(db.scalars(stmt).all())
 
     @staticmethod
-    def count(db: Session, status=None, edition=None) -> int:
-        stmt = select(Task)
+    def count(db: Session, *, tenant_id: str, status=None, edition=None) -> int:
+        stmt = select(Task).where(Task.tenant_id == tenant_id)
         if status is not None:
             stmt = stmt.where(Task.status == status)
         if edition is not None:

@@ -117,10 +117,11 @@ def get_settings() -> Settings:
             pool_pre_ping=db_cfg.get("pool_pre_ping", True),
         ),
         security=SecuritySettings(
-            secret_key=os.getenv(
-                "SECRET_KEY",
-                sec_cfg.get("secret_key", "change-me-in-production"),
-            ),
+            # P1.4 (G T-05): env var strictly overrides yaml.
+            # yaml null → fall through to insecure default (triggers warning).
+            secret_key=os.getenv("SECRET_KEY")
+                or sec_cfg.get("secret_key")
+                or "change-me-in-production",
             token_expire_minutes=int(os.getenv(
                 "TOKEN_EXPIRE_MINUTES",
                 sec_cfg.get("token_expire_minutes", 60),
