@@ -1,0 +1,239 @@
+{
+  "schema_version": "1.0.0",
+  "team_id": "super-agent-self-delivery-cluster",
+  "display_name": "Super Agent Self Delivery Cluster",
+  "language": "zh-CN",
+  "entry_agent": "chief-orchestrator",
+  "max_parallel_agents": 4,
+  "default_timeout_minutes": 45,
+  "paths": {
+    "project_context": "shared/PROJECT-CONTEXT.md",
+    "task_packet": "shared/TASK-PACKET.md",
+    "handoff": "shared/HANDOFF.md",
+    "review": "shared/REVIEW.md",
+    "release_gates": "shared/RELEASE-GATES.md"
+  },
+  "source_priority": [
+    "current_user_work_order",
+    "accepted_adr_and_current_release_decisions",
+    "canonical_architecture_security_deployment_and_user_story_docs",
+    "database_constraints_code_tests_and_runtime_configuration",
+    "historical_reports_and_generated_copies"
+  ],
+  "global_policies": {
+    "single_entry": true,
+    "require_task_packet": true,
+    "require_path_allowlist": true,
+    "implementer_may_self_approve": false,
+    "reviewer_may_modify_reviewed_change": false,
+    "silent_conflict_resolution": false,
+    "evidence_required_for_completion": true,
+    "maximum_fix_review_cycles": 1,
+    "production_fail_closed": true
+  },
+  "model_profiles": {
+    "governance": {
+      "reasoning": "high",
+      "temperature": 0.1
+    },
+    "implementation": {
+      "reasoning": "high",
+      "temperature": 0.2
+    },
+    "verification": {
+      "reasoning": "high",
+      "temperature": 0.0
+    },
+    "documentation": {
+      "reasoning": "medium",
+      "temperature": 0.2
+    }
+  },
+  "tool_profiles": {
+    "coordinator": ["read", "search", "git_read", "task_dispatch", "write_coordination_artifacts"],
+    "governance": ["read", "search", "git_read", "run_read_only_checks", "write_allowed_paths"],
+    "implementation": ["read", "search", "git_read", "patch", "run_tests", "run_build", "write_allowed_paths"],
+    "verification": ["read", "search", "git_read", "run_tests", "run_security_checks", "write_test_artifacts"],
+    "review_read_only": ["read", "search", "git_read", "run_read_only_checks"]
+  },
+  "agents": [
+    {
+      "id": "chief-orchestrator",
+      "display_name": "Chief Orchestrator",
+      "description": "唯一任务入口；负责拆解、路由、依赖、门禁和证据收口。",
+      "prompt_file": "prompts/00-chief-orchestrator.md",
+      "kind": "coordinator",
+      "tool_profile": "coordinator",
+      "model_profile": "governance",
+      "write_policy": "coordination_only",
+      "can_delegate": true
+    },
+    {
+      "id": "product-domain-lead",
+      "display_name": "Product & Domain Lead",
+      "description": "把业务目标变成领域状态、UserStory和可观察验收标准。",
+      "prompt_file": "prompts/01-product-domain-lead.md",
+      "kind": "governance",
+      "tool_profile": "governance",
+      "model_profile": "governance",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "architecture-governor",
+      "display_name": "Architecture Governor",
+      "description": "维护单一规范执行链、模块Interface、状态所有权和ADR。",
+      "prompt_file": "prompts/02-architecture-governor.md",
+      "kind": "governance",
+      "tool_profile": "governance",
+      "model_profile": "governance",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "security-governor",
+      "display_name": "Security Governor",
+      "description": "维护信任模型、授权、隔离、审计和安全发布条件。",
+      "prompt_file": "prompts/03-security-governor.md",
+      "kind": "governance",
+      "tool_profile": "governance",
+      "model_profile": "governance",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "execution-consistency-engineer",
+      "display_name": "Execution Consistency Engineer",
+      "description": "实现Lease、fencing、EffectJournal、恢复和外部副作用一致性。",
+      "prompt_file": "prompts/04-execution-consistency-engineer.md",
+      "kind": "implementation",
+      "tool_profile": "implementation",
+      "model_profile": "implementation",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "backend-engineer",
+      "display_name": "Backend Engineer",
+      "description": "实现后端纵向功能、持久化、队列和内部Interface。",
+      "prompt_file": "prompts/05-backend-engineer.md",
+      "kind": "implementation",
+      "tool_profile": "implementation",
+      "model_profile": "implementation",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "frontend-engineer",
+      "display_name": "Frontend Engineer",
+      "description": "实现控制台、审批和运行状态等安全且可恢复的交互。",
+      "prompt_file": "prompts/06-frontend-engineer.md",
+      "kind": "implementation",
+      "tool_profile": "implementation",
+      "model_profile": "implementation",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "data-migration-engineer",
+      "display_name": "Data & Migration Engineer",
+      "description": "负责Schema约束、迁移、回填、cutover和rollback。",
+      "prompt_file": "prompts/07-data-migration-engineer.md",
+      "kind": "implementation",
+      "tool_profile": "implementation",
+      "model_profile": "implementation",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "platform-sre-engineer",
+      "display_name": "Platform & SRE Engineer",
+      "description": "负责构建、基础设施、部署、密钥、容量和可靠性。",
+      "prompt_file": "prompts/08-platform-sre-engineer.md",
+      "kind": "implementation",
+      "tool_profile": "implementation",
+      "model_profile": "implementation",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "test-automation-engineer",
+      "display_name": "Test Automation Engineer",
+      "description": "把需求和不变量转换为自动化、并发及故障注入测试。",
+      "prompt_file": "prompts/09-test-automation-engineer.md",
+      "kind": "verification",
+      "tool_profile": "verification",
+      "model_profile": "verification",
+      "write_policy": "tests_and_allowed_paths",
+      "can_delegate": false
+    },
+    {
+      "id": "security-validation-engineer",
+      "display_name": "Security Validation Engineer",
+      "description": "以攻击者视角验证越权、重放、跨租户和供应链风险。",
+      "prompt_file": "prompts/10-security-validation-engineer.md",
+      "kind": "verification",
+      "tool_profile": "verification",
+      "model_profile": "verification",
+      "write_policy": "security_tests_and_reports",
+      "can_delegate": false
+    },
+    {
+      "id": "observability-incident-engineer",
+      "display_name": "Observability & Incident Engineer",
+      "description": "建立SLI/SLO、遥测、告警、Runbook和事故演练。",
+      "prompt_file": "prompts/11-observability-incident-engineer.md",
+      "kind": "implementation",
+      "tool_profile": "implementation",
+      "model_profile": "implementation",
+      "write_policy": "allowed_paths_only",
+      "can_delegate": false
+    },
+    {
+      "id": "docs-release-engineer",
+      "display_name": "Docs & Release Engineer",
+      "description": "同步规范、运维文档、变更记录和可复现发布包。",
+      "prompt_file": "prompts/12-docs-release-engineer.md",
+      "kind": "documentation",
+      "tool_profile": "governance",
+      "model_profile": "documentation",
+      "write_policy": "docs_and_release_artifacts",
+      "can_delegate": false
+    },
+    {
+      "id": "independent-release-reviewer",
+      "display_name": "Independent Release Reviewer",
+      "description": "只读独立复核全部证据并给出最终发布裁决。",
+      "prompt_file": "prompts/13-independent-release-reviewer.md",
+      "kind": "review",
+      "tool_profile": "review_read_only",
+      "model_profile": "verification",
+      "write_policy": "read_only",
+      "can_delegate": false
+    }
+  ],
+  "mandatory_routing": [
+    {
+      "match": ["lease", "fencing", "effect", "tool_gateway", "external_side_effect", "recovery"],
+      "implementer": "execution-consistency-engineer",
+      "reviewers": ["architecture-governor", "security-governor", "test-automation-engineer", "independent-release-reviewer"]
+    },
+    {
+      "match": ["capability_grant", "approval", "authorization", "tenant", "artifact", "audit"],
+      "implementer": "backend-engineer",
+      "reviewers": ["security-governor", "security-validation-engineer", "test-automation-engineer", "independent-release-reviewer"]
+    },
+    {
+      "match": ["schema", "migration", "backfill", "cutover", "rollback", "write_fence"],
+      "implementer": "data-migration-engineer",
+      "reviewers": ["architecture-governor", "platform-sre-engineer", "test-automation-engineer", "independent-release-reviewer"]
+    },
+    {
+      "match": ["deployment", "secret", "capacity", "backup", "disaster_recovery"],
+      "implementer": "platform-sre-engineer",
+      "reviewers": ["security-governor", "observability-incident-engineer", "independent-release-reviewer"]
+    }
+  ],
+  "release_verdicts": ["PASS", "CHANGES_REQUIRED", "BLOCKED"]
+}
+

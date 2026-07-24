@@ -48,4 +48,6 @@ Thumbs.db
 # Tool state (process artifacts, not source)
 .zcode/
 .workbuddy/
-.agents/
+# .agents/skills/ is project config (ZCode skills), keep in git
+.agents/*
+!.agents/skills/

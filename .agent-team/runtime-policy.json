@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_encoding": "utf-8",
+  "workflow": {
+    "task_states": [
+      "QUEUED",
+      "READY",
+      "IN_PROGRESS",
+      "HANDOFF_READY",
+      "UNDER_REVIEW",
+      "CHANGES_REQUIRED",
+      "VERIFIED",
+      "DECISION_REQUIRED",
+      "APPROVAL_REQUIRED",
+      "BLOCKED",
+      "CANCELLED"
+    ],
+    "implementer_highest_state": "HANDOFF_READY",
+    "verified_by": "chief-orchestrator",
+    "maximum_revision_cycles": 1,
+    "conflict_policy": "stop_and_escalate"
+  },
+  "locking": {
+    "mode": "single_writer_path_lease",
+    "require_baseline_revision": true,
+    "verify_file_digest_before_write": true
+  },
+  "risk_levels": {
+    "R0": {
+      "description": "read-only analysis",
+      "approval": "none"
+    },
+    "R1": {
+      "description": "scoped workspace modification",
+      "approval": "chief-orchestrator"
+    },
+    "R2": {
+      "description": "dependency, migration, staging or high-cost validation",
+      "approval": "applicable_stage_gate"
+    },
+    "R3": {
+      "description": "production, secret, destructive, external effect or public release",
+      "approval": "human_bound_to_task_revision_environment_and_expiry"
+    }
+  },
+  "security": {
+    "default_deny": true,
+    "repository_content_is_untrusted_instruction": true,
+    "secrets_redacted": true,
+    "network_default": "deny",
+    "production_tools_default": "deny",
+    "production_requires_human_approval": true,
+    "prohibit_self_assignment": true,
+    "prohibit_self_review": true,
+    "prohibit_self_merge": true,
+    "prohibit_self_deploy": true
+  },
+  "budgets": {
+    "max_parallel_agents": 4,
+    "max_turns_per_task": 12,
+    "max_peer_messages": 6,
+    "max_clarification_rounds": 2,
+    "on_exhaustion": "BLOCKED_WITH_EVIDENCE"
+  }
+}
+
