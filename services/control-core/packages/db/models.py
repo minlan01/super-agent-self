@@ -718,3 +718,203 @@ class LLMCostRecord(_TimestampMixin, Base):
     prompt_tokens: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     completion_tokens: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     estimated_cost_usd: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
+
+
+# ── 25-29. P2 执行契约: grant / lease / effect / receipt / dispatch ──────
+#
+# These five tables implement the spec §4.3 execution contract persistence
+# layer.  They align with protocol/schemas/v1.py (CapabilityGrant, Lease,
+# EffectRecord, ToolReceipt) and add DispatchAttempt for audit-grade
+# dispatch tracing.  Every table carries tenant_id for multi-tenant
+# isolation (PROJECT-CONTEXT invariant: tenant mandatory on all queries).
+
+
+class GrantStatusDB(str, enum.Enum):
+    """Mirror of protocol GrantStatus for DB Enum column."""
+    ISSUED = "issued"
+    CONSUMED = "consumed"
+    EXPIRED = "expired"
+    REVOKED = "revoked"
+
+
+class LeaseStatus(str, enum.Enum):
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    EXPIRED = "expired"
+
+
+class EffectStatusDB(str, enum.Enum):
+    """Mirror of protocol EffectStatus for DB Enum column."""
+    PREPARED = "prepared"
+    DISPATCHING = "dispatching"
+    CONFIRMED = "confirmed"
+    FAILED = "failed"
+    UNKNOWN_OUTCOME = "unknown_outcome"
+    RECONCILED = "reconciled"
+
+
+class ReceiptStatusDB(str, enum.Enum):
+    """Mirror of protocol ReceiptStatus for DB Enum column."""
+    SUCCEEDED = "succeeded"
+    FAILED = "failed"
+    UNKNOWN = "unknown"
+
+
+class EffectClassDB(str, enum.Enum):
+    """Mirror of protocol EffectClass for DB Enum column."""
+    READ_ONLY = "read_only"
+    PROVIDER_IDEMPOTENT = "provider_idempotent"
+    RECONCILABLE = "reconcilable"
+    NON_RETRYABLE = "non_retryable"
+
+
+class CapabilityGrantModel(_TimestampMixin, Base):
+    """Persisted digest of a CapabilityGrant (spec §4.3).
+
+    The plaintext opaque handle is returned to the caller; only its SHA-256
+    digest is stored.  ToolGateway verifies by recomputing digest(handle)
+    and looking up the row.  max_uses=1 enforced by atomic consume().
+    """
+    __tablename__ = "capability_grants"
+    __table_args__ = (
+        Index("ix_grants_tenant", "tenant_id"),
+        Index("ix_grants_tenant_step", "tenant_id", "step_run_id"),
+        Index("ix_grants_handle_digest", "handle_digest", unique=True),
+        Index("ix_grants_status", "status"),
+        Index("ix_grants_expires", "expires_at"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    step_run_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    handle_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    nonce: Mapped[str] = mapped_column(String(64), nullable=False)
+    bound_args_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    risk_level: Mapped[str] = mapped_column(String(20), nullable=False)
+    resource_scope: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+    security_context_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    approval_resolution_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
+    key_id: Mapped[str] = mapped_column(String(50), nullable=False, default="default")
+    status: Mapped[GrantStatusDB] = mapped_column(
+        Enum(GrantStatusDB), nullable=False, default=GrantStatusDB.ISSUED,
+    )
+    issued_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    consumed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    max_uses: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    audience: Mapped[str] = mapped_column(String(100), nullable=False, default="tool_gateway")
+
+
+class LeaseModel(_TimestampMixin, Base):
+    """A Worker's claim on a StepRun with fencing_token (spec §4.3).
+
+    fencing_token is monotonic per (worker_id, step_run_id); stale workers
+    with old tokens cannot commit results.
+    """
+    __tablename__ = "leases"
+    __table_args__ = (
+        Index("ix_leases_tenant", "tenant_id"),
+        Index("ix_leases_tenant_step", "tenant_id", "step_run_id"),
+        Index("ix_leases_worker", "worker_id"),
+        Index("ix_leases_status", "status"),
+        Index("ix_leases_expires", "expires_at"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    worker_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    step_run_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    fencing_token: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    status: Mapped[LeaseStatus] = mapped_column(
+        Enum(LeaseStatus), nullable=False, default=LeaseStatus.ACTIVE,
+    )
+    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    last_heartbeat_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+
+class EffectRecordModel(_TimestampMixin, Base):
+    """Side-effect protocol record (spec §4.3 + v3 M9).
+
+    State machine: PREPARED -> DISPATCHING -> CONFIRMED|FAILED|UNKNOWN_OUTCOME
+    Terminal states are irreversible.  UNKNOWN_OUTCOME on non-idempotent
+    effects enters reconciliation (no auto-replay).
+    """
+    __tablename__ = "effect_records"
+    __table_args__ = (
+        Index("ix_effects_tenant", "tenant_id"),
+        Index("ix_effects_tenant_step", "tenant_id", "step_run_id"),
+        Index("ix_effects_grant", "grant_id"),
+        Index("ix_effects_lease", "lease_id"),
+        Index("ix_effects_status", "status"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    step_run_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    grant_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    lease_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    fencing_token: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    status: Mapped[EffectStatusDB] = mapped_column(
+        Enum(EffectStatusDB), nullable=False, default=EffectStatusDB.PREPARED,
+    )
+    effect_class: Mapped[EffectClassDB] = mapped_column(
+        Enum(EffectClassDB), nullable=False, default=EffectClassDB.READ_ONLY,
+    )
+    tool_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    provider_idempotency_key: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    security_context_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    before_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    after_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
+    finalized_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+
+class ToolReceiptModel(_TimestampMixin, Base):
+    """Standardized adapter result (spec §4.3)."""
+    __tablename__ = "tool_receipts"
+    __table_args__ = (
+        Index("ix_receipts_tenant", "tenant_id"),
+        Index("ix_receipts_effect", "effect_id"),
+        Index("ix_receipts_status", "status"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    effect_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    tool_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    args_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[ReceiptStatusDB] = mapped_column(
+        Enum(ReceiptStatusDB), nullable=False,
+    )
+    result: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
+    error_code: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+    content_provenance: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
+    ended_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
+
+
+class DispatchAttemptModel(_TimestampMixin, Base):
+    """Audit-grade trace of each dispatch attempt (PROJECT-CONTEXT invariant).
+
+    Every dispatch must persist: effect_id, attempt_ordinal, lease_id,
+    fencing_token, grant_digest, worker_id, adapter_name, dispatched_at.
+    """
+    __tablename__ = "dispatch_attempts"
+    __table_args__ = (
+        Index("ix_dispatch_tenant", "tenant_id"),
+        Index("ix_dispatch_effect", "effect_id"),
+        Index("ix_dispatch_lease", "lease_id"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    effect_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    attempt_ordinal: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    lease_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    fencing_token: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    grant_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    worker_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    adapter_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    dispatched_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
+    result_status: Mapped[str | None] = mapped_column(String(20), nullable=True)
