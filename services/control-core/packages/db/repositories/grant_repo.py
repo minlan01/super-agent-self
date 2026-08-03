@@ -101,7 +101,7 @@ class GrantRepository:
     @staticmethod
     def expire_stale(db: Session) -> int:
         """Mark all expired-but-still-ISSUED grants as EXPIRED. Returns count."""
-        now = datetime.now(UTC)
+        now = datetime.now(UTC).replace(tzinfo=None)
         result = db.execute(
             update(CapabilityGrantModel)
             .where(

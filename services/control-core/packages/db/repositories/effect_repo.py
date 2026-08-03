@@ -8,7 +8,15 @@ from sqlalchemy.orm import Session
 from packages.db.models import EffectRecordModel, EffectStatusDB
 
 
-# Terminal states - once reached, cannot transition back.
+# Truly irreversible terminal states — once here, no transition out.
+# UNKNOWN_OUTCOME is NOT here: it can be reconciled to CONFIRMED/FAILED.
+_EFFECT_FINAL_STATES = frozenset({
+    EffectStatusDB.CONFIRMED,
+    EffectStatusDB.FAILED,
+    EffectStatusDB.RECONCILED,
+})
+
+# All non-active states (used for filtering "in-flight" effects).
 _EFFECT_TERMINAL_STATES = frozenset({
     EffectStatusDB.CONFIRMED,
     EffectStatusDB.FAILED,
@@ -67,9 +75,16 @@ class EffectRepository:
         if effect is None:
             return None
 
-        # Terminal states are irreversible.
-        if effect.status in _EFFECT_TERMINAL_STATES and new_status != effect.status:
+        # Transition guard:
+        #   - FINAL states (CONFIRMED/FAILED/RECONCILED) are truly irreversible.
+        #   - UNKNOWN_OUTCOME is a holding state: can be reconciled to terminal.
+        if effect.status in _EFFECT_FINAL_STATES and new_status != effect.status:
             return effect  # reject transition
+
+        # UNKNOWN_OUTCOME can only transition to CONFIRMED/FAILED (reconcile).
+        if effect.status == EffectStatusDB.UNKNOWN_OUTCOME:
+            if new_status not in (EffectStatusDB.CONFIRMED, EffectStatusDB.FAILED):
+                return effect  # reject non-reconcile transition from UNKNOWN
 
         values: dict = {"status": new_status}
         if new_status in _EFFECT_TERMINAL_STATES:

@@ -94,7 +94,7 @@ class LeaseRepository:
     @staticmethod
     def expire_stale(db: Session) -> int:
         """Mark all active-but-expired leases as EXPIRED. Returns count."""
-        now = datetime.now(UTC)
+        now = datetime.now(UTC).replace(tzinfo=None)
         result = db.execute(
             update(LeaseModel)
             .where(
@@ -116,7 +116,12 @@ class LeaseRepository:
             return False
         if lease.status != LeaseStatus.ACTIVE:
             return False
-        if lease.expires_at <= datetime.now(UTC):
+        # Compare expiry against current UTC time (normalize to naive for SQLite).
+        now = datetime.now(UTC)
+        expires = lease.expires_at
+        if expires.tzinfo is None:
+            now = now.replace(tzinfo=None)
+        if expires <= now:
             return False
         if lease.fencing_token != fencing_token:
             return False
