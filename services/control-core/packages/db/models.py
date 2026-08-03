@@ -918,3 +918,84 @@ class DispatchAttemptModel(_TimestampMixin, Base):
     adapter_name: Mapped[str] = mapped_column(String(100), nullable=False)
     dispatched_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
     result_status: Mapped[str | None] = mapped_column(String(20), nullable=True)
+
+
+# ── 30-31. P2.6 审批契约: approval_requests + approval_votes ──────────────
+#
+# Separate from the legacy `approvals` table (which is for skill marketplace
+# approvals).  These tables implement the spec §4.3 high-risk step gating:
+# PolicyDecision.WAIT_APPROVAL -> ApprovalRequest -> Vote -> Resolution.
+
+
+class ApprovalRequestStatus(str, enum.Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    EXPIRED = "expired"
+    INVALIDATED = "invalidated"   # key content changed after request
+
+
+class VoteDecision(str, enum.Enum):
+    APPROVE = "approve"
+    REJECT = "reject"
+
+
+class ApprovalRequestModel(_TimestampMixin, Base):
+    """Persisted approval gate for high-risk steps (spec §4.3).
+
+    Created when PolicyDecision.outcome == WAIT_APPROVAL.  Bound to:
+    plan/step/tool/args_hash/resource_scope/policy_digest/security_digest.
+
+    Resolution rules:
+      - Approver identity comes from server-side ActorScope (not client).
+      - Requester cannot self-approve (even if quorum=1).
+      - Key content change (args/policy/security digest) invalidates old request.
+      - On APPROVED: GrantIssuer issues a Grant bound to this resolution.
+    """
+    __tablename__ = "approval_requests"
+    __table_args__ = (
+        Index("ix_approval_req_tenant", "tenant_id"),
+        Index("ix_approval_req_tenant_step", "tenant_id", "step_run_id"),
+        Index("ix_approval_req_status", "status"),
+        Index("ix_approval_req_requester", "requester_principal_id"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    step_run_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    tool_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    normalized_args_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    risk_level: Mapped[str] = mapped_column(String(20), nullable=False)
+    resource_scope: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+    policy_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    security_context_digest: Mapped[str] = mapped_column(String(64), nullable=False)
+    requester_principal_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    requester_workspace_id: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    status: Mapped[ApprovalRequestStatus] = mapped_column(
+        Enum(ApprovalRequestStatus), nullable=False,
+        default=ApprovalRequestStatus.PENDING,
+    )
+    required_quorum: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    resolution_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
+
+
+class ApprovalVoteModel(_TimestampMixin, Base):
+    """A single approver's vote on an ApprovalRequest."""
+    __tablename__ = "approval_votes"
+    __table_args__ = (
+        Index("ix_approval_vote_tenant", "tenant_id"),
+        Index("ix_approval_vote_request", "request_id"),
+        Index("ix_approval_vote_voter", "voter_principal_id"),
+        UniqueConstraint("request_id", "voter_principal_id", name="uq_one_vote_per_voter"),
+    )
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(64), nullable=False, default="default")
+    request_id: Mapped[str] = mapped_column(String(36), nullable=False)
+    voter_principal_id: Mapped[str] = mapped_column(String(100), nullable=False)
+    decision: Mapped[VoteDecision] = mapped_column(Enum(VoteDecision), nullable=False)
+    reason: Mapped[str | None] = mapped_column(Text, nullable=True)
+    voted_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=_now)
