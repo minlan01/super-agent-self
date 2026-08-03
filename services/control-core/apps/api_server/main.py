@@ -513,6 +513,7 @@ _ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
     ("skills", "/api/v1/skills", ["skills"]),
     ("audit", "/api/v1/audit", ["audit"]),
     ("approvals", "/api/v1/approvals", ["approvals"]),
+    ("gateway_approvals", "/api/v1/gateway-approvals", ["gateway-approvals"]),
     ("export", "/api/v1/export", ["export"]),
     ("files", "/api/v1/files", ["files"]),
     ("personal", "/api/v1/personal", ["personal"]),
