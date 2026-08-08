@@ -26,6 +26,9 @@ from packages.policy.policy_engine import PolicyEngine
 
 logger = structlog.get_logger()
 
+# Type for the optional execution orchestrator (avoid circular import)
+ExecutionOrchestratorType = Any  # packages.execution.orchestrator.ExecutionOrchestrator
+
 
 async def _ws_broadcast(task_id: str, event: str, data: dict[str, Any]) -> None:
     """Fire-and-forget WebSocket broadcast for task updates."""
@@ -84,6 +87,7 @@ class ExecutorService:
         planner: Any | None = None,
         max_concurrent_tasks: int = MAX_CONCURRENT_TASKS,
         step_timeout: int | None = None,
+        execution_orchestrator: ExecutionOrchestratorType | None = None,
     ):
         self.tool_runner = tool_runner
         self.policy_engine = policy_engine
@@ -91,6 +95,7 @@ class ExecutorService:
         self._semaphore = asyncio.Semaphore(max_concurrent_tasks)
         self._step_timeout = step_timeout
         self._test_db: Any = None  # injected by tests for session sharing
+        self._execution_orchestrator = execution_orchestrator
 
     # Thread-safe DB helper: each call uses an independent session in production.
     # When a shared _db is injected (tests), reuse it for SQLite visibility.
@@ -298,15 +303,26 @@ class ExecutorService:
             )
         )
 
-        result = await self._execute_step_with_retry(
-            task_id=task_id,
-            step_id=step.id,
-            tool_name=plan_step.tool_name,
-            args=plan_step.args,
-            capability_token=policy_result.token,
-            context=context,
-            ra=ra,
-        )
+        # ── P3.0-4: Route through ToolGateway when orchestrator is available ──
+        if self._execution_orchestrator is not None:
+            result = await self._execute_via_orchestrator(
+                task_id=task_id,
+                step_id=step.id,
+                plan_step=plan_step,
+                policy_result=policy_result,
+                context=context,
+                ra=ra,
+            )
+        else:
+            result = await self._execute_step_with_retry(
+                task_id=task_id,
+                step_id=step.id,
+                tool_name=plan_step.tool_name,
+                args=plan_step.args,
+                capability_token=policy_result.token,
+                context=context,
+                ra=ra,
+            )
 
         await _ws_broadcast(task_id, "step_completed" if result.success else "step_failed", {
             "step_id": step.id, "tool": plan_step.tool_name,
@@ -418,6 +434,119 @@ class ExecutorService:
                                 )
                 except Exception as e:
                     logger.debug("Skill benchmark recording failed: %s", e)
+
+    async def _execute_via_orchestrator(
+        self,
+        *,
+        task_id: str,
+        step_id: str,
+        plan_step: Any,
+        policy_result: Any,
+        context: ExecutionContext,
+        ra,
+    ) -> Any:
+        """Execute a step through ExecutionOrchestrator → ToolGateway.
+
+        This is the P3.0 production path. Replaces the old tool_runner.run()
+        direct call. The orchestrator handles grant/lease/effect/gateway
+        internally.
+
+        Retry policy: UNKNOWN_OUTCOME on non-idempotent effects → no retry
+        (human reconciliation required). FAILED on idempotent → one retry.
+        """
+        from packages.db.models import ReceiptStatusDB
+
+        # First attempt via orchestrator (no asyncio.run — pure async).
+        step_result = await self._orchestrator_execute(
+            task_id=task_id, step_id=step_id,
+            plan_step=plan_step, policy_result=policy_result,
+            context=context,
+        )
+
+        # Gateway failure → evaluate retry eligibility
+        if not step_result.success:
+            receipt = getattr(step_result, "receipt_status", None)
+            effect_class = getattr(step_result, "effect_class", None)
+
+            # UNKNOWN_OUTCOME on non-idempotent: NO auto-retry
+            if receipt == ReceiptStatusDB.UNKNOWN and effect_class is not None:
+                from packages.db.models import EffectClassDB
+                if effect_class != EffectClassDB.READ_ONLY:
+                    logger.error(
+                        "Step %s (%s): UNKNOWN_OUTCOME on non-idempotent effect — "
+                        "no auto-retry, requires human reconciliation",
+                        step_id, plan_step.tool_name,
+                    )
+                    await ra(
+                        AuditRepository.create, AuditEventCreate(
+                            task_id=task_id, step_id=step_id,
+                            event_type=AuditEventType.STEP_FAILED,
+                            detail={
+                                "tool_name": plan_step.tool_name,
+                                "error": step_result.error,
+                                "receipt_status": "UNKNOWN",
+                                "retry_skipped": True,
+                                "reason": "non-idempotent unknown outcome",
+                            },
+                        )
+                    )
+                    # Wrap as a ToolResult-compatible object for the caller
+                    from packages.executor.tools.base import ToolResult
+                    return ToolResult(
+                        success=False,
+                        error=f"UNKNOWN_OUTCOME: {step_result.error}",
+                        artifacts=step_result.artifacts or [],
+                    )
+
+            # Deterministic FAILED or idempotent UNKNOWN: one retry via orchestrator
+            logger.warning(
+                "Step %s (%s) failed (receipt=%s), retrying once via orchestrator: %s",
+                step_id, plan_step.tool_name,
+                receipt, step_result.error,
+            )
+            await ra(
+                AuditRepository.create, AuditEventCreate(
+                    task_id=task_id, step_id=step_id,
+                    event_type=AuditEventType.STEP_FAILED,
+                    detail={"tool_name": plan_step.tool_name, "error": step_result.error, "retry": True},
+                )
+            )
+
+            step_result = await self._orchestrator_execute(
+                task_id=task_id, step_id=step_id,
+                plan_step=plan_step, policy_result=policy_result,
+                context=context,
+            )
+
+        # Convert StepExecutionResult to ToolResult-compatible for caller
+        from packages.executor.tools.base import ToolResult
+        return ToolResult(
+            success=step_result.success,
+            output=step_result.output or "",
+            error=step_result.error,
+            artifacts=step_result.artifacts or [],
+        )
+
+    async def _orchestrator_execute(
+        self,
+        *,
+        task_id: str,
+        step_id: str,
+        plan_step: Any,
+        policy_result: Any,
+        context: ExecutionContext,
+    ) -> Any:
+        """Single attempt through execution_orchestrator.execute_step_async()."""
+        step_result = await self._execution_orchestrator.execute_step_async(
+            task_id=task_id,
+            step_id=step_id,
+            tool_name=plan_step.tool_name,
+            args=plan_step.args,
+            edition=context.edition,
+            tenant_id=getattr(context, "tenant_id", "default"),
+            workspace_root=context.workspace_root,
+        )
+        return step_result
 
     async def _execute_step_with_retry(
         self,
@@ -556,6 +685,43 @@ class ExecutorService:
             logger.warning("Re-planning failed for task %s: %s", task_id, exc)
             return None
 
+    async def _execute_recovery_step(
+        self,
+        *,
+        task_id: str,
+        step: Any,
+        plan_step: Any,
+        policy_result: Any,
+        context: ExecutionContext,
+    ) -> Any:
+        """Execute a recovery plan step via orchestrator when available."""
+        if self._execution_orchestrator is not None:
+            from packages.executor.tools.base import ToolResult
+            step_result = await self._execution_orchestrator.execute_step_async(
+                task_id=task_id,
+                step_id=step.id,
+                tool_name=plan_step.tool_name,
+                args=plan_step.args,
+                edition=context.edition,
+                tenant_id=getattr(context, "tenant_id", "default"),
+                workspace_root=context.workspace_root,
+            )
+            return ToolResult(
+                success=step_result.success,
+                output=step_result.output or "",
+                error=step_result.error,
+                artifacts=step_result.artifacts or [],
+            )
+        # Fallback to old path (dev/test only)
+        return await self._run_with_timeout(
+            task_id=task_id,
+            step_id=step.id,
+            tool_name=plan_step.tool_name,
+            args=plan_step.args,
+            capability_token=policy_result.token,
+            context=context,
+        )
+
     async def _execute_recovery(
         self,
         task_id: str,
@@ -598,12 +764,11 @@ class ExecutorService:
                 })
                 continue
 
-            result = await self._run_with_timeout(
+            result = await self._execute_recovery_step(
                 task_id=task_id,
-                step_id=step.id,
-                tool_name=plan_step.tool_name,
-                args=plan_step.args,
-                capability_token=policy_result.token,
+                step=step,
+                plan_step=plan_step,
+                policy_result=policy_result,
                 context=context,
             )
 

@@ -64,6 +64,10 @@ class StepExecutionResult:
     approval_request_id: str | None = None
     output: Any = None
     error: str | None = None
+    receipt_status: Any = None  # ReceiptStatusDB | None
+    effect_class: Any = None    # EffectClassDB | None
+    artifacts: list = None      # list[Any] | None
+    success: bool = False       # convenience: True iff status == "completed"
 
 
 class ExecutionOrchestrator:
@@ -189,6 +193,165 @@ class ExecutionOrchestrator:
             tool_name=tool_name, args=args,
             policy_result=policy_result, tenant_id=tenant_id,
             workspace_root=workspace_root,
+        )
+
+    # ------------------------------------------------------------------
+    # Async variants — for use inside running event loops (P3.0-4)
+    # ------------------------------------------------------------------
+
+    async def execute_step_async(
+        self,
+        *,
+        task_id: str,
+        step_id: str,
+        tool_name: str,
+        args: dict[str, Any],
+        edition: str = "enterprise",
+        tenant_id: str = "default",
+        requester_principal_id: str = "system",
+        workspace_root: str = "./workspace",
+        db: Session | None = None,
+    ) -> StepExecutionResult:
+        """Async-native execute_step — no asyncio.run(), safe inside event loop.
+
+        This is the P3.0 production path. ExecutorService calls this when
+        execution_orchestrator is available, ensuring all tool invocations
+        go through ToolGateway instead of the legacy tool_runner.run().
+        """
+        owns_session = db is None
+        if owns_session:
+            db = SessionLocal()
+
+        try:
+            return self._execute_step_inner_async(
+                db=db, task_id=task_id, step_id=step_id,
+                tool_name=tool_name, args=args, edition=edition,
+                tenant_id=tenant_id,
+                requester_principal_id=requester_principal_id,
+                workspace_root=workspace_root,
+            )
+        finally:
+            if owns_session and db is not None:
+                try:
+                    db.commit()
+                except Exception:
+                    db.rollback()
+                finally:
+                    db.close()
+
+    async def _execute_step_inner_async(
+        self, db: Session, *, task_id, step_id, tool_name, args,
+        edition, tenant_id, requester_principal_id, workspace_root,
+    ) -> StepExecutionResult:
+        """Async version of _execute_step_inner — no asyncio.run()."""
+        # ── 1. Policy check (sync DB ops are safe in async) ──
+        policy_result = self.policy_engine.check(
+            task_id=task_id, step_id=step_id,
+            tool_name=tool_name, args=args, edition=edition,
+        )
+
+        # ── 2a. DENY or WAIT_APPROVAL ──
+        if not policy_result.allowed:
+            if policy_result.requires_approval:
+                return self._handle_wait_approval(
+                    db=db, step_id=step_id, tool_name=tool_name, args=args,
+                    policy_result=policy_result, tenant_id=tenant_id,
+                    requester_principal_id=requester_principal_id,
+                )
+            return StepExecutionResult(
+                step_id=step_id, tool_name=tool_name,
+                status="rejected",
+                error=policy_result.reason,
+            )
+
+        # ── 2b. GRANT path via async gateway invoke ──
+        return await self._handle_grant_async(
+            db=db, task_id=task_id, step_id=step_id,
+            tool_name=tool_name, args=args,
+            policy_result=policy_result, tenant_id=tenant_id,
+            workspace_root=workspace_root,
+        )
+
+    async def _handle_grant_async(
+        self, db: Session, *, task_id, step_id, tool_name, args,
+        policy_result, tenant_id, workspace_root,
+    ) -> StepExecutionResult:
+        """Async version of _handle_grant — uses await gw.invoke() instead of asyncio.run()."""
+        gi = self._grant_factory(db)
+        lm = self._lease_factory(db)
+        gw = self._gw_factory(db)
+
+        args_hash = self._compute_args_hash(args)
+        security_digest = self._compute_security_digest(args, policy_result.token or "")
+
+        issued = gi.issue(
+            tenant_id=tenant_id,
+            step_run_id=step_id,
+            tool_name=tool_name,
+            bound_args_hash=args_hash,
+            risk_level=policy_result.risk_level,
+            resource_scope={"workspace_id": tenant_id},
+            security_context_digest=security_digest,
+        )
+
+        lease = lm.acquire(
+            tenant_id=tenant_id,
+            worker_id=f"executor-{task_id}",
+            step_run_id=step_id,
+        )
+
+        from packages.executor.tools.base import ExecutionContext
+        ctx = ExecutionContext(
+            task_id=task_id, step_id=step_id,
+            workspace_root=workspace_root,
+        )
+
+        effect_class = (
+            EffectClassDB.READ_ONLY
+            if policy_result.risk_level == "low"
+            else EffectClassDB.NON_RETRYABLE
+        )
+
+        # Invoke through gateway — NO asyncio.run(), direct await.
+        try:
+            result = await gw.invoke(
+                handle=issued.handle,
+                lease_id=lease.lease_id,
+                tool_name=tool_name,
+                args=args,
+                context=ctx,
+                effect_class=effect_class,
+                tenant_id=tenant_id,
+                security_context_digest=security_digest,
+            )
+        except Exception as e:
+            logger.exception("ToolGateway invocation failed: %s", e)
+            return StepExecutionResult(
+                step_id=step_id, tool_name=tool_name,
+                status="failed",
+                error=f"Gateway error: {e}",
+                effect_class=effect_class,
+            )
+
+        if result.success:
+            return StepExecutionResult(
+                step_id=step_id, tool_name=tool_name,
+                status="completed",
+                effect_id=result.effect_id,
+                output=result.tool_result.output if result.tool_result else None,
+                artifacts=result.tool_result.artifacts if result.tool_result else None,
+                receipt_status=result.receipt_status,
+                effect_class=effect_class,
+                success=True,
+            )
+        return StepExecutionResult(
+            step_id=step_id, tool_name=tool_name,
+            status="failed",
+            effect_id=result.effect_id,
+            error=result.error,
+            artifacts=result.tool_result.artifacts if result.tool_result else None,
+            receipt_status=result.receipt_status,
+            effect_class=effect_class,
         )
 
     def _handle_wait_approval(

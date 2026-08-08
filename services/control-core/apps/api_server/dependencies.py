@@ -62,6 +62,7 @@ def get_orchestrator():
     import packages.executor.tools._auto_import  # noqa: F401
     from packages.agent_core.orchestrator import Orchestrator
     from packages.agent_core.sub_agent import set_sub_agent_runner
+    from packages.execution.orchestrator import ExecutionOrchestrator
     from packages.executor.executor_service import ExecutorService
     from packages.executor.tool_runner import ToolRunner
     from packages.executor.tools.delegate_tool import SubAgentRunner
@@ -79,7 +80,19 @@ def get_orchestrator():
     token_issuer = TokenIssuer(secret_key=secret_key)
     tool_runner = ToolRunner(token_issuer, registry=registry)
     policy_engine = PolicyEngine(registry, token_issuer)
-    executor = ExecutorService(tool_runner, policy_engine, planner=planner)
+
+    # ── P3.0-4: Wire ExecutionOrchestrator for ToolGateway routing ──
+    execution_orchestrator = ExecutionOrchestrator.from_defaults(
+        policy_engine=policy_engine,
+        tool_lookup=registry,
+    )
+
+    executor = ExecutorService(
+        tool_runner=tool_runner,
+        policy_engine=policy_engine,
+        planner=planner,
+        execution_orchestrator=execution_orchestrator,
+    )
     _orchestrator_instance = Orchestrator(planner, executor)
 
     sub_agent_runner = SubAgentRunner(planner, executor)
