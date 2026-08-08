@@ -6,13 +6,10 @@ import pytest
 
 from packages.platform.windows.desktop import (
     Classification,
-    CoordinateClickResult,
-    DesktopActionResult,
     DesktopInputNotAvailable,
+    ScreenCaptureNotAvailable,
     ScreenshotArtifact,
     ScreenshotResult,
-    ScreenCaptureNotAvailable,
-    StaleReason,
     UIAElement,
     WindowSnapshot,
     compute_ui_digest,

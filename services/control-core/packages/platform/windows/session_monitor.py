@@ -273,7 +273,7 @@ class WindowsSessionMonitor(SessionMonitor):
             )
         except UnsupportedPlatformError:
             raise
-        except Exception as exc:
+        except Exception:
             logger.exception("Session snapshot failed; denying interactive actions")
             return SessionState(
                 is_locked=True,

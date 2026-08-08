@@ -631,7 +631,7 @@ class ExecutorService:
                 ),
                 timeout=timeout,
             )
-        except asyncio.TimeoutError:
+        except TimeoutError:
             from packages.executor.tools.base import ToolResult
             logger.error(
                 "Step %s (%s) timed out after %ds",

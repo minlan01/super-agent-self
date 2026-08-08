@@ -56,7 +56,7 @@ class ProcessExecuteRequest:
     version: str = PROCESS_EXECUTE_VERSION
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "ProcessExecuteRequest":
+    def from_dict(cls, data: dict[str, Any]) -> ProcessExecuteRequest:
         """Create from API dict, validating all fields."""
         executable = data.get("executable")
         if not isinstance(executable, str) or not executable:

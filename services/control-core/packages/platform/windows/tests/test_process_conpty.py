@@ -2,16 +2,8 @@
 
 from __future__ import annotations
 
-import os
-
 import pytest
 
-from packages.platform.windows.process_tools import (
-    PROCESS_EXECUTE_VERSION,
-    SHELL_INTERPRETERS,
-    ProcessExecuteRequest,
-    ProcessExecuteResult,
-)
 from packages.platform.windows.conpty import (
     TERMINAL_SESSION_VERSION,
     ConPTYNotImplemented,
@@ -20,6 +12,11 @@ from packages.platform.windows.conpty import (
     TerminalMessage,
     TerminalSession,
     is_conpty_available,
+)
+from packages.platform.windows.process_tools import (
+    PROCESS_EXECUTE_VERSION,
+    SHELL_INTERPRETERS,
+    ProcessExecuteRequest,
 )
 
 # Use hardcoded paths instead of tmp_path to avoid safe-delete interference

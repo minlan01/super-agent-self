@@ -24,32 +24,25 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
-import logging
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from typing import Any
 
 import structlog
 from sqlalchemy.orm import Session
 
 from packages.approval.approval_service import (
-    ApprovalRequestResult,
     ApprovalService,
-    ResolutionResult,
 )
 from packages.db.models import (
     ApprovalRequestStatus,
     EffectClassDB,
-    GrantStatusDB,
-    StepStatus,
-    VoteDecision,
 )
 from packages.db.session import SessionLocal
 from packages.execution.effect_journal import EffectJournal
 from packages.execution.lease_manager import LeaseManager
 from packages.executor.tool_gateway import ToolGateway
 from packages.policy.grant_issuer import GrantIssuer
-from packages.policy.policy_engine import PolicyEngine, PolicyResult
+from packages.policy.policy_engine import PolicyEngine
 
 logger = structlog.get_logger()
 
@@ -97,7 +90,7 @@ class ExecutionOrchestrator:
         policy_engine: PolicyEngine,
         db_session_factory: Any = None,
         tool_lookup: Any = None,
-    ) -> "ExecutionOrchestrator":
+    ) -> ExecutionOrchestrator:
         """Create an orchestrator with default factory functions.
 
         Args:

@@ -30,7 +30,6 @@ import sys
 import time
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any
 
 from packages.platform.shared.errors import CapabilityUnavailable
 
@@ -225,7 +224,7 @@ def validate_not_stale(
     if snapshot.hwnd != current_foreground_hwnd:
         raise _make_stale_exception(
             StaleReason.FOREGROUND_CHANGED, snapshot.ui_digest, current_digest,
-            f"foreground changed",
+            "foreground changed",
         )
     if is_locked:
         raise _make_stale_exception(

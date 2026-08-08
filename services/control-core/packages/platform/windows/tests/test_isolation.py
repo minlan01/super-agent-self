@@ -15,7 +15,6 @@ import pytest
 from packages.platform.windows.isolation import (
     DEFAULT_ENV_WHITELIST,
     SECRET_ENV_BLOCKLIST,
-    EgressRule,
     IsolationConfig,
     SecretHandle,
     WindowsIsolationBroker,
@@ -188,7 +187,6 @@ class TestIsolationInitialization:
         Uses a hardcoded workspace dir to avoid tmp_path fixture teardown
         being intercepted by safe-delete. Creates and cleans up manually.
         """
-        import tempfile
         import shutil
 
         workspace = tempfile.mkdtemp(prefix="iso_test_")

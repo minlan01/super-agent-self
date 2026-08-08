@@ -14,16 +14,16 @@ Enforcement strategy:
 
 from __future__ import annotations
 
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
 
 def test_executor_service_accepts_execution_orchestrator():
     """ExecutorService.__init__ must accept execution_orchestrator parameter."""
-    from packages.executor.executor_service import ExecutorService
     import inspect
+
+    from packages.executor.executor_service import ExecutorService
 
     sig = inspect.signature(ExecutorService.__init__)
     assert "execution_orchestrator" in sig.parameters, (
@@ -96,7 +96,6 @@ def test_dependencies_wire_execution_orchestrator():
 async def test_executor_delegates_to_orchestrator_when_available():
     """When execution_orchestrator is set, ExecutorService must not call tool_runner.run()."""
     from packages.executor.executor_service import ExecutorService
-    from packages.executor.tools.base import ToolResult
 
     # Mock orchestrator that returns a completed step result
     mock_orchestrator = MagicMock()
@@ -158,6 +157,7 @@ def test_no_asyncio_run_in_async_methods():
     """Source check: _handle_grant_async must not use asyncio.run() in code."""
     import inspect
     import re
+
     from packages.execution.orchestrator import ExecutionOrchestrator
 
     def _strip_comments_and_docstrings(source: str) -> str:

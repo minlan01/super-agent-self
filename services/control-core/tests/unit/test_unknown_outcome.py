@@ -12,7 +12,7 @@ This test verifies:
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -23,7 +23,6 @@ from packages.db.models import EffectClassDB, ReceiptStatusDB
 async def test_unknown_outcome_non_idempotent_no_retry():
     """UNKNOWN_OUTCOME on NON_RETRYABLE effect must not trigger auto-retry."""
     from packages.executor.executor_service import ExecutorService
-    from packages.executor.tools.base import ToolResult
 
     # Track call count
     call_count = 0

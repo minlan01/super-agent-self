@@ -22,9 +22,9 @@ import subprocess
 import sys
 import threading
 import time
-from dataclasses import dataclass, field
+from collections.abc import Mapping, Sequence
 from ctypes import wintypes
-from typing import Mapping, Sequence
+from dataclasses import dataclass, field
 
 from packages.platform.shared.contracts import ProcessSandbox, SandboxProfile
 from packages.platform.shared.errors import SandboxUnavailable

@@ -28,10 +28,8 @@ import os
 import sys
 from ctypes import wintypes
 from dataclasses import dataclass, field
-from typing import Any
 
-from packages.platform.shared.contracts import SandboxProfile
-from packages.platform.shared.errors import CapabilityUnavailable, SandboxUnavailable
+from packages.platform.shared.errors import SandboxUnavailable
 
 from ._errors import UnsupportedPlatformError
 

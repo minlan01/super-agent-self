@@ -21,8 +21,8 @@ from packages.platform.shared.contracts import (
     SessionMonitor,
     SessionState,
 )
-from packages.platform.windows.adapter import WindowsPlatformAdapter
 from packages.platform.windows._errors import UnsupportedPlatformError
+from packages.platform.windows.adapter import WindowsPlatformAdapter
 from packages.platform.windows.local_ipc import WindowsNamedPipeIpc
 from packages.platform.windows.process_sandbox import WindowsProcessSandbox
 from packages.platform.windows.secret_store import WindowsCredentialStore

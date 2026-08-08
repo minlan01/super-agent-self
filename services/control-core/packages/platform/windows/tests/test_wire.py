@@ -8,6 +8,7 @@ import pytest
 
 from packages.platform.shared.contracts import IpcEndpoint
 from packages.platform.shared.errors import IpcAuthError
+from packages.platform.windows._errors import IpcProtocolError
 from packages.platform.windows.local_ipc import (
     MAX_MESSAGE_SIZE,
     WindowsNamedPipeIpc,
@@ -17,7 +18,6 @@ from packages.platform.windows.local_ipc import (
     _validate_handshake,
     _validate_request,
 )
-from packages.platform.windows._errors import IpcProtocolError
 from packages.protocol.schemas.enums import SCHEMA_VERSION
 
 

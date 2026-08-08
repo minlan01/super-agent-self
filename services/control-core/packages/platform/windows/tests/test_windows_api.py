@@ -36,15 +36,15 @@ from packages.platform.windows.local_ipc import (
     _encode_frame,
 )
 from packages.platform.windows.process_sandbox import (
+    _JOBOBJECT_CPU_RATE_CONTROL_INFORMATION,
+    _JOBOBJECT_EXTENDED_LIMIT_INFORMATION,
+    JOB_OBJECT_CPU_RATE_CONTROL_ENABLE,
     JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP,
     JOB_OBJECT_CPU_RATE_CONTROL_INFORMATION,
-    JOB_OBJECT_CPU_RATE_CONTROL_ENABLE,
     JOB_OBJECT_EXTENDED_LIMIT_INFORMATION,
     JOB_OBJECT_LIMIT_ACTIVE_PROCESS,
     JOB_OBJECT_LIMIT_JOB_MEMORY,
-    _JOBOBJECT_CPU_RATE_CONTROL_INFORMATION,
     WindowsProcessSandbox,
-    _JOBOBJECT_EXTENDED_LIMIT_INFORMATION,
 )
 from packages.platform.windows.secret_store import WindowsCredentialStore
 from packages.platform.windows.session_monitor import WindowsSessionMonitor
@@ -103,7 +103,7 @@ async def _stop_server(ipc: WindowsNamedPipeIpc, task: asyncio.Task[Any]) -> Non
     if not task.done():
         try:
             await asyncio.wait_for(task, 3.0)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             task.cancel()
         except asyncio.CancelledError:
             pass
