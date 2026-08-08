@@ -1,0 +1,14 @@
+?? delivery/evidence/p3-baseline/git-log-before-p3.txt
+?? delivery/evidence/p3-baseline/status-before-filemode-fix.txt
+?? docs/adr/0010-windows-p1-implementation.md
+?? services/control-core/packages/platform/windows/__init__.py
+?? services/control-core/packages/platform/windows/_errors.py
+?? services/control-core/packages/platform/windows/adapter.py
+?? services/control-core/packages/platform/windows/local_ipc.py
+?? services/control-core/packages/platform/windows/process_sandbox.py
+?? services/control-core/packages/platform/windows/secret_store.py
+?? services/control-core/packages/platform/windows/session_monitor.py
+?? services/control-core/packages/platform/windows/tests/__init__.py
+?? services/control-core/packages/platform/windows/tests/test_contract_integration.py
+?? services/control-core/packages/platform/windows/tests/test_windows_api.py
+?? services/control-core/packages/platform/windows/tests/test_wire.py

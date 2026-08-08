@@ -1,0 +1,5 @@
+30a9dcd (HEAD -> main, origin/main) docs(P3.8): user/admin/security-incident/offline-deployment guides
+612f383 feat(P3.7): backup & recovery service
+e7e2e53 feat(P3.6): tianshu tasks.json ETL to control-core Task schema
+2b658b5 feat(P3.5): browser isolation - egress policy + per-task context
+33eb4de feat(P3.4): download quarantine - MIME/size/malicious content validation

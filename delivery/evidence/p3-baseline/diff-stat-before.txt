@@ -1,0 +1,1540 @@
+warning: in the working copy of '.agent-team/BOOTSTRAP-PROMPT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/COPY-INSTRUCTIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/COPY-TO-PROJECT.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/EVALUATION.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/FIRST-RUN-PLAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/START-HERE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/TEAM-DESIGN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/TOOL-CONFIGURATION.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/VALIDATION.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/Validate-Team.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/00-chief-orchestrator.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/01-product-domain-lead.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/02-architecture-governor.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/03-security-governor.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/04-execution-consistency-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/05-backend-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/06-frontend-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/07-data-migration-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/08-platform-sre-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/09-test-automation-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/10-security-validation-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/11-observability-incident-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/12-docs-release-engineer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/prompts/13-independent-release-reviewer.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/runtime-policy.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/shared/HANDOFF.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/shared/PROJECT-CONTEXT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/shared/RELEASE-GATES.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/shared/REVIEW.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/shared/TASK-PACKET.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.agent-team/team.config.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/aggregation.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/dispatch.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/doc.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/eng.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/planning.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/qa.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/receiver.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/agents/review.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/skills/registry.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'adapters/tianshu-concept/skills/tianshu_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'agent-control-center-design-and-fix-plan-v2.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'agent-control-center-design-and-implementation-plan-v3.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/.node-version', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/rust-toolchain.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/scripts/prepare-sidecar.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/sidecar.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/Cargo.lock', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/Cargo.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/build.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/capabilities/default.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/examples/ipc_smoke_v2.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/gen/schemas/desktop-schema.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/gen/schemas/windows-schema.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/src/lib.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/src/main.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src-tauri/tauri.conf.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src/main.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/src/styles.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/tests/measure_ipc_v2.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/tests/measure_startup.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/tests/run_artifact_suite.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/tests/test_authenticode.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/tests/test_lifecycle.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/desktop/vite.config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.github/CI_CD_CONFIG.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.github/workflows/ci-cd.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.github/workflows/deploy.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.github/workflows/monitoring-deploy.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.github/workflows/release.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.github/workflows/security-scan.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/.prettierrc', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/AGENTS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/CHANGELOG.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/CONTRIBUTING.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/LICENSE', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/README.en.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/eslint.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/public/assets/generated/actors/capy-claw-emoji-v2/manifest.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/public/assets/generated/actors/cat-claw-emoji-v1/manifest.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/App.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/adapters/museum/router-sync.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/adapters/museum/telemetry-feed.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/adapters/museum/vue-bridge.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/connect.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/device-auth-payload.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/device-identity.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/evidence.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/hermes/chat-types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/hermes/client.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/hermes/configSchema.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/hermes/dynamicSchema.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/hermes/types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/http-client.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/myself-agent.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/rpc-client.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/backup.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/channel.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/chat-types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/remote-desktop.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/rpc.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/types/terminal.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/api/websocket.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/assets/styles/main.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/assets/styles/pixel-components.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/assets/styles/pixel-tokens.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/AnimatedCharacters.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/AutoField.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/ConnectionStatus.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/EmptyState.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/GatewaySwitcher.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/PdfViewer.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/common/StatCard.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/hermes/ConfigCategoryNav.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/hermes/ConfigEditorPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/hermes/ConfigField.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/hermes/ConfigFormSection.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/hermes/HermesChatCommandPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/hermes/SkillFileBrowser.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/layout/AppHeader.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/layout/AppSidebar.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/museum/MiniMuseumWidget.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/museum/MuseumAgentList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/museum/MuseumCanvas.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/museum/MuseumFocusPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/museum/MuseumToolbar.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/AgentCharacter.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/OfficeAreaLabel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/OfficeCharacter.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/OfficeChatBubble.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/OfficeScene3D.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/OfficeToolbar.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/OfficeWorkspace.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/ScenarioManagementPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/ScenarioWizard.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/TaskDelegationPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/WizardConfirmPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/WizardExecutionPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/chat/ChatHeader.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/chat/ChatMessageBubble.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/components/office/chat/ChatSkillSelector.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/museum/useMuseumSnapshot.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useAgentStatus.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useChatTTS.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useConfigEditor.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useEdgeTTS.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useEventStream.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useHermesCommands.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useHermesProviderConfig.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useMessageList.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/usePixelTheme.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useQuickReplies.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useResizable.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useScrollManagement.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useSessionManagement.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useSlashCommands.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useTTSSettings.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useTheme.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/composables/useTokenUsage.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/env.d.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/i18n/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/i18n/locale.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/i18n/messages/en-US.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/i18n/messages/zh-CN.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/i18n/text.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/layouts/DefaultLayout.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/layouts/MyselfAgentLayout.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/main.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/clawlibrary.config.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/core/geometry.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/core/pathfinder.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/core/types.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/main.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/remap.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/runtime/scene/LibraryScene.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/runtime/systems/growth.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/runtime/systems/protocolStore.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/runtime/systems/touchController.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/ui/events.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/ui/locale.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/museum/ui/palette.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/router/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/router/routes.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/agent-router.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/agent.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/auth.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/backup.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/channel-management.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/channel.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/chat.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/cron.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes-cli.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/channel.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/chat.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/connection.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/cron.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/memory.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/model.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/hermes/skill.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/locale.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/memory.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/model.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/monitor.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/museum.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/myself-agent.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/node.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/office.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/remote-desktop.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/skill.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/terminal.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/theme.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/websocket.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/wideMode.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/stores/wizard.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/channel-config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/chat-parser.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/chat-render.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/configValidation.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/cron-formatter.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/error.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/file-utils.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/format.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/hermes-provider-helpers.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/hermes-tool-parser.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/logger.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/markdown.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/model-parser.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/provider-sync.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/secret-mask.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/wizard-agent-generator.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/utils/wizard-execution.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/BreakRoom.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/Dashboard.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/Login.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/agents/AgentsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/backup/BackupPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/channels/ChannelsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/config/ConfigPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/cron/CronPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/evidence/EvidencePage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/files/FilesPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesChannelsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesChatPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesCliPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesCronPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesDashboard.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesFilesPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesMemoryPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesModelsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesRemoteDesktopPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesSessionsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesSkillsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesSystemPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/hermes/HermesTerminalPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/memory/MemoryPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/models/ModelsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/monitor/MonitorPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfAnalyticsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfAuditPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfChatPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfCronPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfDashboard.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfMemoryPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfSkillsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myself-agent/MyselfTasksPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/myworld/MyWorldPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/nodes/NodesPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/office/OfficePage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/remote-desktop/RemoteDesktopPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/remote-desktop/components/DesktopCanvas.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/remote-desktop/components/NodeSelector.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/remote-desktop/components/SessionList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/sessions/SessionDetailPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/sessions/SessionsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/settings/SettingsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/skills/SkillsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/system/SystemPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/terminal/TerminalPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/src/views/tools/ToolsPage.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/tsconfig.app.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/tsconfig.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/tsconfig.node.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/vite.config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web-console-src/wolai-config.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/UserStory.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/material_digest.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/research_report.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/v3-enhancement-report.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/安全设计.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/系统设计.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/部署设计.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delivery/高层架构设计.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/adr/0001-desktop-shell.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/adr/0002-core-sidecar.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/adr/0022-tauri-spike-result.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/acceptance-decision.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/build-artifacts.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/installer-validation.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/tauri-demo-first.stdout.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/tauri-demo-incremental-measured.stderr.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/tauri-demo-incremental-measured.stdout.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/tauri-demo-incremental-warmup.stderr.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/tauri-demo-incremental-warmup.stdout.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/evidence/p1-2026-07-22/tauri-demo-second.stdout.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/spike/p1-2026-07-22.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.dockerignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.github/workflows/ci.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.omc/metrics/agent-metrics.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.omc/plans/autopilot-optimization-sprint42-45.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.omc/project-memory.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.omc/sessions/1425c2d1-21be-4c5b-9813-5a1eb768f9de.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.omc/sessions/668a14fb-a35a-4778-96e5-8a9b37d8428d.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/.omc/sessions/b0ff83e3-2a4c-4fd0-ac27-8afe7bbd4152.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/DEVELOPMENT_PLAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/env.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/script.py.mako', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/3aa7020a9881_initial_schema_10_tables.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/84cab4f1b67a_add_users_table.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/a1b2c3d4e5f6_add_task_templates_and_dependencies.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/b2c3d4e5f6a7_add_notifications_table.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/c3d4e5f6a7b8_add_messaging_and_marketplace_tables.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/e5f6a7b8c9d0_add_llm_cost_records_and_skill_run_fields.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/f1a2b3c4d5e6_add_missing_indexes_and_user_updated_at.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/g2h3i4j5k6l7_add_remaining_missing_indexes.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/h3i4j5k6l7m8_add_skill_benchmark_fields.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/i5j6k7l8m9n0_add_production_critical_indexes.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/j6k7l8m9n0o1_add_task_user_id_status_composite_index.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/alembic/versions/k7l8m9n0o1p2_add_unique_constraint_to_users_sso_id.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/api_server/routes/approvals.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/api_server/routes/metrics.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/api_server/routes/notifications.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/api_server/routes/plugins.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/api_server/routes/ws/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/api_server/routes/ws/connection_managers.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/metrics/agent-metrics.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/agent-replay-1425c2d1-21be-4c5b-9813-5a1eb768f9de.jsonl', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/agent-replay-668a14fb-a35a-4778-96e5-8a9b37d8428d.jsonl', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/agent-replay-e30b8356-c407-47a6-9834-35ca552bb65a.jsonl', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/idle-notif-cooldown.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/last-tool-error.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/mission-state.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/sessions/154e3715-1be9-4ee8-9f3f-fda19ffaf301/hud-state.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/sessions/861a1b74-b4f0-482c-9a64-2f6e5afe985c/hud-state.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/sessions/9e167eb6-c0d8-4f85-80c5-125d00719351/hud-state.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/sessions/b8f33c0f-310a-469c-a9c6-54bd9db887a3/hud-state.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/sessions/e56be365-b425-4f83-93b8-5c9759e16913/hud-state.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/.omc/state/subagent-tracking.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/auto-imports.d.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/components.d.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/eslint.config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/App.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/api/__tests__/api.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/api/agent-control.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/components/AudioPlayer.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/components/StatCard.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/components/__tests__/StatCard.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/__tests__/useExponentialBackoff.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/__tests__/useNotificationWS.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/__tests__/useTaskWS.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useAsyncData.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useAudioRecorder.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useChatWS.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useControlWS.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useEchartsChart.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useExponentialBackoff.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useNotificationWS.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useSSE.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useTaskWS.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/composables/useWebSocket.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/i18n/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/main.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/router/__tests__/guards.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/stores/notification.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/stores/task.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/theme/__tests__/useTheme.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/theme/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/theme/variables.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/utils/__tests__/format.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/utils/__tests__/status.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/utils/format.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/utils/status.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/AgentDetail.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/AgentList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/ApprovalList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/AuditLog.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/ConversationList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/CronList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/ExportView.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/HealthView.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/Login.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/MemoryList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/MonitoringView.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/NotFound.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/NotificationPanel.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/Register.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/ScenarioDetail.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/ScenarioList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/SkillDetail.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/SkillList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/TaskDAGView.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/TaskList.vue', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/AnalyticsView.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/ApprovalList.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/ChatView.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/ConversationList.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/CronList.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/Dashboard.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/ExportView.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/HealthView.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/Login.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/MemoryList.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/NotificationPanel.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/TaskDAGView.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/src/views/__tests__/TaskList.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/tsconfig.node.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/apps/enterprise_admin_web/vitest.config.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/cache.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/cron.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/editions/enterprise.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/editions/personal.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/mcp.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/memory.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/models.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/policy.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/rate_limits.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/rbac.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/search.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/skills.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/configs/tools.yaml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/2026-05-21-critical-bugfix-plan.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/2026-05-22-round3-fix-plan.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/api_reference.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/architecture.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/deployment.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/editions.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/memory_design.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/security_model.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/docs/skill_lifecycle.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/monitoring/grafana/dashboard.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/monitoring/grafana/provisioning/dashboards/dashboard.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/monitoring/grafana/provisioning/datasources/prometheus.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/monitoring/prometheus/prometheus.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/agent_core/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/agent_core/edition_manager.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/agent_core/orchestrator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/agent_core/task_state.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/agent_core/version.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/auth/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/auth/secrets.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/cache/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/cache/base.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/cache/memory.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/cron/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/cron/jobs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/pagination.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/approval_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/audit_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/auth_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/edition_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/notification_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/skill_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/db/repositories/template_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/evaluation/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/evaluation/task_evaluator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/executor/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/executor/tool_runner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/executor/tools/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/executor/tools/delegate_tool.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/graphql/schema.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/graphql/types.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/llm_gateway/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/llm_gateway/error_classifier.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/llm_gateway/mock_provider.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/mcp/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/mcp/mcp_tool_adapter.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/memory/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/memory/importance_scorer.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/memory/schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/memory/summarizer.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/middleware/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/notification/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/notification/notification_ws_manager.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/notification/ws_broadcaster.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/observability/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/personal_context/personal_context_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/personal_context/reminder_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/planner/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/planner/personal_prompts.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/planner/plan_validator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/planner/prompt_templates.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/plugins/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/policy/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/policy/ssrf_guard.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/policy/tool_discovery.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/policy/tool_registry.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/skills/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/skills/schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/skills/skill_registry.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/vision/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/packages/voice/__init__.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/ruff.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/check_no_tool_bypass.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/init_db.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/nuitka-build/.python-version', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/nuitka-build/build.ps1', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/nuitka-build/requirements-build.lock', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/nuitka-build/requirements-build.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/nuitka-build/sidecar.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/run_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/run_enterprise_demo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/scripts/seed_demo_data.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/conftest.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/e2e/conftest.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/e2e/test_frontend_e2e.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/e2e/test_full_lifecycle.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_admin_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_agents_api_new.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_agents_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_analytics_flow.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_analytics_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_chat_flow.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_chat_websocket.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_cron_chaining.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_desktop_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_executor_e2e.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_export_conversation_health_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_files_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_marketplace_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_memory_skill_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_missing_routes.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_personal_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_personal_chat_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_planning_policy_chain.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_plugins_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_rbac_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_semantic_memory.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_task_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_vision_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/integration/test_webhooks_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/security/test_rbac_security.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/security/test_security.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_advanced_analytics.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_analytics.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_approvals.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_audit.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_auth.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_browser_enhanced.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_cache.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_cache_integration.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_context_compressor.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_conversation_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_cron.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_db_pool_config.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_delegate_tool.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_desktop_advanced.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_desktop_tools.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_editions.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_error_classifier.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_executor.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_file_tools.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_graphql.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_llm_gateway.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_mcp_client.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_memory.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_messaging_gateway.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_missing_modules.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_models.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_monitoring_config.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_notification_persistence.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_notification_ws.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_notification_ws_endpoint.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_notifications.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_observability.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_orchestrator.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_pagination.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_personal_edition.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_personal_tools.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_planner.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_plugin_loader.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_plugin_sdk.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_policy.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_rate_limiter.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_rate_limiter_dynamic.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_rbac.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_rbac_repo.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_redis_cache.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_repos.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_schemas.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_search.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_secrets.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_security_hardening.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_shared_fixtures.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_skills.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_smart_router.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_sso.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_ssrf_guard.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_sub_agent.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_task_dag_api.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_task_dependencies.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_task_retry_batch.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_task_state.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_task_ws_events.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_templates.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_tier1_enhancements.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_vision.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_vision_advanced.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_voice.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_web_search_tool.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_websocket.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_ws_chat.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/control-core/tests/unit/test_ws_token_refresh.py', LF will be replaced by CRLF the next time Git touches it
+ .agent-team/BOOTSTRAP-PROMPT.md                    |   0
+ .agent-team/COPY-INSTRUCTIONS.md                   |   0
+ .agent-team/COPY-TO-PROJECT.ps1                    |   0
+ .agent-team/EVALUATION.md                          |   0
+ .agent-team/FIRST-RUN-PLAN.md                      |   0
+ .agent-team/README.md                              |   0
+ .agent-team/START-HERE.md                          |   0
+ .agent-team/TEAM-DESIGN.md                         |   0
+ .agent-team/TOOL-CONFIGURATION.md                  |   0
+ .agent-team/VALIDATION.md                          |   0
+ .agent-team/Validate-Team.ps1                      |   0
+ .agent-team/prompts/00-chief-orchestrator.md       |   0
+ .agent-team/prompts/01-product-domain-lead.md      |   0
+ .agent-team/prompts/02-architecture-governor.md    |   0
+ .agent-team/prompts/03-security-governor.md        |   0
+ .../prompts/04-execution-consistency-engineer.md   |   0
+ .agent-team/prompts/05-backend-engineer.md         |   0
+ .agent-team/prompts/06-frontend-engineer.md        |   0
+ .agent-team/prompts/07-data-migration-engineer.md  |   0
+ .agent-team/prompts/08-platform-sre-engineer.md    |   0
+ .agent-team/prompts/09-test-automation-engineer.md |   0
+ .../prompts/10-security-validation-engineer.md     |   0
+ .../prompts/11-observability-incident-engineer.md  |   0
+ .agent-team/prompts/12-docs-release-engineer.md    |   0
+ .../prompts/13-independent-release-reviewer.md     |   0
+ .agent-team/runtime-policy.json                    |   0
+ .agent-team/shared/HANDOFF.md                      |   0
+ .agent-team/shared/PROJECT-CONTEXT.md              |   0
+ .agent-team/shared/RELEASE-GATES.md                |   0
+ .agent-team/shared/REVIEW.md                       |   0
+ .agent-team/shared/TASK-PACKET.md                  |   0
+ .agent-team/team.config.json                       |   0
+ adapters/tianshu-concept/agents/aggregation.json   |   0
+ adapters/tianshu-concept/agents/dispatch.json      |   0
+ adapters/tianshu-concept/agents/doc.json           |   0
+ adapters/tianshu-concept/agents/eng.json           |   0
+ adapters/tianshu-concept/agents/planning.json      |   0
+ adapters/tianshu-concept/agents/qa.json            |   0
+ adapters/tianshu-concept/agents/receiver.json      |   0
+ adapters/tianshu-concept/agents/review.json        |   0
+ .../tianshu-concept/openclaw-agents-config.json    |   0
+ adapters/tianshu-concept/skills/registry.json      |   0
+ adapters/tianshu-concept/skills/tianshu_api.py     |   0
+ agent-control-center-design-and-fix-plan-v2.md     |   0
+ ...rol-center-design-and-implementation-plan-v3.md |   0
+ apps/desktop/.node-version                         |   0
+ apps/desktop/README.md                             |   0
+ apps/desktop/index.html                            |   0
+ apps/desktop/package-lock.json                     |   0
+ apps/desktop/package.json                          |   0
+ apps/desktop/rust-toolchain.toml                   |   0
+ apps/desktop/scripts/prepare-sidecar.ps1           |   0
+ apps/desktop/sidecar.py                            |   0
+ apps/desktop/src-tauri/Cargo.lock                  |   0
+ apps/desktop/src-tauri/Cargo.toml                  |   0
+ apps/desktop/src-tauri/build.rs                    |   0
+ apps/desktop/src-tauri/capabilities/default.json   |   0
+ apps/desktop/src-tauri/examples/ipc_smoke_v2.rs    |   0
+ .../src-tauri/gen/schemas/acl-manifests.json       |   0
+ .../src-tauri/gen/schemas/capabilities.json        |   0
+ .../src-tauri/gen/schemas/desktop-schema.json      |   0
+ .../src-tauri/gen/schemas/windows-schema.json      |   0
+ apps/desktop/src-tauri/icons/128x128.png           | Bin 3512 -> 3512 bytes
+ apps/desktop/src-tauri/icons/128x128@2x.png        | Bin 7012 -> 7012 bytes
+ apps/desktop/src-tauri/icons/32x32.png             | Bin 974 -> 974 bytes
+ apps/desktop/src-tauri/icons/Square107x107Logo.png | Bin 2863 -> 2863 bytes
+ apps/desktop/src-tauri/icons/Square142x142Logo.png | Bin 3858 -> 3858 bytes
+ apps/desktop/src-tauri/icons/Square150x150Logo.png | Bin 3966 -> 3966 bytes
+ apps/desktop/src-tauri/icons/Square284x284Logo.png | Bin 7737 -> 7737 bytes
+ apps/desktop/src-tauri/icons/Square30x30Logo.png   | Bin 903 -> 903 bytes
+ apps/desktop/src-tauri/icons/Square310x310Logo.png | Bin 8591 -> 8591 bytes
+ apps/desktop/src-tauri/icons/Square44x44Logo.png   | Bin 1299 -> 1299 bytes
+ apps/desktop/src-tauri/icons/Square71x71Logo.png   | Bin 2011 -> 2011 bytes
+ apps/desktop/src-tauri/icons/Square89x89Logo.png   | Bin 2468 -> 2468 bytes
+ apps/desktop/src-tauri/icons/StoreLogo.png         | Bin 1523 -> 1523 bytes
+ apps/desktop/src-tauri/icons/icon.icns             | Bin 98451 -> 98451 bytes
+ apps/desktop/src-tauri/icons/icon.ico              | Bin 86642 -> 86642 bytes
+ apps/desktop/src-tauri/icons/icon.png              | Bin 14183 -> 14183 bytes
+ apps/desktop/src-tauri/src/lib.rs                  |   0
+ apps/desktop/src-tauri/src/main.rs                 |   0
+ apps/desktop/src-tauri/tauri.conf.json             |   0
+ apps/desktop/src/main.ts                           |   0
+ apps/desktop/src/styles.css                        |   0
+ apps/desktop/tests/measure_ipc_v2.ps1              |   0
+ apps/desktop/tests/measure_startup.ps1             |   0
+ apps/desktop/tests/run_artifact_suite.ps1          |   0
+ apps/desktop/tests/test_authenticode.ps1           |   0
+ apps/desktop/tests/test_lifecycle.ps1              |   0
+ apps/desktop/tsconfig.json                         |   0
+ apps/desktop/vite.config.ts                        |   0
+ apps/web-console-src/.github/CI_CD_CONFIG.md       |   0
+ apps/web-console-src/.github/workflows/ci-cd.yml   |   0
+ apps/web-console-src/.github/workflows/deploy.yml  |   0
+ .../.github/workflows/monitoring-deploy.yml        |   0
+ apps/web-console-src/.github/workflows/release.yml |   0
+ .../.github/workflows/security-scan.yml            |   0
+ apps/web-console-src/.gitignore                    |   0
+ apps/web-console-src/.prettierrc                   |   0
+ apps/web-console-src/AGENTS.md                     |   0
+ apps/web-console-src/CHANGELOG.md                  |   0
+ apps/web-console-src/CONTRIBUTING.md               |   0
+ apps/web-console-src/LICENSE                       |   0
+ apps/web-console-src/README.en.md                  |   0
+ apps/web-console-src/README.md                     |   0
+ .../\344\273\252\350\241\250\347\233\230.png"      | Bin 665174 -> 665174 bytes
+ ...74\232\350\257\235\347\256\241\347\220\206.png" | Bin 668389 -> 668389 bytes
+ ...34\250\347\272\277\345\257\271\350\257\235.png" | Bin 454381 -> 454381 bytes
+ ...44\232\346\231\272\350\203\275\344\275\223.png" | Bin 448067 -> 448067 bytes
+ .../\345\276\256\344\277\241\347\276\244-2.png"    | Bin 198504 -> 198504 bytes
+ .../\345\276\256\344\277\241\347\276\244-3.png"    | Bin 196029 -> 196029 bytes
+ .../\345\276\256\344\277\241\347\276\244-4.png"    | Bin 193749 -> 193749 bytes
+ .../\345\276\256\344\277\241\347\276\244.png"      | Bin 90983 -> 90983 bytes
+ ...12\200\350\203\275\347\256\241\347\220\206.png" | Bin 503413 -> 503413 bytes
+ ...73\266\346\265\217\350\247\210\345\231\250.png" | Bin 255705 -> 255705 bytes
+ ...\275\344\275\223\345\267\245\345\235\212-1.png" | Bin 360518 -> 360518 bytes
+ ...\275\344\275\223\345\267\245\345\235\212-2.png" | Bin 372551 -> 372551 bytes
+ ...50\241\345\236\213\347\256\241\347\220\206.png" | Bin 620844 -> 620844 bytes
+ .../docs/images/\347\231\273\345\275\225.png"      | Bin 870524 -> 870524 bytes
+ ...73\237\347\233\221\350\247\206\345\231\250.png" | Bin 172489 -> 172489 bytes
+ ...63\273\347\273\237\350\256\276\347\275\256.png" | Bin 172019 -> 172019 bytes
+ ...31\232\346\213\237\345\205\254\345\217\270.png" | Bin 1603697 -> 1603697 bytes
+ ...56\241\345\210\222\344\273\273\345\212\241.png" | Bin 624953 -> 624953 bytes
+ ...56\260\345\277\206\347\256\241\347\220\206.png" | Bin 627518 -> 627518 bytes
+ ...77\234\347\250\213\346\241\214\351\235\242.png" | Bin 163754 -> 163754 bytes
+ ...77\234\347\250\213\347\273\210\347\253\257.png" | Bin 159778 -> 159778 bytes
+ ...42\221\351\201\223\347\256\241\347\220\206.png" | Bin 569417 -> 569417 bytes
+ apps/web-console-src/eslint.config.js              |   0
+ apps/web-console-src/index.html                    |   0
+ apps/web-console-src/package-lock.json             |   0
+ apps/web-console-src/package.json                  |   0
+ .../actors/capy-claw-emoji-v2/manifest.json        |   0
+ .../sheets/coffee-spritesheet.png                  | Bin 328760 -> 328760 bytes
+ .../sheets/error-spritesheet.png                   | Bin 241869 -> 241869 bytes
+ .../capy-claw-emoji-v2/sheets/idea-spritesheet.png | Bin 234320 -> 234320 bytes
+ .../sheets/lie_flat-spritesheet.png                | Bin 197837 -> 197837 bytes
+ .../capy-claw-emoji-v2/sheets/read-spritesheet.png | Bin 320220 -> 320220 bytes
+ .../sheets/repair-spritesheet.png                  | Bin 190783 -> 190783 bytes
+ .../capy-claw-emoji-v2/sheets/rest-spritesheet.png | Bin 325544 -> 325544 bytes
+ .../sheets/sleep-spritesheet.png                   | Bin 319181 -> 319181 bytes
+ .../sheets/stand_back-spritesheet.png              | Bin 273055 -> 273055 bytes
+ .../sheets/stand_front-spritesheet.png             | Bin 322728 -> 322728 bytes
+ .../capy-claw-emoji-v2/sheets/walk-spritesheet.png | Bin 227160 -> 227160 bytes
+ .../capy-claw-emoji-v2/sheets/work-spritesheet.png | Bin 279507 -> 279507 bytes
+ .../actors/cat-claw-emoji-v1/manifest.json         |   0
+ .../sheets/coffee-spritesheet.png                  | Bin 211122 -> 211122 bytes
+ .../cat-claw-emoji-v1/sheets/error-spritesheet.png | Bin 222221 -> 222221 bytes
+ .../cat-claw-emoji-v1/sheets/front-spritesheet.png | Bin 270306 -> 270306 bytes
+ .../cat-claw-emoji-v1/sheets/game-spritesheet.png  | Bin 288433 -> 288433 bytes
+ .../cat-claw-emoji-v1/sheets/idea-spritesheet.png  | Bin 205698 -> 205698 bytes
+ .../sheets/lie_side-spritesheet.png                | Bin 140151 -> 140151 bytes
+ .../sheets/repair-spritesheet.png                  | Bin 217338 -> 217338 bytes
+ .../cat-claw-emoji-v1/sheets/sleep-spritesheet.png | Bin 209985 -> 209985 bytes
+ .../sheets/stand_back-spritesheet.png              | Bin 189309 -> 189309 bytes
+ .../sheets/stand_front-spritesheet.png             | Bin 226666 -> 226666 bytes
+ .../cat-claw-emoji-v1/sheets/walk-spritesheet.png  | Bin 105115 -> 105115 bytes
+ .../cat-claw-emoji-v1/sheets/work-spritesheet.png  | Bin 321578 -> 321578 bytes
+ .../default/2026-03-09/reference-room-tags.png     | Bin 32811 -> 32811 bytes
+ .../default/2026-03-09/reference-walkable.png      | Bin 157427 -> 157427 bytes
+ .../packs/default/2026-03-09/scene-floor.png       | Bin 5963907 -> 5963907 bytes
+ .../packs/default/2026-03-09/scene-objects.png     | Bin 5702707 -> 5702707 bytes
+ apps/web-console-src/public/hermes-logo.png        | Bin 1319989 -> 1319989 bytes
+ apps/web-console-src/public/vite.svg               |   0
+ apps/web-console-src/src/App.vue                   |   0
+ .../src/adapters/museum/router-sync.ts             |   0
+ .../src/adapters/museum/telemetry-feed.ts          |   0
+ .../src/adapters/museum/vue-bridge.ts              |   0
+ apps/web-console-src/src/api/connect.ts            |   0
+ .../web-console-src/src/api/device-auth-payload.ts |   0
+ apps/web-console-src/src/api/device-identity.ts    |   0
+ apps/web-console-src/src/api/evidence.ts           |   0
+ apps/web-console-src/src/api/hermes/chat-types.ts  |   0
+ apps/web-console-src/src/api/hermes/client.ts      |   0
+ .../web-console-src/src/api/hermes/configSchema.ts |   0
+ .../src/api/hermes/dynamicSchema.ts                |   0
+ apps/web-console-src/src/api/hermes/types.ts       |   0
+ apps/web-console-src/src/api/http-client.ts        |   0
+ apps/web-console-src/src/api/myself-agent.ts       |   0
+ apps/web-console-src/src/api/rpc-client.ts         |   0
+ apps/web-console-src/src/api/types/backup.ts       |   0
+ apps/web-console-src/src/api/types/channel.ts      |   0
+ apps/web-console-src/src/api/types/chat-types.ts   |   0
+ apps/web-console-src/src/api/types/config.ts       |   0
+ apps/web-console-src/src/api/types/index.ts        |   0
+ .../src/api/types/remote-desktop.ts                |   0
+ apps/web-console-src/src/api/types/rpc.ts          |   0
+ apps/web-console-src/src/api/types/session.ts      |   0
+ apps/web-console-src/src/api/types/terminal.ts     |   0
+ apps/web-console-src/src/api/websocket.ts          |   0
+ apps/web-console-src/src/assets/styles/main.css    |   0
+ .../src/assets/styles/pixel-components.css         |   0
+ .../src/assets/styles/pixel-tokens.css             |   0
+ .../src/components/common/AnimatedCharacters.vue   |   0
+ .../src/components/common/AutoField.vue            |   0
+ .../src/components/common/ConnectionStatus.vue     |   0
+ .../src/components/common/EmptyState.vue           |   0
+ .../src/components/common/GatewaySwitcher.vue      |   0
+ .../src/components/common/PdfViewer.vue            |   0
+ .../src/components/common/StatCard.vue             |   0
+ .../src/components/hermes/ConfigCategoryNav.vue    |   0
+ .../src/components/hermes/ConfigEditorPanel.vue    |   0
+ .../src/components/hermes/ConfigField.vue          |   0
+ .../src/components/hermes/ConfigFormSection.vue    |   0
+ .../components/hermes/HermesChatCommandPanel.vue   |   0
+ .../src/components/hermes/SkillFileBrowser.vue     |   0
+ .../src/components/layout/AppHeader.vue            |   0
+ .../src/components/layout/AppSidebar.vue           |   0
+ .../src/components/museum/MiniMuseumWidget.vue     |   0
+ .../src/components/museum/MuseumAgentList.vue      |   0
+ .../src/components/museum/MuseumCanvas.vue         |   0
+ .../src/components/museum/MuseumFocusPanel.vue     |   0
+ .../src/components/museum/MuseumToolbar.vue        |   0
+ .../src/components/office/AgentCharacter.vue       |   0
+ .../src/components/office/AgentChatPanel.vue       |   0
+ .../src/components/office/OfficeAreaLabel.vue      |   0
+ .../src/components/office/OfficeCharacter.vue      |   0
+ .../src/components/office/OfficeChatBubble.vue     |   0
+ .../src/components/office/OfficeScene3D.vue        |   0
+ .../src/components/office/OfficeToolbar.vue        |   0
+ .../src/components/office/OfficeWorkspace.vue      |   0
+ .../components/office/ScenarioManagementPanel.vue  |   0
+ .../src/components/office/ScenarioWizard.vue       |   0
+ .../src/components/office/TaskDelegationPanel.vue  |   0
+ .../src/components/office/WizardConfirmPanel.vue   |   0
+ .../src/components/office/WizardExecutionPanel.vue |   0
+ .../src/components/office/chat/ChatHeader.vue      |   0
+ .../components/office/chat/ChatMessageBubble.vue   |   0
+ .../components/office/chat/ChatSkillSelector.vue   |   0
+ .../src/composables/museum/useMuseumSnapshot.ts    |   0
+ .../src/composables/useAgentStatus.ts              |   0
+ apps/web-console-src/src/composables/useChatTTS.ts |   0
+ .../src/composables/useConfigEditor.ts             |   0
+ apps/web-console-src/src/composables/useEdgeTTS.ts |   0
+ .../src/composables/useEventStream.ts              |   0
+ .../src/composables/useHermesCommands.ts           |   0
+ .../src/composables/useHermesProviderConfig.ts     |   0
+ .../src/composables/useMessageList.ts              |   0
+ .../src/composables/usePixelTheme.ts               |   0
+ .../src/composables/useQuickReplies.ts             |   0
+ .../src/composables/useResizable.ts                |   0
+ .../src/composables/useScrollManagement.ts         |   0
+ .../src/composables/useSessionManagement.ts        |   0
+ .../src/composables/useSlashCommands.ts            |   0
+ .../src/composables/useTTSSettings.ts              |   0
+ apps/web-console-src/src/composables/useTheme.ts   |   0
+ .../src/composables/useTokenUsage.ts               |   0
+ apps/web-console-src/src/env.d.ts                  |   0
+ apps/web-console-src/src/i18n/index.ts             |   0
+ apps/web-console-src/src/i18n/locale.ts            |   0
+ apps/web-console-src/src/i18n/messages/en-US.ts    |   0
+ apps/web-console-src/src/i18n/messages/zh-CN.ts    |   0
+ apps/web-console-src/src/i18n/text.ts              |   0
+ apps/web-console-src/src/layouts/DefaultLayout.vue |   0
+ .../src/layouts/MyselfAgentLayout.vue              |   0
+ apps/web-console-src/src/main.ts                   |   0
+ .../src/museum/clawlibrary.config.json             |   0
+ apps/web-console-src/src/museum/core/geometry.ts   |   0
+ apps/web-console-src/src/museum/core/pathfinder.ts |   0
+ apps/web-console-src/src/museum/core/types.ts      |   0
+ apps/web-console-src/src/museum/main.ts            |   0
+ apps/web-console-src/src/museum/remap.ts           |   0
+ .../src/museum/runtime/scene/LibraryScene.ts       |   0
+ .../src/museum/runtime/systems/growth.ts           |   0
+ .../src/museum/runtime/systems/protocolStore.ts    |   0
+ .../src/museum/runtime/systems/touchController.ts  |   0
+ apps/web-console-src/src/museum/ui/events.ts       |   0
+ apps/web-console-src/src/museum/ui/locale.ts       |   0
+ apps/web-console-src/src/museum/ui/palette.ts      |   0
+ apps/web-console-src/src/router/index.ts           |   0
+ apps/web-console-src/src/router/routes.ts          |   0
+ apps/web-console-src/src/stores/agent-router.ts    |   0
+ apps/web-console-src/src/stores/agent.ts           |   0
+ apps/web-console-src/src/stores/auth.ts            |   0
+ apps/web-console-src/src/stores/backup.ts          |   0
+ .../src/stores/channel-management.ts               |   0
+ apps/web-console-src/src/stores/channel.ts         |   0
+ apps/web-console-src/src/stores/chat.ts            |   0
+ apps/web-console-src/src/stores/config.ts          |   0
+ apps/web-console-src/src/stores/cron.ts            |   0
+ apps/web-console-src/src/stores/hermes-cli.ts      |   0
+ apps/web-console-src/src/stores/hermes/channel.ts  |   0
+ apps/web-console-src/src/stores/hermes/chat.ts     |   0
+ apps/web-console-src/src/stores/hermes/config.ts   |   0
+ .../src/stores/hermes/connection.ts                |   0
+ apps/web-console-src/src/stores/hermes/cron.ts     |   0
+ apps/web-console-src/src/stores/hermes/index.ts    |   0
+ apps/web-console-src/src/stores/hermes/memory.ts   |   0
+ apps/web-console-src/src/stores/hermes/model.ts    |   0
+ apps/web-console-src/src/stores/hermes/session.ts  |   0
+ apps/web-console-src/src/stores/hermes/skill.ts    |   0
+ apps/web-console-src/src/stores/locale.ts          |   0
+ apps/web-console-src/src/stores/memory.ts          |   0
+ apps/web-console-src/src/stores/model.ts           |   0
+ apps/web-console-src/src/stores/monitor.ts         |   0
+ apps/web-console-src/src/stores/museum.ts          |   0
+ apps/web-console-src/src/stores/myself-agent.ts    |   0
+ apps/web-console-src/src/stores/node.ts            |   0
+ apps/web-console-src/src/stores/office.ts          |   0
+ apps/web-console-src/src/stores/remote-desktop.ts  |   0
+ apps/web-console-src/src/stores/session.ts         |   0
+ apps/web-console-src/src/stores/skill.ts           |   0
+ apps/web-console-src/src/stores/terminal.ts        |   0
+ apps/web-console-src/src/stores/theme.ts           |   0
+ apps/web-console-src/src/stores/websocket.ts       |   0
+ apps/web-console-src/src/stores/wideMode.ts        |   0
+ apps/web-console-src/src/stores/wizard.ts          |   0
+ apps/web-console-src/src/utils/channel-config.ts   |   0
+ apps/web-console-src/src/utils/chat-parser.ts      |   0
+ apps/web-console-src/src/utils/chat-render.ts      |   0
+ apps/web-console-src/src/utils/configValidation.ts |   0
+ apps/web-console-src/src/utils/cron-formatter.ts   |   0
+ apps/web-console-src/src/utils/error.ts            |   0
+ apps/web-console-src/src/utils/file-utils.ts       |   0
+ apps/web-console-src/src/utils/format.ts           |   0
+ .../src/utils/hermes-provider-helpers.ts           |   0
+ .../src/utils/hermes-tool-parser.ts                |   0
+ apps/web-console-src/src/utils/logger.ts           |   0
+ apps/web-console-src/src/utils/markdown.ts         |   0
+ apps/web-console-src/src/utils/model-parser.ts     |   0
+ apps/web-console-src/src/utils/provider-sync.ts    |   0
+ apps/web-console-src/src/utils/secret-mask.ts      |   0
+ .../src/utils/wizard-agent-generator.ts            |   0
+ apps/web-console-src/src/utils/wizard-execution.ts |   0
+ apps/web-console-src/src/views/BreakRoom.vue       |   0
+ apps/web-console-src/src/views/Dashboard.vue       |   0
+ apps/web-console-src/src/views/Login.vue           |   0
+ .../src/views/agents/AgentsPage.vue                |   0
+ .../src/views/backup/BackupPage.vue                |   0
+ .../src/views/channels/ChannelsPage.vue            |   0
+ apps/web-console-src/src/views/chat/ChatPage.vue   |   0
+ .../src/views/config/ConfigPage.vue                |   0
+ apps/web-console-src/src/views/cron/CronPage.vue   |   0
+ .../src/views/evidence/EvidencePage.vue            |   0
+ apps/web-console-src/src/views/files/FilesPage.vue |   0
+ .../src/views/hermes/HermesChannelsPage.vue        |   0
+ .../src/views/hermes/HermesChatPage.vue            |   0
+ .../src/views/hermes/HermesCliPage.vue             |   0
+ .../src/views/hermes/HermesCronPage.vue            |   0
+ .../src/views/hermes/HermesDashboard.vue           |   0
+ .../src/views/hermes/HermesFilesPage.vue           |   0
+ .../src/views/hermes/HermesMemoryPage.vue          |   0
+ .../src/views/hermes/HermesModelsPage.vue          |   0
+ .../src/views/hermes/HermesRemoteDesktopPage.vue   |   0
+ .../src/views/hermes/HermesSessionsPage.vue        |   0
+ .../src/views/hermes/HermesSkillsPage.vue          |   0
+ .../src/views/hermes/HermesSystemPage.vue          |   0
+ .../src/views/hermes/HermesTerminalPage.vue        |   0
+ .../src/views/memory/MemoryPage.vue                |   0
+ .../src/views/models/ModelsPage.vue                |   0
+ .../src/views/monitor/MonitorPage.vue              |   0
+ .../src/views/myself-agent/MyselfAnalyticsPage.vue |   0
+ .../src/views/myself-agent/MyselfAuditPage.vue     |   0
+ .../src/views/myself-agent/MyselfChatPage.vue      |   0
+ .../src/views/myself-agent/MyselfCronPage.vue      |   0
+ .../src/views/myself-agent/MyselfDashboard.vue     |   0
+ .../src/views/myself-agent/MyselfMemoryPage.vue    |   0
+ .../src/views/myself-agent/MyselfSkillsPage.vue    |   0
+ .../src/views/myself-agent/MyselfTasksPage.vue     |   0
+ .../src/views/myworld/MyWorldPage.vue              |   0
+ apps/web-console-src/src/views/nodes/NodesPage.vue |   0
+ .../src/views/office/OfficePage.vue                |   0
+ .../src/views/remote-desktop/RemoteDesktopPage.vue |   0
+ .../remote-desktop/components/DesktopCanvas.vue    |   0
+ .../remote-desktop/components/NodeSelector.vue     |   0
+ .../remote-desktop/components/SessionList.vue      |   0
+ .../src/views/sessions/SessionDetailPage.vue       |   0
+ .../src/views/sessions/SessionsPage.vue            |   0
+ .../src/views/settings/SettingsPage.vue            |   0
+ .../src/views/skills/SkillsPage.vue                |   0
+ .../src/views/system/SystemPage.vue                |   0
+ .../src/views/terminal/TerminalPage.vue            |   0
+ apps/web-console-src/src/views/tools/ToolsPage.vue |   0
+ apps/web-console-src/tsconfig.app.json             |   0
+ apps/web-console-src/tsconfig.json                 |   0
+ apps/web-console-src/tsconfig.node.json            |   0
+ apps/web-console-src/vite.config.ts                |   0
+ apps/web-console-src/wolai-config.yaml             |   0
+ bin/show_tree.py                                   |   0
+ bin/validate_myteam.py                             |   0
+ bin/validate_template_compliance.py                |   0
+ delivery/README.md                                 |   0
+ delivery/UserStory.md                              |   0
+ delivery/material_digest.md                        |   0
+ delivery/research_report.md                        |   0
+ delivery/v3-enhancement-report.md                  |   0
+ ...256\211\345\205\250\350\256\276\350\256\241.md" |   0
+ ...263\273\347\273\237\350\256\276\350\256\241.md" |   0
+ ...203\250\347\275\262\350\256\276\350\256\241.md" |   0
+ ...236\266\346\236\204\350\256\276\350\256\241.md" |   0
+ docs/adr/0001-desktop-shell.md                     |   0
+ docs/adr/0002-core-sidecar.md                      |   0
+ docs/adr/0022-tauri-spike-result.md                |   0
+ docs/spike/evidence/p1-2026-07-22/README.md        |   0
+ .../p1-2026-07-22/acceptance-decision.json         |   0
+ .../evidence/p1-2026-07-22/build-artifacts.json    |   0
+ .../p1-2026-07-22/installer-validation.json        |   0
+ .../p1-2026-07-22/nuitka-ipc-powershell.json       |   0
+ .../evidence/p1-2026-07-22/nuitka-ipc-rust.json    |   0
+ .../evidence/p1-2026-07-22/nuitka-lifecycle.json   |   0
+ .../evidence/p1-2026-07-22/nuitka-startup.json     |   0
+ .../p1-2026-07-22/nuitka-suite-summary.json        |   0
+ .../p1-2026-07-22/tauri-demo-first.stderr.log      |   0
+ .../p1-2026-07-22/tauri-demo-first.stdout.log      |   0
+ .../tauri-demo-incremental-measured.stderr.log     |   0
+ .../tauri-demo-incremental-measured.stdout.log     |   0
+ .../tauri-demo-incremental-warmup.stderr.log       |   0
+ .../tauri-demo-incremental-warmup.stdout.log       |   0
+ .../p1-2026-07-22/tauri-demo-second.stderr.log     |   0
+ .../p1-2026-07-22/tauri-demo-second.stdout.log     |   0
+ .../evidence/p1-2026-07-22/tauri-demo-timings.json |   0
+ docs/spike/p1-2026-07-22.md                        |   0
+ scripts/etl/tianshu-tasks-source.json              |   0
+ services/control-core/.dockerignore                |   0
+ services/control-core/.github/workflows/ci.yml     |   0
+ services/control-core/.gitignore                   |   0
+ .../control-core/.omc/metrics/agent-metrics.json   |   0
+ .../plans/autopilot-optimization-sprint42-45.md    |   0
+ services/control-core/.omc/project-memory.json     |   0
+ .../1425c2d1-21be-4c5b-9813-5a1eb768f9de.json      |   0
+ .../668a14fb-a35a-4778-96e5-8a9b37d8428d.json      |   0
+ .../b0ff83e3-2a4c-4fd0-ac27-8afe7bbd4152.json      |   0
+ services/control-core/DEVELOPMENT_PLAN.md          |   0
+ services/control-core/Dockerfile                   |   0
+ services/control-core/README.md                    |   0
+ services/control-core/alembic.ini                  |   0
+ services/control-core/alembic/env.py               |   0
+ services/control-core/alembic/script.py.mako       |   0
+ .../3aa7020a9881_initial_schema_10_tables.py       |   0
+ .../versions/84cab4f1b67a_add_users_table.py       |   0
+ ...c3d4e5f6_add_task_templates_and_dependencies.py |   0
+ .../b2c3d4e5f6a7_add_notifications_table.py        |   0
+ ...5f6a7b8_add_messaging_and_marketplace_tables.py |   0
+ .../versions/d4e5f6a7b8c9_add_rbac_tables.py       |   0
+ ...d0_add_llm_cost_records_and_skill_run_fields.py |   0
+ ...d5e6_add_missing_indexes_and_user_updated_at.py |   0
+ .../g2h3i4j5k6l7_add_remaining_missing_indexes.py  |   0
+ .../h3i4j5k6l7m8_add_skill_benchmark_fields.py     |   0
+ ...i5j6k7l8m9n0_add_production_critical_indexes.py |   0
+ ...n0o1_add_task_user_id_status_composite_index.py |   0
+ ...n0o1p2_add_unique_constraint_to_users_sso_id.py |   0
+ .../m1n2o3p4q5r6_add_round5_audit_indexes.py       |   0
+ services/control-core/apps/__init__.py             |   0
+ services/control-core/apps/api_server/__init__.py  |   0
+ .../control-core/apps/api_server/dependencies.py   |   0
+ services/control-core/apps/api_server/main.py      |   0
+ .../apps/api_server/routes/__init__.py             |   0
+ .../control-core/apps/api_server/routes/admin.py   |   0
+ .../control-core/apps/api_server/routes/agents.py  |   0
+ .../apps/api_server/routes/analytics.py            |   0
+ .../apps/api_server/routes/approvals.py            |   0
+ .../control-core/apps/api_server/routes/audit.py   |   0
+ .../control-core/apps/api_server/routes/auth.py    |   0
+ .../control-core/apps/api_server/routes/chat.py    |   0
+ .../apps/api_server/routes/conversations.py        |   0
+ .../control-core/apps/api_server/routes/cron.py    |   0
+ .../control-core/apps/api_server/routes/desktop.py |   0
+ .../apps/api_server/routes/editions.py             |   0
+ .../control-core/apps/api_server/routes/export.py  |   0
+ .../control-core/apps/api_server/routes/files.py   |   0
+ .../control-core/apps/api_server/routes/health.py  |   0
+ .../apps/api_server/routes/marketplace.py          |   0
+ .../control-core/apps/api_server/routes/memory.py  |   0
+ .../control-core/apps/api_server/routes/metrics.py |   0
+ .../apps/api_server/routes/notifications.py        |   0
+ .../apps/api_server/routes/personal.py             |   0
+ .../control-core/apps/api_server/routes/plugins.py |   0
+ .../control-core/apps/api_server/routes/rbac.py    |   0
+ .../control-core/apps/api_server/routes/search.py  |   0
+ .../control-core/apps/api_server/routes/skills.py  |   0
+ .../apps/api_server/routes/task_dependencies.py    |   0
+ .../control-core/apps/api_server/routes/tasks.py   |   0
+ .../apps/api_server/routes/templates.py            |   0
+ .../control-core/apps/api_server/routes/vision.py  |   0
+ .../control-core/apps/api_server/routes/voice.py   |   0
+ .../apps/api_server/routes/webhooks.py             |   0
+ .../apps/api_server/routes/ws/__init__.py          |   0
+ .../api_server/routes/ws/connection_managers.py    |   0
+ .../apps/api_server/routes/ws/ws_auth.py           |   0
+ .../apps/api_server/routes/ws/ws_routes.py         |   0
+ .../.omc/metrics/agent-metrics.json                |   0
+ ...play-1425c2d1-21be-4c5b-9813-5a1eb768f9de.jsonl |   0
+ ...play-668a14fb-a35a-4778-96e5-8a9b37d8428d.jsonl |   0
+ ...play-e30b8356-c407-47a6-9834-35ca552bb65a.jsonl |   0
+ .../.omc/state/hud-stdin-cache.json                |   0
+ .../.omc/state/idle-notif-cooldown.json            |   0
+ .../.omc/state/last-tool-error.json                |   0
+ .../.omc/state/mission-state.json                  |   0
+ .../write-capture-state.json                       |   0
+ .../write-guard-read-permissions.json              |   0
+ .../hud-state.json                                 |   0
+ .../write-guard-read-permissions.json              |   0
+ .../hud-state.json                                 |   0
+ .../hud-state.json                                 |   0
+ .../hud-state.json                                 |   0
+ .../write-guard-read-permissions.json              |   0
+ .../hud-state.json                                 |   0
+ .../.omc/state/subagent-tracking.json              |   0
+ .../apps/enterprise_admin_web/auto-imports.d.ts    |   0
+ .../apps/enterprise_admin_web/components.d.ts      |   0
+ .../apps/enterprise_admin_web/eslint.config.js     |   0
+ .../apps/enterprise_admin_web/index.html           |   0
+ .../apps/enterprise_admin_web/package-lock.json    |   0
+ .../apps/enterprise_admin_web/package.json         |   0
+ .../apps/enterprise_admin_web/src/App.vue          |   0
+ .../src/api/__tests__/api.test.ts                  |   0
+ .../enterprise_admin_web/src/api/agent-control.ts  |   0
+ .../apps/enterprise_admin_web/src/api/index.ts     |   0
+ .../src/components/AudioPlayer.vue                 |   0
+ .../src/components/GlobalSearch.vue                |   0
+ .../enterprise_admin_web/src/components/Layout.vue |   0
+ .../src/components/StatCard.vue                    |   0
+ .../src/components/__tests__/Layout.test.ts        |   0
+ .../src/components/__tests__/StatCard.test.ts      |   0
+ .../__tests__/useExponentialBackoff.test.ts        |   0
+ .../__tests__/useNotificationWS.test.ts            |   0
+ .../src/composables/__tests__/useTaskWS.test.ts    |   0
+ .../src/composables/useAsyncData.ts                |   0
+ .../src/composables/useAudioRecorder.ts            |   0
+ .../src/composables/useChatWS.ts                   |   0
+ .../src/composables/useControlWS.ts                |   0
+ .../src/composables/useEchartsChart.ts             |   0
+ .../src/composables/useExponentialBackoff.ts       |   0
+ .../src/composables/useNotificationWS.ts           |   0
+ .../enterprise_admin_web/src/composables/useSSE.ts |   0
+ .../src/composables/useTaskWS.ts                   |   0
+ .../src/composables/useWebSocket.ts                |   0
+ .../apps/enterprise_admin_web/src/i18n/index.ts    |   0
+ .../enterprise_admin_web/src/i18n/locales/en.ts    |   0
+ .../enterprise_admin_web/src/i18n/locales/zh.ts    |   0
+ .../apps/enterprise_admin_web/src/main.ts          |   0
+ .../src/router/__tests__/guards.test.ts            |   0
+ .../apps/enterprise_admin_web/src/router/index.ts  |   0
+ .../apps/enterprise_admin_web/src/stores/auth.ts   |   0
+ .../src/stores/notification.ts                     |   0
+ .../apps/enterprise_admin_web/src/stores/task.ts   |   0
+ .../src/theme/__tests__/useTheme.test.ts           |   0
+ .../apps/enterprise_admin_web/src/theme/index.ts   |   0
+ .../enterprise_admin_web/src/theme/variables.css   |   0
+ .../apps/enterprise_admin_web/src/types/index.ts   |   0
+ .../src/utils/__tests__/format.test.ts             |   0
+ .../src/utils/__tests__/status.test.ts             |   0
+ .../apps/enterprise_admin_web/src/utils/echarts.ts |   0
+ .../apps/enterprise_admin_web/src/utils/format.ts  |   0
+ .../apps/enterprise_admin_web/src/utils/status.ts  |   0
+ .../enterprise_admin_web/src/views/AgentDetail.vue |   0
+ .../enterprise_admin_web/src/views/AgentList.vue   |   0
+ .../src/views/AnalyticsView.vue                    |   0
+ .../src/views/ApprovalList.vue                     |   0
+ .../enterprise_admin_web/src/views/AuditLog.vue    |   0
+ .../enterprise_admin_web/src/views/ChatView.vue    |   0
+ .../src/views/ConversationList.vue                 |   0
+ .../enterprise_admin_web/src/views/CronList.vue    |   0
+ .../enterprise_admin_web/src/views/Dashboard.vue   |   0
+ .../enterprise_admin_web/src/views/ExportView.vue  |   0
+ .../enterprise_admin_web/src/views/HealthView.vue  |   0
+ .../apps/enterprise_admin_web/src/views/Login.vue  |   0
+ .../enterprise_admin_web/src/views/MemoryList.vue  |   0
+ .../src/views/MonitoringView.vue                   |   0
+ .../enterprise_admin_web/src/views/NotFound.vue    |   0
+ .../src/views/NotificationPanel.vue                |   0
+ .../src/views/RbacManagement.vue                   |   0
+ .../enterprise_admin_web/src/views/Register.vue    |   0
+ .../src/views/ScenarioDetail.vue                   |   0
+ .../src/views/ScenarioList.vue                     |   0
+ .../enterprise_admin_web/src/views/SkillDetail.vue |   0
+ .../enterprise_admin_web/src/views/SkillList.vue   |   0
+ .../enterprise_admin_web/src/views/TaskDAGView.vue |   0
+ .../enterprise_admin_web/src/views/TaskDetail.vue  |   0
+ .../enterprise_admin_web/src/views/TaskList.vue    |   0
+ .../src/views/TemplateList.vue                     |   0
+ .../src/views/__tests__/AnalyticsView.test.ts      |   0
+ .../src/views/__tests__/ApprovalList.test.ts       |   0
+ .../src/views/__tests__/ChatView.test.ts           |   0
+ .../src/views/__tests__/ConversationList.test.ts   |   0
+ .../src/views/__tests__/CronList.test.ts           |   0
+ .../src/views/__tests__/Dashboard.test.ts          |   0
+ .../src/views/__tests__/ExportView.test.ts         |   0
+ .../src/views/__tests__/HealthView.test.ts         |   0
+ .../src/views/__tests__/Login.test.ts              |   0
+ .../src/views/__tests__/MemoryList.test.ts         |   0
+ .../src/views/__tests__/NotificationPanel.test.ts  |   0
+ .../src/views/__tests__/TaskDAGView.test.ts        |   0
+ .../src/views/__tests__/TaskList.test.ts           |   0
+ .../apps/enterprise_admin_web/tsconfig.json        |   0
+ .../apps/enterprise_admin_web/tsconfig.node.json   |   0
+ .../apps/enterprise_admin_web/vite.config.ts       |   0
+ .../apps/enterprise_admin_web/vitest.config.ts     |   0
+ .../control-core/apps/personal_shell/__init__.py   |   0
+ services/control-core/apps/personal_shell/cli.py   |   0
+ .../apps/personal_shell/commands/__init__.py       |   0
+ .../apps/personal_shell/commands/config.py         |   0
+ .../apps/personal_shell/commands/skill.py          |   0
+ .../apps/personal_shell/commands/task.py           |   0
+ .../control-core/apps/personal_shell/executor.py   |   0
+ .../control-core/apps/personal_shell/history.py    |   0
+ services/control-core/apps/personal_shell/repl.py  |   0
+ .../control-core/apps/personal_shell/streaming.py  |   0
+ services/control-core/configs/app.yaml             |   0
+ services/control-core/configs/cache.yaml           |   0
+ services/control-core/configs/cron.yaml            |   0
+ .../control-core/configs/editions/enterprise.yaml  |   0
+ .../control-core/configs/editions/personal.yaml    |   0
+ services/control-core/configs/mcp.yaml             |   0
+ services/control-core/configs/memory.yaml          |   0
+ services/control-core/configs/messaging.yaml       |   0
+ services/control-core/configs/models.yaml          |   0
+ services/control-core/configs/policy.yaml          |   0
+ services/control-core/configs/rate_limits.yaml     |   0
+ services/control-core/configs/rbac.yaml            |   0
+ services/control-core/configs/search.yaml          |   0
+ services/control-core/configs/skills.yaml          |   0
+ services/control-core/configs/tools.yaml           |   0
+ services/control-core/docker-compose.prod.yml      |   0
+ services/control-core/docker-compose.yml           |   0
+ .../docs/2026-05-21-critical-bugfix-plan.md        |   0
+ .../docs/2026-05-22-round3-fix-plan.md             |   0
+ services/control-core/docs/api_reference.md        |   0
+ services/control-core/docs/architecture.md         |   0
+ services/control-core/docs/deployment.md           |   0
+ services/control-core/docs/editions.md             |   0
+ services/control-core/docs/memory_design.md        |   0
+ services/control-core/docs/roadmap.md              |   0
+ services/control-core/docs/security_model.md       |   0
+ services/control-core/docs/skill_lifecycle.md      |   0
+ .../monitoring/docker-compose.monitoring.yml       |   0
+ .../control-core/monitoring/grafana/dashboard.json |   0
+ .../grafana/provisioning/dashboards/dashboard.yml  |   0
+ .../provisioning/datasources/prometheus.yml        |   0
+ .../monitoring/prometheus/prometheus.yml           |   0
+ services/control-core/nginx.conf                   |   0
+ services/control-core/packages/__init__.py         |   0
+ services/control-core/packages/admin/__init__.py   |   0
+ .../control-core/packages/admin/backup_service.py  |   0
+ .../control-core/packages/agent_core/__init__.py   |   0
+ .../control-core/packages/agent_core/agent_bus.py  |   0
+ .../packages/agent_core/context_compressor.py      |   0
+ .../packages/agent_core/edition_manager.py         |   0
+ .../packages/agent_core/orchestrator.py            |   0
+ .../control-core/packages/agent_core/schemas.py    |   0
+ .../control-core/packages/agent_core/sub_agent.py  |   0
+ .../control-core/packages/agent_core/task_state.py |   0
+ .../control-core/packages/agent_core/version.py    |   0
+ services/control-core/packages/auth/__init__.py    |   0
+ .../control-core/packages/auth/auth_service.py     |   0
+ services/control-core/packages/auth/rbac.py        |   0
+ services/control-core/packages/auth/secrets.py     |   0
+ services/control-core/packages/auth/sso.py         |   0
+ services/control-core/packages/cache/__init__.py   |   0
+ services/control-core/packages/cache/base.py       |   0
+ services/control-core/packages/cache/manager.py    |   0
+ services/control-core/packages/cache/memory.py     |   0
+ services/control-core/packages/cache/redis.py      |   0
+ services/control-core/packages/config.py           |   0
+ services/control-core/packages/cron/__init__.py    |   0
+ services/control-core/packages/cron/jobs.py        |   0
+ services/control-core/packages/cron/scheduler.py   |   0
+ services/control-core/packages/db/__init__.py      |   0
+ services/control-core/packages/db/models.py        |   0
+ services/control-core/packages/db/pagination.py    |   0
+ .../packages/db/repositories/__init__.py           |   0
+ .../packages/db/repositories/approval_repo.py      |   0
+ .../packages/db/repositories/audit_repo.py         |   0
+ .../packages/db/repositories/auth_repo.py          |   0
+ .../packages/db/repositories/conversation_repo.py  |   0
+ .../packages/db/repositories/edition_repo.py       |   0
+ .../packages/db/repositories/memory_repo.py        |   0
+ .../packages/db/repositories/messaging_repo.py     |   0
+ .../packages/db/repositories/notification_repo.py  |   0
+ .../packages/db/repositories/rbac_repo.py          |   0
+ .../packages/db/repositories/skill_repo.py         |   0
+ .../db/repositories/task_dependency_repo.py        |   0
+ .../packages/db/repositories/task_repo.py          |   0
+ .../packages/db/repositories/template_repo.py      |   0
+ services/control-core/packages/db/session.py       |   0
+ .../control-core/packages/evaluation/__init__.py   |   0
+ .../packages/evaluation/task_evaluator.py          |   0
+ .../control-core/packages/executor/__init__.py     |   0
+ .../packages/executor/executor_service.py          |   0
+ .../control-core/packages/executor/tool_runner.py  |   0
+ .../packages/executor/tools/__init__.py            |   0
+ .../packages/executor/tools/_auto_import.py        |   0
+ .../control-core/packages/executor/tools/base.py   |   0
+ .../packages/executor/tools/bash_tool.py           |   0
+ .../packages/executor/tools/browser_enhanced.py    |   0
+ .../packages/executor/tools/browser_tools.py       |   0
+ .../packages/executor/tools/delegate_tool.py       |   0
+ .../packages/executor/tools/desktop_tools.py       |   0
+ .../packages/executor/tools/file_tools.py          |   0
+ .../packages/executor/tools/messaging_tool.py      |   0
+ .../packages/executor/tools/personal_tools.py      |   0
+ .../packages/executor/tools/web_search_tool.py     |   0
+ services/control-core/packages/graphql/__init__.py |   0
+ .../control-core/packages/graphql/resolvers.py     |   0
+ services/control-core/packages/graphql/schema.py   |   0
+ services/control-core/packages/graphql/types.py    |   0
+ .../control-core/packages/llm_gateway/__init__.py  |   0
+ .../packages/llm_gateway/anthropic_provider.py     |   0
+ services/control-core/packages/llm_gateway/base.py |   0
+ .../packages/llm_gateway/cost_tracker.py           |   0
+ .../packages/llm_gateway/credential_pool.py        |   0
+ .../packages/llm_gateway/deepseek_provider.py      |   0
+ .../packages/llm_gateway/error_classifier.py       |   0
+ .../packages/llm_gateway/gemini_provider.py        |   0
+ .../packages/llm_gateway/health_tracker.py         |   0
+ .../packages/llm_gateway/mock_provider.py          |   0
+ .../packages/llm_gateway/ollama_provider.py        |   0
+ .../packages/llm_gateway/provider_router.py        |   0
+ .../packages/llm_gateway/smart_router.py           |   0
+ services/control-core/packages/mcp/__init__.py     |   0
+ services/control-core/packages/mcp/mcp_client.py   |   0
+ .../control-core/packages/mcp/mcp_tool_adapter.py  |   0
+ services/control-core/packages/memory/__init__.py  |   0
+ .../packages/memory/importance_scorer.py           |   0
+ .../control-core/packages/memory/memory_service.py |   0
+ services/control-core/packages/memory/retriever.py |   0
+ services/control-core/packages/memory/schemas.py   |   0
+ .../control-core/packages/memory/summarizer.py     |   0
+ .../packages/messaging_gateway/__init__.py         |   0
+ .../packages/messaging_gateway/base.py             |   0
+ .../packages/messaging_gateway/discord_provider.py |   0
+ .../packages/messaging_gateway/feishu_provider.py  |   0
+ .../packages/messaging_gateway/messaging_router.py |   0
+ .../packages/messaging_gateway/slack_provider.py   |   0
+ .../messaging_gateway/telegram_provider.py         |   0
+ .../control-core/packages/middleware/__init__.py   |   0
+ .../control-core/packages/middleware/prometheus.py |   0
+ .../packages/middleware/rate_limiter.py            |   0
+ .../control-core/packages/notification/__init__.py |   0
+ .../packages/notification/notification_service.py  |   0
+ .../notification/notification_ws_manager.py        |   0
+ .../packages/notification/ws_broadcaster.py        |   0
+ .../packages/observability/__init__.py             |   0
+ .../packages/observability/structured_logger.py    |   0
+ .../packages/personal_context/__init__.py          |   0
+ .../personal_context/personal_context_service.py   |   0
+ .../packages/personal_context/reminder_service.py  |   0
+ services/control-core/packages/planner/__init__.py |   0
+ .../packages/planner/personal_prompts.py           |   0
+ .../packages/planner/plan_validator.py             |   0
+ .../packages/planner/planner_service.py            |   0
+ .../packages/planner/prompt_templates.py           |   0
+ services/control-core/packages/plugins/__init__.py |   0
+ services/control-core/packages/plugins/loader.py   |   0
+ services/control-core/packages/plugins/sdk.py      |   0
+ services/control-core/packages/policy/__init__.py  |   0
+ .../packages/policy/capability_token.py            |   0
+ .../control-core/packages/policy/command_safety.py |   0
+ .../control-core/packages/policy/policy_engine.py  |   0
+ .../control-core/packages/policy/risk_rules.py     |   0
+ .../control-core/packages/policy/ssrf_guard.py     |   0
+ .../control-core/packages/policy/tool_discovery.py |   0
+ .../control-core/packages/policy/tool_registry.py  |   0
+ .../packages/policy/unified_registry.py            |   0
+ services/control-core/packages/skills/__init__.py  |   0
+ .../control-core/packages/skills/marketplace.py    |   0
+ services/control-core/packages/skills/schemas.py   |   0
+ .../packages/skills/skill_evaluator.py             |   0
+ .../packages/skills/skill_extractor.py             |   0
+ .../control-core/packages/skills/skill_registry.py |   0
+ .../control-core/packages/skills/skill_service.py  |   0
+ services/control-core/packages/vision/__init__.py  |   0
+ .../control-core/packages/vision/vision_service.py |   0
+ services/control-core/packages/voice/__init__.py   |   0
+ .../control-core/packages/voice/voice_service.py   |   0
+ services/control-core/pyproject.toml               |   0
+ services/control-core/ruff.toml                    |   0
+ .../control-core/scripts/check_no_tool_bypass.py   |   0
+ services/control-core/scripts/init_db.py           |   0
+ .../scripts/nuitka-build/.python-version           |   0
+ .../control-core/scripts/nuitka-build/build.ps1    |   0
+ .../scripts/nuitka-build/requirements-build.lock   |   0
+ .../scripts/nuitka-build/requirements-build.txt    |   0
+ .../scripts/nuitka-build/sidecar-ondir.spec        |   0
+ .../control-core/scripts/nuitka-build/sidecar.py   |   0
+ .../control-core/scripts/nuitka-build/sidecar.spec |   0
+ services/control-core/scripts/run_api.py           |   0
+ .../control-core/scripts/run_enterprise_demo.py    |   0
+ services/control-core/scripts/seed_demo_data.py    |   0
+ services/control-core/tests/__init__.py            |   0
+ services/control-core/tests/conftest.py            |   0
+ services/control-core/tests/e2e/__init__.py        |   0
+ services/control-core/tests/e2e/conftest.py        |   0
+ .../control-core/tests/e2e/test_frontend_e2e.py    |   0
+ .../control-core/tests/e2e/test_full_lifecycle.py  |   0
+ .../control-core/tests/integration/__init__.py     |   0
+ .../tests/integration/test_admin_api.py            |   0
+ .../tests/integration/test_agents_api_new.py       |   0
+ .../tests/integration/test_agents_integration.py   |   0
+ .../tests/integration/test_analytics_flow.py       |   0
+ .../integration/test_analytics_integration.py      |   0
+ .../tests/integration/test_chat_flow.py            |   0
+ .../tests/integration/test_chat_websocket.py       |   0
+ .../tests/integration/test_cron_chaining.py        |   0
+ .../tests/integration/test_desktop_integration.py  |   0
+ .../tests/integration/test_executor_e2e.py         |   0
+ .../test_export_conversation_health_api.py         |   0
+ .../tests/integration/test_files_api.py            |   0
+ .../tests/integration/test_marketplace_api.py      |   0
+ .../tests/integration/test_memory_skill_api.py     |   0
+ .../tests/integration/test_missing_routes.py       |   0
+ .../tests/integration/test_personal_api.py         |   0
+ .../tests/integration/test_personal_chat_api.py    |   0
+ .../integration/test_planning_policy_chain.py      |   0
+ .../tests/integration/test_plugins_integration.py  |   0
+ .../tests/integration/test_rbac_integration.py     |   0
+ .../tests/integration/test_semantic_memory.py      |   0
+ .../tests/integration/test_task_api.py             |   0
+ .../tests/integration/test_vision_integration.py   |   0
+ .../tests/integration/test_webhooks_api.py         |   0
+ services/control-core/tests/security/__init__.py   |   0
+ .../tests/security/test_rbac_security.py           |   0
+ .../control-core/tests/security/test_security.py   |   0
+ services/control-core/tests/unit/__init__.py       |   0
+ .../tests/unit/test_advanced_analytics.py          |   0
+ services/control-core/tests/unit/test_agent_bus.py |   0
+ .../tests/unit/test_alembic_migrations.py          |   0
+ services/control-core/tests/unit/test_analytics.py |   0
+ services/control-core/tests/unit/test_approvals.py |   0
+ services/control-core/tests/unit/test_audit.py     |   0
+ services/control-core/tests/unit/test_auth.py      |   0
+ .../control-core/tests/unit/test_backup_restore.py |   0
+ services/control-core/tests/unit/test_bash_tool.py |   0
+ .../tests/unit/test_browser_enhanced.py            |   0
+ .../control-core/tests/unit/test_browser_tools.py  |   0
+ services/control-core/tests/unit/test_cache.py     |   0
+ .../tests/unit/test_cache_integration.py           |   0
+ .../control-core/tests/unit/test_command_safety.py |   0
+ .../tests/unit/test_context_compressor.py          |   0
+ .../tests/unit/test_conversation_api.py            |   0
+ services/control-core/tests/unit/test_cron.py      |   0
+ .../control-core/tests/unit/test_db_pool_config.py |   0
+ .../control-core/tests/unit/test_delegate_tool.py  |   0
+ .../tests/unit/test_desktop_advanced.py            |   0
+ .../control-core/tests/unit/test_desktop_tools.py  |   0
+ services/control-core/tests/unit/test_editions.py  |   0
+ .../tests/unit/test_error_classifier.py            |   0
+ .../control-core/tests/unit/test_evaluation.py     |   0
+ services/control-core/tests/unit/test_executor.py  |   0
+ .../control-core/tests/unit/test_export_api.py     |   0
+ .../control-core/tests/unit/test_file_tools.py     |   0
+ services/control-core/tests/unit/test_graphql.py   |   0
+ .../control-core/tests/unit/test_health_api.py     |   0
+ .../control-core/tests/unit/test_llm_failover.py   |   0
+ .../control-core/tests/unit/test_llm_gateway.py    |   0
+ .../control-core/tests/unit/test_mcp_client.py     |   0
+ services/control-core/tests/unit/test_memory.py    |   0
+ .../tests/unit/test_messaging_gateway.py           |   0
+ .../tests/unit/test_missing_modules.py             |   0
+ services/control-core/tests/unit/test_models.py    |   0
+ .../tests/unit/test_monitoring_config.py           |   0
+ .../tests/unit/test_notification_persistence.py    |   0
+ .../tests/unit/test_notification_ws.py             |   0
+ .../tests/unit/test_notification_ws_endpoint.py    |   0
+ .../control-core/tests/unit/test_notifications.py  |   0
+ .../control-core/tests/unit/test_observability.py  |   0
+ .../control-core/tests/unit/test_orchestrator.py   |   0
+ .../control-core/tests/unit/test_pagination.py     |   0
+ .../tests/unit/test_personal_edition.py            |   0
+ .../control-core/tests/unit/test_personal_tools.py |   0
+ services/control-core/tests/unit/test_planner.py   |   0
+ .../control-core/tests/unit/test_plugin_loader.py  |   0
+ .../control-core/tests/unit/test_plugin_sdk.py     |   0
+ services/control-core/tests/unit/test_policy.py    |   0
+ .../control-core/tests/unit/test_prometheus.py     |   0
+ .../control-core/tests/unit/test_rate_limiter.py   |   0
+ .../tests/unit/test_rate_limiter_dynamic.py        |   0
+ services/control-core/tests/unit/test_rbac.py      |   0
+ services/control-core/tests/unit/test_rbac_repo.py |   0
+ .../control-core/tests/unit/test_redis_cache.py    |   0
+ services/control-core/tests/unit/test_repos.py     |   0
+ services/control-core/tests/unit/test_schemas.py   |   0
+ services/control-core/tests/unit/test_search.py    |   0
+ services/control-core/tests/unit/test_secrets.py   |   0
+ .../tests/unit/test_security_hardening.py          |   0
+ .../tests/unit/test_shared_fixtures.py             |   0
+ services/control-core/tests/unit/test_skills.py    |   0
+ .../control-core/tests/unit/test_smart_router.py   |   0
+ services/control-core/tests/unit/test_sso.py       |   0
+ .../control-core/tests/unit/test_ssrf_guard.py     |   0
+ services/control-core/tests/unit/test_sub_agent.py |   0
+ .../control-core/tests/unit/test_task_dag_api.py   |   0
+ .../tests/unit/test_task_dependencies.py           |   0
+ .../tests/unit/test_task_retry_batch.py            |   0
+ .../control-core/tests/unit/test_task_state.py     |   0
+ .../control-core/tests/unit/test_task_ws_events.py |   0
+ services/control-core/tests/unit/test_templates.py |   0
+ .../tests/unit/test_tier1_enhancements.py          |   0
+ .../tests/unit/test_unified_registry.py            |   0
+ services/control-core/tests/unit/test_vision.py    |   0
+ .../tests/unit/test_vision_advanced.py             |   0
+ services/control-core/tests/unit/test_voice.py     |   0
+ .../tests/unit/test_web_search_tool.py             |   0
+ services/control-core/tests/unit/test_websocket.py |   0
+ services/control-core/tests/unit/test_ws_chat.py   |   0
+ .../tests/unit/test_ws_token_refresh.py            |   0
+ .../protocols/intermediate_confirmation.md         |   0
+ .../aicoding-team-bootstrap/templates/UserStory.md |   0
+ .../templates/material_digest.md                   |   0
+ .../templates/research_report.md                   |   0
+ ...256\211\345\205\250\350\256\276\350\256\241.md" |   0
+ ...263\273\347\273\237\350\256\276\350\256\241.md" |   0
+ ...203\250\347\275\262\350\256\276\350\256\241.md" |   0
+ ...236\266\346\236\204\350\256\276\350\256\241.md" |   0
+ 902 files changed, 0 insertions(+), 0 deletions(-)

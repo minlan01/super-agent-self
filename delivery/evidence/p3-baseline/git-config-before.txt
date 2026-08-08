@@ -1,0 +1,18 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[user]
+	name = minlan
+	email = minlan@example.com
+[remote "upstream"]
+	url = /home/minlan/Agents/myself-agent
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+[branch "main"]
+	vscode-merge-base = upstream/main
+	remote = origin
+	merge = refs/heads/main
+[remote "origin"]
+	url = https://github.com/minlan01/super-agent-self.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
