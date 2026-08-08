@@ -22,6 +22,9 @@ from packages.platform.windows.conpty import (
     is_conpty_available,
 )
 
+# Use hardcoded paths instead of tmp_path to avoid safe-delete interference
+_WORKSPACE = r"D:\workspace\test-task"
+
 
 class TestProcessExecuteRequest:
     """P3.10A: Parameterized process execution request validation."""
@@ -38,28 +41,28 @@ class TestProcessExecuteRequest:
         assert req.args == ("python",)
         assert req.version == PROCESS_EXECUTE_VERSION
 
-    def test_rejects_shell_interpreters(self, tmp_path):
+    def test_rejects_shell_interpreters(self):
         """process.execute must refuse shell interpreters."""
         for shell in ["cmd.exe", "powershell.exe", "bash", "sh", "python.exe"]:
             req = ProcessExecuteRequest(
                 executable=f"C:\\Windows\\System32\\{shell}",
                 args=(),
-                cwd=str(tmp_path),
+                cwd=_WORKSPACE,
             )
             with pytest.raises(Exception, match="shell interpreter"):
-                req.validate_security(str(tmp_path))
+                req.validate_security(_WORKSPACE)
 
-    def test_rejects_relative_executable(self, tmp_path):
+    def test_rejects_relative_executable(self):
         """executable must be absolute path."""
         req = ProcessExecuteRequest(
             executable="where.exe",
             args=(),
-            cwd=str(tmp_path),
+            cwd=_WORKSPACE,
         )
         with pytest.raises(Exception, match="absolute path"):
-            req.validate_security(str(tmp_path))
+            req.validate_security(_WORKSPACE)
 
-    def test_rejects_cwd_outside_workspace(self, tmp_path):
+    def test_rejects_cwd_outside_workspace(self):
         """cwd must resolve inside workspace_root."""
         req = ProcessExecuteRequest(
             executable=r"C:\Windows\System32\where.exe",
@@ -67,7 +70,7 @@ class TestProcessExecuteRequest:
             cwd=r"C:\Windows",  # outside workspace
         )
         with pytest.raises(Exception, match="inside workspace"):
-            req.validate_security(str(tmp_path))
+            req.validate_security(_WORKSPACE)
 
     def test_timeout_must_be_positive(self):
         """timeout_sec must be positive."""
@@ -108,12 +111,12 @@ class TestProcessExecuteRequest:
                 "version": "2.0",
             })
 
-    def test_request_is_frozen(self, tmp_path):
+    def test_request_is_frozen(self):
         """Request should be immutable."""
         req = ProcessExecuteRequest(
             executable="/bin/echo",
             args=(),
-            cwd=str(tmp_path),
+            cwd=_WORKSPACE,
         )
         with pytest.raises((AttributeError, TypeError)):
             req.executable = "/bin/cat"  # type: ignore[misc]

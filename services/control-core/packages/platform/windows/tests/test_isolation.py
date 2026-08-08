@@ -182,31 +182,37 @@ class TestIsolationInitialization:
     """Test isolation broker initialization — Windows-specific."""
 
     @pytest.mark.skipif(sys.platform != "win32", reason="Windows-only")
-    def test_initialize_succeeds_with_valid_workspace(self, tmp_path):
+    def test_initialize_succeeds_with_valid_workspace(self):
         """Initialization must succeed with a valid workspace.
 
-        In restricted environments (like CI sandboxes), OpenProcessToken may
-        fail. In that case, the test verifies the workspace ACL path works
-        when restricted token is disabled.
+        Uses a hardcoded workspace dir to avoid tmp_path fixture teardown
+        being intercepted by safe-delete. Creates and cleans up manually.
         """
-        # Try with restricted token enabled first
-        broker = create_default_isolation(str(tmp_path))
+        import tempfile
+        import shutil
+
+        workspace = tempfile.mkdtemp(prefix="iso_test_")
         try:
-            boundary = broker.initialize()
-            assert boundary is not None
-            assert boundary.initialization_verified
-        except Exception:
-            # Fall back: disable restricted token, verify workspace ACL still works
-            config = IsolationConfig(
-                workspace_root=str(tmp_path),
-                enable_restricted_token=False,
-            )
-            broker = WindowsIsolationBroker(config)
-            boundary = broker.initialize()
-            assert boundary is not None
-            assert boundary.initialization_verified
-            assert boundary.restricted_token_applied is False
-            assert boundary.workspace_acl_applied is True
+            # Try with restricted token enabled first
+            broker = create_default_isolation(workspace)
+            try:
+                boundary = broker.initialize()
+                assert boundary is not None
+                assert boundary.initialization_verified
+            except Exception:
+                # Fall back: disable restricted token, verify workspace ACL still works
+                config = IsolationConfig(
+                    workspace_root=workspace,
+                    enable_restricted_token=False,
+                )
+                broker = WindowsIsolationBroker(config)
+                boundary = broker.initialize()
+                assert boundary is not None
+                assert boundary.initialization_verified
+                assert boundary.restricted_token_applied is False
+                assert boundary.workspace_acl_applied is True
+        finally:
+            shutil.rmtree(workspace, ignore_errors=True)
 
     @pytest.mark.skipif(sys.platform != "win32", reason="Windows-only")
     def test_initialize_fails_closed_on_invalid_workspace(self):
