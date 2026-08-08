@@ -46,6 +46,13 @@ dev = [
     "pytest-playwright>=0.5.0",
     "bandit[toml]",
 ]
+windows = [
+    "pywin32>=306,<310",
+    "Pillow>=10.0,<12.0",
+]
+windows-uia = [
+    "uiautomation>=2.0,<3.0",
+]
 
 [tool.setuptools.packages.find]
 include = ["packages*", "apps*"]
