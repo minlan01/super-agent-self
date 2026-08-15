@@ -40,8 +40,15 @@ def _is_path_allowed(workdir: str, workspace_root: str) -> bool:
 
 
 def _bash_check_fn(args: dict) -> tuple[bool, str]:
-    """Pre-execution safety check for bash commands."""
+    """Pre-execution safety check for bash commands.
+
+    ``command`` may arrive as a list (parameterized argv from structured
+    callers) — join it before pattern matching so the injection checks
+    still apply to the effective command text.
+    """
     command = args.get("command", "")
+    if isinstance(command, (list, tuple)):
+        command = " ".join(str(part) for part in command)
     if not command:
         return False, "command is required"
     safe, reason = _safety_checker.check_all(command)

@@ -296,9 +296,21 @@ class TestAdminEndpoints:
     """Integration tests for GET /admin/rate-limits and POST /admin/rate-limits/reload."""
 
     def _build_app(self, tmp_path: Path) -> tuple[FastAPI, TestClient, str]:
-        """Create a test app with the admin routes and a fresh limiter."""
-        from apps.api_server.dependencies import get_current_user
+        """Create a test app with the admin routes and a fresh limiter.
+
+        P1: require_auth defaults to True, and require_permission() then
+        queries RBAC tables for the resolved user — against the global
+        engine when get_db is not overridden.  For this isolated app we
+        disable require_auth (synthetic-admin path, no DB touched) and
+        override ``_resolve_current_user`` — the function object
+        require_permission actually Depends on (get_current_user is only
+        a re-export alias, overriding it has no effect here).
+        """
+        import os
+
+        from apps.api_server.dependencies import _resolve_current_user
         from apps.api_server.routes.admin import router as admin_router
+        from packages.config import clear_settings_cache
 
         cfg_path = tmp_path / "rate_limits.yaml"
         _write_yaml(cfg_path, _valid_yaml())
@@ -306,7 +318,7 @@ class TestAdminEndpoints:
         app = FastAPI()
         app.include_router(admin_router, prefix="/api/v1/admin")
 
-        # Override auth dependency — always return a valid admin user
+        # Fake admin user (synthetic, never attached to a session).
         from packages.db.models import User, UserRole
         _fake_admin = User(
             id="test-admin",
@@ -316,7 +328,10 @@ class TestAdminEndpoints:
             role=UserRole.ADMIN,
             is_active=True,
         )
-        app.dependency_overrides[get_current_user] = lambda: _fake_admin
+        app.dependency_overrides[_resolve_current_user] = lambda: _fake_admin
+
+        os.environ["REQUIRE_AUTH"] = "false"
+        clear_settings_cache()
 
         # Create limiter and register as active
         limiter = RateLimiter(app=app, config_path=str(cfg_path))

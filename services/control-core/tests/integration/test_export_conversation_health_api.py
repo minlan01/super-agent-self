@@ -10,7 +10,19 @@ from apps.api_server.main import app
 
 @pytest.fixture()
 def client():
+    """TestClient with a valid Bearer token (P1: require_auth defaults True)."""
+    from tests.integration.conftest import make_auth_header
+
+    from packages.db.session import SessionLocal
+
+    db = SessionLocal()
+    try:
+        headers = make_auth_header(db)
+    finally:
+        db.close()
+
     with TestClient(app) as c:
+        c.headers.update(headers)
         yield c
 
 
@@ -91,13 +103,38 @@ class TestExportIntegration:
 @pytest.mark.integration
 class TestConversationIntegration:
     def test_list_conversations_with_filter(self, client: TestClient):
-        # Use a unique user_id to get an empty/predictable result
+        """P1 semantics: the ?user_id= query param is IGNORED (anti-forgery);
+        a non-admin user only sees their own (empty) conversation list."""
+        from tests.integration.conftest import make_auth_header
+
+        from packages.db.session import SessionLocal
+
+        db = SessionLocal()
+        try:
+            viewer_headers = make_auth_header(db, role="viewer")
+        finally:
+            db.close()
+
+        # The client's default admin header sees everything (owner filter
+        # is disabled for admins); client-sent user_id must not change that.
         resp = client.get("/api/v1/conversations?user_id=no-such-user-xyz")
         assert resp.status_code == 200
         body = resp.json()
         assert body["success"] is True
-        assert body["count"] == 0
-        assert body["data"] == []
+        assert isinstance(body["data"], list)
+
+        # A fresh viewer user sees only their own conversations: empty.
+        saved = dict(client.headers)
+        client.headers.update(viewer_headers)
+        try:
+            resp2 = client.get("/api/v1/conversations")
+            assert resp2.status_code == 200
+            body2 = resp2.json()
+            assert body2["count"] == 0
+            assert body2["data"] == []
+        finally:
+            client.headers.clear()
+            client.headers.update(saved)
 
     def test_create_and_get_conversation(self, client: TestClient):
         # Create a conversation via chat (which auto-creates conversations)

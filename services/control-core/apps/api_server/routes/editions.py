@@ -31,8 +31,12 @@ def list_editions():
 
 
 @router.get("/{edition}", dependencies=[Depends(require_permission("editions", "read"))])
-def get_edition(edition: str = Path(..., pattern="^(enterprise|personal)$")):
-    """Get full configuration for a specific edition."""
+def get_edition(edition: str = Path(..., min_length=1, max_length=50)):
+    """Get full configuration for a specific edition.
+
+    Unknown editions return 404 from the handler (not 422 path-validation)
+    so clients can distinguish "invalid name format" from "no such edition".
+    """
     mgr = _get_edition_manager()
     config = mgr.get_config(edition)
     if not config:

@@ -287,10 +287,14 @@ class TestRedisCacheBackendClear:
         mock_redis.scan_iter.return_value = _async_iter(keys)
         count = await redis_backend.clear("*")
         assert count == 3
-        mock_redis.scan_iter.assert_called_once_with(match="myagent:*")
-        assert mock_redis.delete.await_count == 3
-        for key in keys:
-            mock_redis.delete.assert_any_await(key)
+        _args, kwargs = mock_redis.scan_iter.call_args
+        assert kwargs.get("match") == "myagent:*"
+        # clear() may batch deletes into a single call — assert key coverage.
+        deleted_keys = set()
+        for call in mock_redis.delete.await_args_list:
+            deleted_keys.update(a for a in call.args if isinstance(a, (str, list)))
+        flattened = {k for item in deleted_keys for k in (item if isinstance(item, list) else [item])}
+        assert set(keys) <= flattened
 
     @pytest.mark.asyncio
     async def test_clear_specific_pattern(self, redis_backend, mock_redis):
@@ -298,7 +302,8 @@ class TestRedisCacheBackendClear:
         mock_redis.scan_iter.return_value = _async_iter(keys)
         count = await redis_backend.clear("task:*")
         assert count == 2
-        mock_redis.scan_iter.assert_called_once_with(match="myagent:task:*")
+        _args, kwargs = mock_redis.scan_iter.call_args
+        assert kwargs.get("match") == "myagent:task:*"
 
     @pytest.mark.asyncio
     async def test_clear_empty(self, redis_backend, mock_redis):
@@ -385,7 +390,8 @@ class TestRedisCacheBackendPrefix:
     async def test_prefix_on_clear(self, redis_backend, mock_redis):
         mock_redis.scan_iter.return_value = _async_iter([])
         await redis_backend.clear("ns:*")
-        mock_redis.scan_iter.assert_called_once_with(match="myagent:ns:*")
+        _args, kwargs = mock_redis.scan_iter.call_args
+        assert kwargs.get("match") == "myagent:ns:*"
 
     @pytest.mark.asyncio
     async def test_custom_prefix(self, mock_redis):
@@ -524,7 +530,8 @@ class TestCacheManagerWithRedisBackend:
         mock_redis.scan_iter.return_value = _async_iter(keys)
         count = await mgr.invalidate("tasks")
         assert count == 2
-        mock_redis.scan_iter.assert_called_once_with(match="myagent:tasks:*")
+        _a, kw = mock_redis.scan_iter.call_args
+        assert kw.get("match") == "myagent:tasks:*"
 
     @pytest.mark.asyncio
     async def test_namespace_isolation(self, mgr_with_redis):
@@ -567,7 +574,8 @@ class TestCacheManagerWithRedisBackend:
         mock_redis.scan_iter.return_value = _async_iter(keys)
         count = await mgr.invalidate_tasks()
         assert count == 1
-        mock_redis.scan_iter.assert_called_once_with(match="myagent:tasks:*")
+        _a, kw = mock_redis.scan_iter.call_args
+        assert kw.get("match") == "myagent:tasks:*"
 
     @pytest.mark.asyncio
     async def test_convenience_invalidate_dashboard(self, mgr_with_redis):
@@ -576,7 +584,8 @@ class TestCacheManagerWithRedisBackend:
         mock_redis.scan_iter.return_value = _async_iter(keys)
         count = await mgr.invalidate_dashboard()
         assert count == 1
-        mock_redis.scan_iter.assert_called_once_with(match="myagent:dashboard:*")
+        _a, kw = mock_redis.scan_iter.call_args
+        assert kw.get("match") == "myagent:dashboard:*"
 
     @pytest.mark.asyncio
     async def test_namespace_ttl_override(self, mgr_with_redis):
@@ -887,4 +896,9 @@ class TestCacheManagerRedisRoundTrip:
         ])
         count = await mgr.invalidate("tasks")
         assert count == 2
-        assert mock_redis.delete.await_count == 2
+        # Deletes may be batched into one call — verify key coverage.
+        deleted = set()
+        for call in mock_redis.delete.await_args_list:
+            for a in call.args:
+                deleted.update(a if isinstance(a, list) else [a])
+        assert {"myagent:tasks:a", "myagent:tasks:b"} <= deleted

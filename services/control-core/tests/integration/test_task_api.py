@@ -10,8 +10,23 @@ from apps.api_server.main import app
 
 @pytest.fixture()
 def client():
-    """Yield a TestClient — startup event creates DB tables automatically."""
+    """Yield a TestClient — startup event creates DB tables automatically.
+
+    P1: require_auth defaults to True, so attach a valid Bearer token
+    (user created in the app's own DB via SessionLocal).
+    """
+    from tests.integration.conftest import make_auth_header
+
+    from packages.db.session import SessionLocal
+
+    db = SessionLocal()
+    try:
+        headers = make_auth_header(db)
+    finally:
+        db.close()
+
     with TestClient(app) as c:
+        c.headers.update(headers)
         yield c
 
 

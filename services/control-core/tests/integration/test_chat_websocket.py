@@ -17,8 +17,31 @@ from apps.api_server.main import app
 
 @pytest.fixture()
 def client():
+    """TestClient with a valid Bearer token (P1: require_auth defaults True).
+
+    The raw token is exposed as ``client.ws_token`` for WebSocket connects
+    (WS auth uses ``?token=`` query param, not the Authorization header).
+    """
+    from tests.integration.conftest import make_auth_header
+
+    from packages.db.session import SessionLocal
+
+    db = SessionLocal()
+    try:
+        headers = make_auth_header(db)
+    finally:
+        db.close()
+
     with TestClient(app) as c:
+        c.headers.update(headers)
+        c.ws_token = headers["Authorization"].removeprefix("Bearer ")
         yield c
+
+
+def _ws(client: TestClient, url: str):
+    """WebSocket connect with the auth token attached (?token=...)."""
+    sep = "&" if "?" in url else "?"
+    return client.websocket_connect(f"{url}{sep}token={client.ws_token}")
 
 
 # ── Task WebSocket: connect, ping/pong ──────────────────────────────────────
@@ -31,22 +54,24 @@ class TestTaskWebSocket:
     def test_connect_and_ping_pong(self, client: TestClient):
         """Connecting to a task WS and sending 'ping' should return 'pong'."""
         task_id = str(uuid.uuid4())
-        with client.websocket_connect(f"/ws/tasks/{task_id}") as ws:
+        with _ws(client, f"/ws/tasks/{task_id}") as ws:
             ws.send_text("ping")
             data = ws.receive_text()
             assert data == "pong"
 
-    def test_connect_without_token(self, client: TestClient):
-        """Without a token, connection should still work (REQUIRE_AUTH=false)."""
+    def test_connect_without_token_rejected(self, client: TestClient):
+        """Without a token the WS is rejected (P1: require_auth defaults True)."""
+        from starlette.websockets import WebSocketDisconnect
+
         task_id = str(uuid.uuid4())
-        with client.websocket_connect(f"/ws/tasks/{task_id}") as ws:
-            ws.send_text("ping")
-            assert ws.receive_text() == "pong"
+        with pytest.raises(WebSocketDisconnect):
+            with client.websocket_connect(f"/ws/tasks/{task_id}") as ws:
+                ws.receive_text()
 
     def test_multiple_pings_in_sequence(self, client: TestClient):
         """Multiple pings should each get a pong."""
         task_id = str(uuid.uuid4())
-        with client.websocket_connect(f"/ws/tasks/{task_id}") as ws:
+        with _ws(client, f"/ws/tasks/{task_id}") as ws:
             for _ in range(5):
                 ws.send_text("ping")
                 assert ws.receive_text() == "pong"
@@ -56,8 +81,8 @@ class TestTaskWebSocket:
         task_id_1 = str(uuid.uuid4())
         task_id_2 = str(uuid.uuid4())
 
-        with client.websocket_connect(f"/ws/tasks/{task_id_1}") as ws1:
-            with client.websocket_connect(f"/ws/tasks/{task_id_2}") as ws2:
+        with _ws(client, f"/ws/tasks/{task_id_1}") as ws1:
+            with _ws(client, f"/ws/tasks/{task_id_2}") as ws2:
                 ws1.send_text("ping")
                 ws2.send_text("ping")
                 assert ws1.receive_text() == "pong"
@@ -66,7 +91,7 @@ class TestTaskWebSocket:
     def test_websocket_connection_lifecycle(self, client: TestClient):
         """Connection should be usable, then cleanly close."""
         task_id = str(uuid.uuid4())
-        with client.websocket_connect(f"/ws/tasks/{task_id}") as ws:
+        with _ws(client, f"/ws/tasks/{task_id}") as ws:
             ws.send_text("ping")
             assert ws.receive_text() == "pong"
         # After context manager exits, connection is closed
@@ -81,21 +106,21 @@ class TestChatWebSocketPingPong:
 
     def test_raw_text_ping_returns_json_pong(self, client: TestClient):
         """Sending raw 'ping' string should return JSON pong."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text("ping")
             data = json.loads(ws.receive_text())
             assert data["type"] == "pong"
 
     def test_json_ping_envelope_returns_json_pong(self, client: TestClient):
         """Sending JSON {"type":"ping"} should return JSON pong."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({"type": "ping"}))
             data = json.loads(ws.receive_text())
             assert data["type"] == "pong"
 
     def test_multiple_pings(self, client: TestClient):
         """Multiple sequential pings should each get a pong."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             for _ in range(3):
                 ws.send_text(json.dumps({"type": "ping"}))
                 data = json.loads(ws.receive_text())
@@ -111,7 +136,7 @@ class TestChatWebSocketErrors:
 
     def test_invalid_json_returns_error(self, client: TestClient):
         """Non-JSON text (not 'ping') should return an error."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text("not-valid-json{{{")
             data = json.loads(ws.receive_text())
             assert data["type"] == "error"
@@ -119,7 +144,7 @@ class TestChatWebSocketErrors:
 
     def test_missing_message_field_returns_error(self, client: TestClient):
         """Chat envelope without 'message' field should return error."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({"type": "chat"}))
             data = json.loads(ws.receive_text())
             assert data["type"] == "error"
@@ -127,14 +152,14 @@ class TestChatWebSocketErrors:
 
     def test_empty_message_returns_error(self, client: TestClient):
         """Chat envelope with empty/whitespace message should return error."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({"type": "chat", "message": "   "}))
             data = json.loads(ws.receive_text())
             assert data["type"] == "error"
 
     def test_unknown_type_returns_error(self, client: TestClient):
         """Unknown message type should return error."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({"type": "unknown_xyz"}))
             data = json.loads(ws.receive_text())
             assert data["type"] == "error"
@@ -150,7 +175,7 @@ class TestChatWebSocketFlow:
 
     def test_chat_message_receives_typing_and_reply(self, client: TestClient):
         """Sending a chat message should produce typing indicator then reply."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({
                 "type": "chat",
                 "message": "Hello, what can you do?",
@@ -176,7 +201,7 @@ class TestChatWebSocketFlow:
 
     def test_chat_with_task_intent_creates_task(self, client: TestClient):
         """Sending a task-oriented message should create a task."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({
                 "type": "chat",
                 "message": "search for latest AI news",
@@ -195,7 +220,7 @@ class TestChatWebSocketFlow:
 
     def test_chat_with_reminder_intent(self, client: TestClient):
         """Sending a reminder message should trigger reminder creation."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text(json.dumps({
                 "type": "chat",
                 "message": "remind me to check emails tomorrow",
@@ -214,7 +239,7 @@ class TestChatWebSocketFlow:
 
     def test_chat_with_continuation_conversation_id(self, client: TestClient):
         """Second message with same conversation_id should continue the chat."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             # First message
             ws.send_text(json.dumps({
                 "type": "chat",
@@ -261,7 +286,7 @@ class TestChatWebSocketSequential:
 
     def test_sequential_ping_and_chat(self, client: TestClient):
         """Ping followed by chat should both work."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             # Ping
             ws.send_text("ping")
             assert json.loads(ws.receive_text())["type"] == "pong"
@@ -285,7 +310,7 @@ class TestChatWebSocketSequential:
 
     def test_error_then_valid_message(self, client: TestClient):
         """An error response should not break the connection."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             # Invalid message
             ws.send_text("not-json")
             error = json.loads(ws.receive_text())
@@ -298,7 +323,7 @@ class TestChatWebSocketSequential:
 
     def test_multiple_errors_in_sequence(self, client: TestClient):
         """Multiple invalid messages should each get an error response."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             for _ in range(3):
                 ws.send_text("{{{invalid")
                 error = json.loads(ws.receive_text())
@@ -315,14 +340,14 @@ class TestChatWebSocketLifecycle:
 
     def test_connection_opens_successfully(self, client: TestClient):
         """WebSocket should open without error."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             # If we get here, the connection opened
             ws.send_text("ping")
             assert json.loads(ws.receive_text())["type"] == "pong"
 
     def test_connection_close_is_clean(self, client: TestClient):
         """Closing the context manager should cleanly close the connection."""
-        with client.websocket_connect("/ws/chat") as ws:
+        with _ws(client, "/ws/chat") as ws:
             ws.send_text("ping")
             ws.receive_text()
         # Context manager exit should not raise
@@ -330,8 +355,8 @@ class TestChatWebSocketLifecycle:
     def test_task_and_chat_websockets_coexist(self, client: TestClient):
         """Both task and chat WebSocket should work simultaneously."""
         task_id = str(uuid.uuid4())
-        with client.websocket_connect(f"/ws/tasks/{task_id}") as task_ws:
-            with client.websocket_connect("/ws/chat") as chat_ws:
+        with _ws(client, f"/ws/tasks/{task_id}") as task_ws:
+            with _ws(client, "/ws/chat") as chat_ws:
                 task_ws.send_text("ping")
                 assert task_ws.receive_text() == "pong"
 

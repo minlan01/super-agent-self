@@ -26,19 +26,22 @@ def client(db_engine, db):
 
 @pytest.fixture()
 def auth_client(db_engine, db):
-    """Client that sends a valid-looking Authorization header.
+    """Authenticated admin client (P1: require_auth defaults True).
 
-    Because REQUIRE_AUTH is false by default, the admin routes'
-    _require_admin dependency will return the default-admin user
-    without actually validating the token.
+    Creates the it-admin user + admin role binding in the overridden DB and
+    attaches a valid Bearer token.
     """
     from apps.api_server.dependencies import get_db
+
+    from tests.integration.conftest import make_auth_header
 
     def _override_get_db():
         yield db
 
     app.dependency_overrides[get_db] = _override_get_db
+    headers = make_auth_header(db)
     with TestClient(app) as c:
+        c.headers.update(headers)
         yield c
     app.dependency_overrides.clear()
 

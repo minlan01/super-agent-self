@@ -36,6 +36,15 @@ ALL_TABLES = sorted([
     "role_permissions",
     "user_role_assignments",
     "llm_cost_records",
+    # P2 execution contract (spec §4.3)
+    "capability_grants",
+    "leases",
+    "effect_records",
+    "tool_receipts",
+    "dispatch_attempts",
+    # P2.6 approval gating
+    "approval_requests",
+    "approval_votes",
 ])
 
 ALEMBIC_SCRIPT_LOC = os.path.normpath(
@@ -100,7 +109,7 @@ class TestAlembicUpgrade:
             assert table in actual_tables, f"Table '{table}' missing after upgrade. Got: {actual_tables}"
 
         non_alembic = [t for t in actual_tables if not t.startswith("alembic_")]
-        assert len(non_alembic) == 24, f"Expected 24 tables, got {len(non_alembic)}: {non_alembic}"
+        assert len(non_alembic) == 31, f"Expected 31 tables, got {len(non_alembic)}: {non_alembic}"
 
     def test_task_templates_columns(self, alembic_config, engine):
         """task_templates table has the correct columns from TaskTemplate model."""
@@ -165,22 +174,24 @@ class TestAlembicDowngrade:
 
     def test_downgrade_drops_newest_tables(self, alembic_config, engine):
         """Downgrading by one revision should revert the newest migration
-        (k7l8m9n0o1p2 — unique constraint on users.sso_id)."""
+        (p2_approval — approval_requests + approval_votes)."""
         _upgrade(alembic_config)
 
         inspector = inspect(engine)
-        indexes = inspector.get_indexes("users")
-        sso_idx = [idx for idx in indexes if idx["name"] == "ix_users_sso_id"]
-        assert len(sso_idx) == 1
-        assert sso_idx[0]["unique"] is True or sso_idx[0]["unique"] == 1
+        tables = inspector.get_table_names()
+        assert "approval_requests" in tables
+        assert "approval_votes" in tables
 
         _downgrade(alembic_config, "-1")
 
         inspector = inspect(engine)
-        indexes = inspector.get_indexes("users")
-        sso_idx = [idx for idx in indexes if idx["name"] == "ix_users_sso_id"]
-        assert len(sso_idx) == 1
-        assert not sso_idx[0]["unique"], "ix_users_sso_id should be non-unique after downgrade"
+        tables = inspector.get_table_names()
+        assert "approval_requests" not in tables, (
+            "approval_requests should be dropped after downgrading p2_approval"
+        )
+        assert "approval_votes" not in tables, (
+            "approval_votes should be dropped after downgrading p2_approval"
+        )
 
     def test_downgrade_preserves_other_tables(self, alembic_config, engine):
         """Downgrading by one revision should keep all prior tables intact."""

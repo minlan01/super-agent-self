@@ -12,7 +12,9 @@ from packages.db.models import MemoryType
 class MemoryWriteRequest(BaseModel):
     """Request to write a memory from task completion."""
 
-    task_id: str
+    # None for non-task origins (preferences, reminders) — avoids FK
+    # violations against tasks.source_task_id.
+    task_id: str | None = None
     goal: str
     steps_summary: list[dict[str, Any]] = Field(default_factory=list)
     success: bool = True

@@ -77,7 +77,7 @@ class TestTaskRepository:
         TaskRepository.create(db_session, TaskCreate(goal="task-1"))
         TaskRepository.create(db_session, TaskCreate(goal="task-2"))
         TaskRepository.create(db_session, TaskCreate(goal="task-3"))
-        tasks = TaskRepository.list_tasks(db_session)
+        tasks = TaskRepository.list_tasks(db_session, tenant_id="default")
         assert len(tasks) == 3
         # Ordered by created_at desc, so most recent first
         assert tasks[0].goal == "task-3"
@@ -87,8 +87,8 @@ class TestTaskRepository:
         t2 = TaskRepository.create(db_session, TaskCreate(goal="done"))
         TaskRepository.update(db_session, t2.id, TaskUpdate(status=TaskStatus.COMPLETED))
 
-        pending = TaskRepository.list_tasks(db_session, status=TaskStatus.PENDING)
-        completed = TaskRepository.list_tasks(db_session, status=TaskStatus.COMPLETED)
+        pending = TaskRepository.list_tasks(db_session, status=TaskStatus.PENDING, tenant_id="default")
+        completed = TaskRepository.list_tasks(db_session, status=TaskStatus.COMPLETED, tenant_id="default")
         assert len(pending) == 1
         assert len(completed) == 1
         assert pending[0].goal == "pending"
@@ -98,8 +98,8 @@ class TestTaskRepository:
         TaskRepository.create(db_session, TaskCreate(goal="ent", edition=Edition.ENTERPRISE))
         TaskRepository.create(db_session, TaskCreate(goal="per", edition=Edition.PERSONAL))
 
-        ent = TaskRepository.list_tasks(db_session, edition=Edition.ENTERPRISE)
-        per = TaskRepository.list_tasks(db_session, edition=Edition.PERSONAL)
+        ent = TaskRepository.list_tasks(db_session, edition=Edition.ENTERPRISE, tenant_id="default")
+        per = TaskRepository.list_tasks(db_session, edition=Edition.PERSONAL, tenant_id="default")
         assert len(ent) == 1
         assert len(per) == 1
 
@@ -107,15 +107,15 @@ class TestTaskRepository:
         TaskRepository.create(db_session, TaskCreate(goal="a"))
         TaskRepository.create(db_session, TaskCreate(goal="b"))
         TaskRepository.create(db_session, TaskCreate(goal="c"))
-        assert TaskRepository.count(db_session) == 3
+        assert TaskRepository.count(db_session, tenant_id="default") == 3
 
     def test_count_with_filter(self, db_session: Session):
         t1 = TaskRepository.create(db_session, TaskCreate(goal="a"))
         t2 = TaskRepository.create(db_session, TaskCreate(goal="b"))
         TaskRepository.update(db_session, t2.id, TaskUpdate(status=TaskStatus.COMPLETED))
 
-        assert TaskRepository.count(db_session, status=TaskStatus.PENDING) == 1
-        assert TaskRepository.count(db_session, status=TaskStatus.COMPLETED) == 1
+        assert TaskRepository.count(db_session, status=TaskStatus.PENDING, tenant_id="default") == 1
+        assert TaskRepository.count(db_session, status=TaskStatus.COMPLETED, tenant_id="default") == 1
 
     def test_update(self, db_session: Session):
         task = TaskRepository.create(db_session, TaskCreate(goal="update me"))

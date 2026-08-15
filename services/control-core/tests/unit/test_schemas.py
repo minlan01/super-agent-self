@@ -33,7 +33,7 @@ class TestTaskCreate:
         schema = TaskCreate(goal="Deploy the application")
         assert schema.goal == "Deploy the application"
         assert schema.edition == Edition.ENTERPRISE
-        assert schema.user_id == "default"
+        assert schema.user_id is None  # P1.3: overwritten by ActorScope, never trusted from body
 
     def test_goal_required(self):
         with pytest.raises(ValidationError) as exc_info:

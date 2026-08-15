@@ -61,8 +61,17 @@ def paginate(
     # Calculate pages
     total_pages = (total + page_size - 1) // page_size if total > 0 else 0
 
-    # Apply pagination
-    items = list(db.scalars(query.offset((page - 1) * page_size).limit(page_size)).all())
+    # Apply pagination. Queries with joined eager loads against collections
+    # require .unique() on the Result (SQLAlchemy 2.0); detect and apply it
+    # so callers with collection joinedloads don't crash.
+    paged = query.offset((page - 1) * page_size).limit(page_size)
+    result = db.scalars(paged)
+    try:
+        items = list(result.all())
+    except Exception:
+        # InvalidRequestError from collection joinedloads without unique()
+        result = result.unique()
+        items = list(result.all())
 
     return PaginatedResult(
         items=items,

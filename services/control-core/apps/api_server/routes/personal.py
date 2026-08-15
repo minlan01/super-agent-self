@@ -73,6 +73,7 @@ def create_reminder(
         title=body.title,
         description=body.description,
         expires_at=body.expires_at,
+        user_id=str(current_user.id),
     )
     return {
         "success": True,
@@ -149,7 +150,10 @@ async def save_preference(
 ):
     """Save a user preference."""
     svc = _get_context_service()
-    result = await svc.save_preference(db, key=body.key, value=body.value)
+    result = await svc.save_preference(
+        db, key=body.key, value=body.value,
+        user_id=str(current_user.id),
+    )
     validated = MemoryResponse.model_validate(result).model_dump() if result else None
     return {
         "success": True,

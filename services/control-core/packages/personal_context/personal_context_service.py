@@ -77,7 +77,7 @@ class PersonalContextService:
         return await self.memory_service.write_from_task(
             db,
             MemoryWriteRequest(
-                task_id=f"preference_{key}",
+                task_id=None,  # preference: not bound to any task (FK safety)
                 goal=f"Save preference: {key} = {value}",
                 steps_summary=[],
                 success=True,
@@ -98,7 +98,7 @@ class PersonalContextService:
         return await self.memory_service.write_from_task(
             db,
             MemoryWriteRequest(
-                task_id=f"reminder_{title}",
+                task_id=None,  # reminder: not bound to any task (FK safety)
                 goal=title,
                 steps_summary=[{"tool": "reminder", "status": "completed"}],
                 success=True,

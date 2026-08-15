@@ -41,25 +41,47 @@ class TestTenantIsolation:
             "tenant_id must have no default — callers must pass it explicitly"
         )
 
-    def test_list_tasks_filters_by_tenant(self, client, monkeypatch) -> None:
-        """不同 tenant_id 返回不同任务集（路由层用 ActorScope 注入 tenant）。
+    def test_list_tasks_filters_by_tenant(self, db_engine) -> None:
+        """list_tasks 必须按 tenant_id 过滤，不同租户看到不同集合。
 
-        本测试用 REQUIRE_AUTH=false（默认 admin tenant=default），
-        验证返回的任务都带 tenant_id=default。
+        Uses an isolated in-memory engine (via the shared db_engine fixture)
+        instead of the global app engine, whose DATABASE_URL can be
+        polluted by earlier suites in a combined run.
         """
-        # 先建一个任务
-        resp = client.post("/api/v1/tasks", json={"goal": "tenant test task"})
-        if resp.status_code == 200:
-            resp = client.get("/api/v1/tasks")
-            assert resp.status_code == 200
-            data = resp.json()
-            # 列表里的所有任务 tenant_id 都应是 default（单租户 personal Profile）
-            if data.get("data", {}).get("items"):
-                for item in data["data"]["items"]:
-                    # TaskResponse 可能不含 tenant_id（未暴露），这里验证路由不报错
-                    pass
-        # 关键：路由成功响应 = ActorScope 注入工作正常
-        assert resp.status_code in (200, 401), f"unexpected: {resp.status_code}"
+        from sqlalchemy.orm import Session
+
+        from packages.agent_core.schemas import TaskCreate
+        from packages.db.models import Task, TaskStatus
+        from packages.db.repositories.task_repo import TaskRepository
+
+        with Session(db_engine) as session:
+            t_default = TaskRepository.create(
+                session, TaskCreate(goal="default-tenant task"),
+            )
+            t_default.tenant_id = "default"
+            t_other = TaskRepository.create(
+                session, TaskCreate(goal="other-tenant task"),
+            )
+            t_other.tenant_id = "tenant-b"
+            session.flush()
+
+            # default 租户只能看到自己的任务
+            default_tasks = TaskRepository.list_tasks(
+                session, tenant_id="default",
+            )
+            goals = {t.goal for t in default_tasks}
+            assert "default-tenant task" in goals
+            assert "other-tenant task" not in goals, (
+                "tenant isolation broken: default tenant sees tenant-b's task"
+            )
+
+            # tenant-b 只看到自己的
+            other_tasks = TaskRepository.list_tasks(
+                session, tenant_id="tenant-b",
+            )
+            other_goals = {t.goal for t in other_tasks}
+            assert "other-tenant task" in other_goals
+            assert "default-tenant task" not in other_goals
 
     def test_get_task_cross_tenant_returns_404(self) -> None:
         """直接查 Repository：不同 tenant 的任务返回 None（或路由层 404）。

@@ -75,7 +75,10 @@ class RateLimiter(BaseHTTPMiddleware):
         self._rebuild_sorted_prefixes()
         self._requests: dict[str, dict[str, list[float]]] = {}
         self._locks: list[asyncio.Lock] = [asyncio.Lock() for _ in range(_SHARD_COUNT)]
-        self._config_lock = threading.Lock()
+        # RLock: _check_config_reload() holds this lock while calling
+        # _load_config(), which acquires it again — a plain Lock deadlocks
+        # the poll-reload path (same thread, double acquire).
+        self._config_lock = threading.RLock()
         self.trusted_proxies: set[str] = set(trusted_proxies or [])
 
         # Hot-reload state

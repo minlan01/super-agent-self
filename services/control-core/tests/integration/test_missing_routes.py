@@ -45,11 +45,15 @@ def db(db_engine):
 
 @pytest.fixture
 def client(db_engine, db):
+    from tests.integration.conftest import make_auth_header
+
     def _override_get_db():
         yield db
 
     app.dependency_overrides[get_db] = _override_get_db
+    headers = make_auth_header(db)
     with TestClient(app) as c:
+        c.headers.update(headers)
         yield c
     app.dependency_overrides.clear()
 

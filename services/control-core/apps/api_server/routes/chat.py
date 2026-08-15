@@ -135,6 +135,14 @@ async def chat(body: ChatRequest, db: Session = Depends(get_db), current_user: U
         conv.id, "user", body.message,
     )
 
+    # Commit the conversation writes before intent handlers run: handlers
+    # may write via independent sessions (memory worker), and holding this
+    # open transaction across them causes SQLite write-write lock timeouts.
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
+
     classification = await _classify_intent(body.message)
     intent = classification["intent"]
     extracted = classification.get("extracted", body.message)
@@ -164,6 +172,15 @@ async def chat(body: ChatRequest, db: Session = Depends(get_db), current_user: U
             raise HTTPException(status_code=500, detail="Failed to create task")
     else:
         response = await _handle_info(body, db)
+
+    # Handlers write via the request session (e.g. memory INSERT) without
+    # committing; commit before the independent-session assistant-message
+    # write below, otherwise that write blocks on this session's lock
+    # until the SQLite busy timeout expires.
+    try:
+        db.commit()
+    except Exception:
+        db.rollback()
 
     # Save assistant message
     await run_async(

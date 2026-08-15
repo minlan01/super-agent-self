@@ -23,7 +23,7 @@ from packages.agent_core.schemas import (
     UserPermissionsResponse,
 )
 from packages.auth.rbac import get_rbac_service
-from packages.db.models import AuditEventType, User
+from packages.db.models import AuditEventType, Role, RolePermission, User
 from packages.db.repositories.audit_repo import AuditRepository
 from packages.db.repositories.rbac_repo import RBACRepository
 from packages.db.pagination import paginate

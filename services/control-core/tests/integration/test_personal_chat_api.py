@@ -8,7 +8,19 @@ from apps.api_server.main import app
 
 @pytest.fixture()
 def client():
+    """TestClient with a valid Bearer token (P1: require_auth defaults True)."""
+    from tests.integration.conftest import make_auth_header
+
+    from packages.db.session import SessionLocal
+
+    db = SessionLocal()
+    try:
+        headers = make_auth_header(db)
+    finally:
+        db.close()
+
     with TestClient(app) as c:
+        c.headers.update(headers)
         yield c
 
 
