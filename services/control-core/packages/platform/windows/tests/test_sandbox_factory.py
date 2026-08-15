@@ -2,11 +2,18 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 import pytest
 
 from packages.platform.windows import sandbox_factory
+
+# The factory enforces a Windows-only platform gate before staging; these
+# lifecycle tests exercise post-gate behavior and can only run on Windows.
+requires_windows = pytest.mark.skipif(
+    sys.platform != "win32", reason="sandbox factory requires Windows host"
+)
 
 
 class _FakeBroker:
@@ -57,6 +64,7 @@ class _FakeSandbox:
             raise RuntimeError("forced sandbox kill failure")
 
 
+@requires_windows
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "failure",

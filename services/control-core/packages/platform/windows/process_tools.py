@@ -15,13 +15,20 @@ Security invariants:
 
 from __future__ import annotations
 
+import ntpath
 import os
+import sys as _sys
 from dataclasses import dataclass
 from typing import Any
 
 from packages.executor.tools.base import ExecutionContext, ToolBase, ToolResult
 from packages.platform.shared.errors import SandboxUnavailable
 from packages.policy.unified_registry import tool_registry
+
+
+def sys_platform() -> str:
+    """Return the current platform (test-seamable)."""
+    return _sys.platform
 
 # Shell interpreters that must NEVER be launched via process.execute
 SHELL_INTERPRETERS: frozenset[str] = frozenset({
@@ -110,30 +117,32 @@ class ProcessExecuteRequest:
 
         - executable must be absolute and not a shell interpreter
         - cwd must resolve inside workspace_root
+
+        Uses ntpath semantics so validation is identical on Windows and on
+        cross-platform CI (this is the windows platform module; paths are
+        always Windows-style).
         """
         # Check executable
-        abs_exec = os.path.normcase(
-            os.path.realpath(os.path.abspath(self.executable))
-        )
-        exec_name = os.path.basename(abs_exec).lower()
+        norm_exec = ntpath.normcase(ntpath.abspath(self.executable))
+        exec_name = ntpath.basename(norm_exec).lower()
         if exec_name in SHELL_INTERPRETERS:
             raise SandboxUnavailable(
                 f"process.execute refuses to launch shell interpreter: {exec_name}; "
                 "use shell.execute (high-risk) if interpreter access is required"
             )
 
-        if not os.path.isabs(self.executable):
+        if not ntpath.isabs(self.executable):
             raise SandboxUnavailable(
                 f"executable must be an absolute path: {self.executable}"
             )
 
-        # Check cwd is inside workspace
-        abs_cwd = os.path.normcase(os.path.realpath(os.path.abspath(self.cwd)))
-        abs_workspace = os.path.normcase(
-            os.path.realpath(os.path.abspath(workspace_root))
-        )
+        # Check cwd is inside workspace (ntpath semantics).
+        abs_cwd = ntpath.normcase(ntpath.abspath(self.cwd))
+        abs_workspace = ntpath.normcase(ntpath.abspath(workspace_root))
         try:
-            cwd_is_inside = os.path.commonpath((abs_workspace, abs_cwd)) == abs_workspace
+            cwd_is_inside = (
+                ntpath.commonpath((abs_workspace, abs_cwd)) == abs_workspace
+            )
         except ValueError:
             cwd_is_inside = False
         if not cwd_is_inside:
@@ -141,11 +150,12 @@ class ProcessExecuteRequest:
                 f"cwd must be inside workspace: {abs_cwd} not in {abs_workspace}"
             )
 
-        if not os.path.isfile(abs_exec):
-            raise SandboxUnavailable(f"executable does not exist: {abs_exec}")
+        # Filesystem checks only meaningful on a real Windows host.
+        if sys_platform() == "win32" and not os.path.isfile(norm_exec):
+            raise SandboxUnavailable(f"executable does not exist: {norm_exec}")
         try:
             executable_is_inside = (
-                os.path.commonpath((abs_workspace, abs_exec)) == abs_workspace
+                ntpath.commonpath((abs_workspace, norm_exec)) == abs_workspace
             )
         except ValueError:
             executable_is_inside = False

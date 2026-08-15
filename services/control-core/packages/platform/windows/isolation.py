@@ -532,10 +532,17 @@ class WindowsIsolationBroker:
         return True
 
     def _release_appcontainer_profile(self) -> None:
-        userenv, advapi32, _kernel32 = self._profile_apis()
         sid_pointer = self._appcontainer_sid_ptr
         profile_name = self._appcontainer_profile_name
         created = self._profile_created_by_broker
+        # No native AppContainer resources were ever created: nothing to
+        # release, and no need to load the Win32 API set (keeps the broker
+        # importable/closable on non-Windows CI for contract tests).
+        if not sid_pointer and not (profile_name and created):
+            self._appcontainer_profile_name = None
+            self._profile_created_by_broker = False
+            return
+        userenv, advapi32, _kernel32 = self._profile_apis()
         if sid_pointer:
             advapi32.FreeSid(wintypes.LPVOID(sid_pointer))
             self._appcontainer_sid_ptr = 0
