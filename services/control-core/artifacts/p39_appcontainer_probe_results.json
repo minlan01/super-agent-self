@@ -1,0 +1,237 @@
+{
+  "profile_name": "P39.Probe.a45a9c2e81f74e0f871a",
+  "workspace": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p39_appcontainer_23sp6jev\\workspace",
+  "outside": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p39_appcontainer_23sp6jev\\outside",
+  "parent_python": "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\.venv-win\\Scripts\\python.exe",
+  "base_python": "C:\\Users\\minlan01\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "parent_loopback_baseline": true,
+  "credential": {
+    "target": "P39.Probe.Cred.0f93a2b5188840a6ac71fc94a10a4d09",
+    "created": true,
+    "parent_visible": true,
+    "delete_succeeded": true,
+    "visible_after_delete": false
+  },
+  "profile": {
+    "create_hresult": "0x00000000",
+    "sid": "S-1-15-2-1854641451-1521260570-2451801335-3833778411-2940478804-1048573218-3315963805"
+  },
+  "workspace_acl_granted": true,
+  "host_venv_probe": {
+    "purpose": "negative control: a venv launcher requires external pyvenv.cfg/runtime"
+  },
+  "controls": [
+    {
+      "api": "CreateProcessW",
+      "created": true,
+      "pid": 17684,
+      "exit_code": 0,
+      "token": {
+        "is_appcontainer": true,
+        "is_restricted": false,
+        "integrity_sid": "S-1-16-4096",
+        "appcontainer_sid": "S-1-15-2-1854641451-1521260570-2451801335-3833778411-2940478804-1048573218-3315963805"
+      },
+      "stdout": "APP_CONTAINER_CMD_OK\r\n",
+      "stderr": ""
+    },
+    {
+      "api": "CreateProcessAsUserW-current-token-host-venv",
+      "created": true,
+      "pid": 13004,
+      "exit_code": 106,
+      "token": {
+        "is_appcontainer": true,
+        "is_restricted": false,
+        "integrity_sid": "S-1-16-4096",
+        "appcontainer_sid": "S-1-15-2-1854641451-1521260570-2451801335-3833778411-2940478804-1048573218-3315963805"
+      },
+      "stdout": "",
+      "stderr": "No pyvenv.cfg file\r\n"
+    }
+  ],
+  "launches": [
+    {
+      "api": "CreateProcessAsUserW-current-token",
+      "created": true,
+      "pid": 7644,
+      "exit_code": 0,
+      "token": {
+        "is_appcontainer": true,
+        "is_restricted": false,
+        "integrity_sid": "S-1-16-4096",
+        "appcontainer_sid": "S-1-15-2-1854641451-1521260570-2451801335-3833778411-2940478804-1048573218-3315963805"
+      },
+      "stdout": "{\"workspace_read\": {\"ok\": true, \"value\": \"workspace-seed\"}, \"outside_read\": {\"ok\": false, \"error\": \"PermissionError\", \"errno\": 13, \"winerror\": null, \"text\": \"[Errno 13] Permission denied: 'C:\\\\\\\\Users\\\\\\\\minlan01\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\p39_appcontainer_23sp6jev\\\\\\\\outside\\\\\\\\secret.txt'\"}, \"user_profile_read\": {\"ok\": false, \"error\": \"PermissionError\", \"errno\": 13, \"winerror\": null, \"text\": \"[Errno 13] Permission denied: 'C:\\\\\\\\Users\\\\\\\\minlan01\\\\\\\\NTUSER.DAT'\"}, \"credential_read\": {\"ok\": false, \"winerror\": 5}, \"workspace_write\": {\"ok\": true, \"value\": \"appcontainer-write-ok\"}, \"loopback\": {\"ok\": false, \"error\": \"TimeoutError\", \"errno\": null, \"winerror\": null, \"text\": \"timed out\"}, \"internet_tcp\": {\"ok\": false, \"error\": \"PermissionError\", \"errno\": 13, \"winerror\": 10013, \"text\": \"[WinError 10013] \\u4ee5\\u4e00\\u79cd\\u8bbf\\u95ee\\u6743\\u9650\\u4e0d\\u5141\\u8bb8\\u7684\\u65b9\\u5f0f\\u505a\\u4e86\\u4e00\\u4e2a\\u8bbf\\u95ee\\u5957\\u63a5\\u5b57\\u7684\\u5c1d\\u8bd5\\u3002\"}}\r\n",
+      "stderr": "",
+      "child": {
+        "workspace_read": {
+          "ok": true,
+          "value": "workspace-seed"
+        },
+        "outside_read": {
+          "ok": false,
+          "error": "PermissionError",
+          "errno": 13,
+          "winerror": null,
+          "text": "[Errno 13] Permission denied: 'C:\\\\Users\\\\minlan01\\\\AppData\\\\Local\\\\Temp\\\\p39_appcontainer_23sp6jev\\\\outside\\\\secret.txt'"
+        },
+        "user_profile_read": {
+          "ok": false,
+          "error": "PermissionError",
+          "errno": 13,
+          "winerror": null,
+          "text": "[Errno 13] Permission denied: 'C:\\\\Users\\\\minlan01\\\\NTUSER.DAT'"
+        },
+        "credential_read": {
+          "ok": false,
+          "winerror": 5
+        },
+        "workspace_write": {
+          "ok": true,
+          "value": "appcontainer-write-ok"
+        },
+        "loopback": {
+          "ok": false,
+          "error": "TimeoutError",
+          "errno": null,
+          "winerror": null,
+          "text": "timed out"
+        },
+        "internet_tcp": {
+          "ok": false,
+          "error": "PermissionError",
+          "errno": 13,
+          "winerror": 10013,
+          "text": "[WinError 10013] \u4ee5\u4e00\u79cd\u8bbf\u95ee\u6743\u9650\u4e0d\u5141\u8bb8\u7684\u65b9\u5f0f\u505a\u4e86\u4e00\u4e2a\u8bbf\u95ee\u5957\u63a5\u5b57\u7684\u5c1d\u8bd5\u3002"
+        }
+      }
+    },
+    {
+      "api": "CreateProcessAsUserW-restricted-token",
+      "created": true,
+      "pid": 8096,
+      "exit_code": 0,
+      "token": {
+        "is_appcontainer": true,
+        "is_restricted": true,
+        "integrity_sid": "S-1-16-4096",
+        "appcontainer_sid": "S-1-15-2-1854641451-1521260570-2451801335-3833778411-2940478804-1048573218-3315963805"
+      },
+      "stdout": "workspace_read_exit=0\r\nworkspace_write_exit=0\r\noutside_read_exit=1\r\nuser_profile_read_exit=1\r\nloopback_exit=28\r\ninternet_tcp_exit=7\r\nprobe_complete_exit=0\r\n",
+      "stderr": "Access is denied.\r\nAccess is denied.\r\ncurl: (28) Connection timed out after 2009 milliseconds\r\ncurl: (7) Failed to connect to 1.1.1.1:80 after 1 ms: Could not connect to server\r\n",
+      "child": {
+        "workspace_read": {
+          "ok": true,
+          "exit_code": 0
+        },
+        "workspace_write": {
+          "ok": true,
+          "exit_code": 0
+        },
+        "outside_read": {
+          "ok": false,
+          "exit_code": 1
+        },
+        "user_profile_read": {
+          "ok": false,
+          "exit_code": 1
+        },
+        "loopback": {
+          "ok": false,
+          "exit_code": 28
+        },
+        "internet_tcp": {
+          "ok": false,
+          "exit_code": 7
+        },
+        "probe_complete": {
+          "ok": true,
+          "exit_code": 0
+        }
+      }
+    },
+    {
+      "api": "CreateProcessAsUserW-restricted-token-python",
+      "created": true,
+      "pid": 16040,
+      "exit_code": 0,
+      "token": {
+        "is_appcontainer": true,
+        "is_restricted": true,
+        "integrity_sid": "S-1-16-4096",
+        "appcontainer_sid": "S-1-15-2-1854641451-1521260570-2451801335-3833778411-2940478804-1048573218-3315963805"
+      },
+      "stdout": "{\"workspace_read\": {\"ok\": true, \"value\": \"workspace-seed\"}, \"outside_read\": {\"ok\": false, \"error\": \"PermissionError\", \"errno\": 13, \"winerror\": null, \"text\": \"[Errno 13] Permission denied: 'C:\\\\\\\\Users\\\\\\\\minlan01\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\p39_appcontainer_23sp6jev\\\\\\\\outside\\\\\\\\secret.txt'\"}, \"user_profile_read\": {\"ok\": false, \"error\": \"PermissionError\", \"errno\": 13, \"winerror\": null, \"text\": \"[Errno 13] Permission denied: 'C:\\\\\\\\Users\\\\\\\\minlan01\\\\\\\\NTUSER.DAT'\"}, \"credential_read\": {\"ok\": false, \"winerror\": 5}, \"workspace_write\": {\"ok\": true, \"value\": \"appcontainer-write-ok\"}, \"loopback\": {\"ok\": false, \"error\": \"TimeoutError\", \"errno\": null, \"winerror\": null, \"text\": \"timed out\"}, \"internet_tcp\": {\"ok\": false, \"error\": \"PermissionError\", \"errno\": 13, \"winerror\": 10013, \"text\": \"[WinError 10013] \\u4ee5\\u4e00\\u79cd\\u8bbf\\u95ee\\u6743\\u9650\\u4e0d\\u5141\\u8bb8\\u7684\\u65b9\\u5f0f\\u505a\\u4e86\\u4e00\\u4e2a\\u8bbf\\u95ee\\u5957\\u63a5\\u5b57\\u7684\\u5c1d\\u8bd5\\u3002\"}}\r\n",
+      "stderr": "",
+      "child": {
+        "workspace_read": {
+          "ok": true,
+          "value": "workspace-seed"
+        },
+        "outside_read": {
+          "ok": false,
+          "error": "PermissionError",
+          "errno": 13,
+          "winerror": null,
+          "text": "[Errno 13] Permission denied: 'C:\\\\Users\\\\minlan01\\\\AppData\\\\Local\\\\Temp\\\\p39_appcontainer_23sp6jev\\\\outside\\\\secret.txt'"
+        },
+        "user_profile_read": {
+          "ok": false,
+          "error": "PermissionError",
+          "errno": 13,
+          "winerror": null,
+          "text": "[Errno 13] Permission denied: 'C:\\\\Users\\\\minlan01\\\\NTUSER.DAT'"
+        },
+        "credential_read": {
+          "ok": false,
+          "winerror": 5
+        },
+        "workspace_write": {
+          "ok": true,
+          "value": "appcontainer-write-ok"
+        },
+        "loopback": {
+          "ok": false,
+          "error": "TimeoutError",
+          "errno": null,
+          "winerror": null,
+          "text": "timed out"
+        },
+        "internet_tcp": {
+          "ok": false,
+          "error": "PermissionError",
+          "errno": 13,
+          "winerror": 10013,
+          "text": "[WinError 10013] \u4ee5\u4e00\u79cd\u8bbf\u95ee\u6743\u9650\u4e0d\u5141\u8bb8\u7684\u65b9\u5f0f\u505a\u4e86\u4e00\u4e2a\u8bbf\u95ee\u5957\u63a5\u5b57\u7684\u5c1d\u8bd5\u3002"
+        }
+      }
+    }
+  ],
+  "delete_profile_hresult": "0x00000000",
+  "temp_root_removed": true,
+  "acceptance": {
+    "passed": true,
+    "checks": {
+      "no_fatal_error": true,
+      "parent_loopback_baseline": true,
+      "credential_parent_visible": true,
+      "credential_deleted": true,
+      "restricted_child_created": true,
+      "restricted_child_exit_zero": true,
+      "token_is_appcontainer": true,
+      "token_is_restricted": true,
+      "token_is_low_integrity": true,
+      "package_sid_matches_profile": true,
+      "workspace_read_allowed": true,
+      "workspace_write_allowed": true,
+      "outside_read_denied": true,
+      "user_profile_read_denied": true,
+      "credential_read_denied": true,
+      "loopback_denied": true,
+      "internet_tcp_denied": true,
+      "profile_deleted": true,
+      "temp_root_removed": true
+    }
+  }
+}

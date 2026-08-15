@@ -117,6 +117,8 @@ class Orchestrator:
             context = ExecutionContext(
                 task_id=task.id,
                 step_id="orchestrator",
+                principal_id=user_id,
+                workspace_id=task.id,
                 edition=edition,
             )
 

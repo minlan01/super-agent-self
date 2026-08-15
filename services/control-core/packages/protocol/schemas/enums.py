@@ -16,7 +16,6 @@ from __future__ import annotations
 
 from enum import StrEnum
 
-
 # ---------------------------------------------------------------------------
 # Schema version (for protocol negotiation)
 # ---------------------------------------------------------------------------
@@ -222,6 +221,7 @@ class Capability(StrEnum):
     LOCAL_IPC = "local_ipc"
     SESSION_MONITOR = "session_monitor"
     PROCESS_SANDBOX = "process_sandbox"
+    TERMINAL_SESSION = "terminal_session"
     WINDOW_PROVIDER = "window_provider"
     SCREEN_CAPTURE = "screen_capture"
     PERMISSION_BROKER = "permission_broker"

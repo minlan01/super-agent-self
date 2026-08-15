@@ -1,7 +1,7 @@
-"""Tests for PlatformAdapter contracts (P0.2).
+"""Tests for PlatformAdapter contracts (P0.2/P3.10B).
 
 Verifies:
-- All 9 sub-interfaces are abstract (cannot be instantiated directly)
+- All 10 sub-interfaces are abstract (cannot be instantiated directly)
 - StubPlatformAdapter reports zero capabilities
 - StubPlatformAdapter raises CapabilityUnavailable on every sub-interface
 - CapabilityReport serializes correctly
@@ -33,11 +33,11 @@ from packages.platform.shared.errors import (
     SandboxUnavailable,
     StaleUIState,
 )
+from packages.platform.shared.terminal import TerminalSessionProvider
 from packages.protocol.schemas.enums import Capability, ErrorCode
 
-
 # ---------------------------------------------------------------------------
-# 9 sub-interfaces must be abstract
+# 10 sub-interfaces must be abstract
 # ---------------------------------------------------------------------------
 
 ABSTRACT_INTERFACES = [
@@ -45,6 +45,7 @@ ABSTRACT_INTERFACES = [
     LocalIpc,
     SessionMonitor,
     ProcessSandbox,
+    TerminalSessionProvider,
     WindowProvider,
     ScreenCapture,
     PermissionBroker,
@@ -89,6 +90,7 @@ class TestStubPlatformAdapter:
             ("local_ipc", "local_ipc"),
             ("session_monitor", "session_monitor"),
             ("process_sandbox", "process_sandbox"),
+            ("terminal_sessions", "terminal_session"),
             ("window_provider", "window_provider"),
             ("screen_capture", "screen_capture"),
             ("permission_broker", "permission_broker"),

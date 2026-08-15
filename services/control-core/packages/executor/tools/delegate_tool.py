@@ -11,7 +11,21 @@ logger = logging.getLogger(__name__)
 
 MAX_DEPTH = 2
 MAX_CONCURRENT = 3
-BLOCKED_TOOLS = {"delegate.task", "memory.write"}
+BLOCKED_TOOLS = {
+    "delegate.task",
+    "memory.write",
+    "process.execute",
+    "shell.execute",
+    "terminal.open",
+    "terminal.write",
+    "terminal.read",
+    "terminal.resize",
+    "terminal.signal",
+    "terminal.attach",
+    "terminal.disconnect",
+    "terminal.heartbeat",
+    "terminal.close",
+}
 
 
 class SubAgentRunner:
@@ -139,7 +153,12 @@ class SubAgentRunner:
             async with self._count_lock:
                 self._active_count -= 1
 
-    async def run_parallel(self, goals: list[str], parent_context: Any, depth: int = 0) -> list[dict[str, Any]]:
+    async def run_parallel(
+        self,
+        goals: list[str],
+        parent_context: Any,
+        depth: int = 0,
+    ) -> list[dict[str, Any]]:
         """Run multiple sub-agents in parallel (up to max_concurrent)."""
         semaphore = asyncio.Semaphore(self.max_concurrent)
 

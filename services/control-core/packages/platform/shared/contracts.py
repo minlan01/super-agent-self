@@ -18,19 +18,14 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import IO, Any, Protocol, runtime_checkable
+from typing import IO
 
 from packages.platform.shared.errors import (
     CapabilityUnavailable,
-    PermissionDenied,
-    PlatformError,
-    SandboxUnavailable,
-    SecretAccessError,
-    StaleUIState,
 )
-from packages.protocol.schemas.enums import Capability, Classification, RiskLevel
+from packages.platform.shared.terminal import TerminalSessionProvider
+from packages.protocol.schemas.enums import Capability, Classification
 from packages.protocol.schemas.v1 import CapabilityReport
-
 
 # ---------------------------------------------------------------------------
 # Shared value types
@@ -346,7 +341,7 @@ class Updater(ABC):
 
 class PlatformAdapter(ABC):
     """The composite platform adapter. Implementations provide concrete
-    instances of all 9 sub-interfaces plus capability discovery.
+    instances of all 10 sub-interfaces plus capability discovery.
 
     Spec §4.5: `if platform == windows` lives ONLY inside concrete subclasses
     of PlatformAdapter. Business code takes a PlatformAdapter and queries
@@ -366,7 +361,7 @@ class PlatformAdapter(ABC):
         """Return the set of supported capabilities + reasons for unsupported.
         UI/API uses this for accurate state presentation — never fake-online."""
 
-    # The 9 sub-interfaces. Concrete adapters return instances or raise
+    # The 10 sub-interfaces. Concrete adapters return instances or raise
     # CapabilityUnavailable if the platform lacks the capability entirely.
     @abstractmethod
     def secret_store(self) -> SecretStore: ...
@@ -379,6 +374,9 @@ class PlatformAdapter(ABC):
 
     @abstractmethod
     def process_sandbox(self) -> ProcessSandbox: ...
+
+    @abstractmethod
+    def terminal_sessions(self) -> TerminalSessionProvider: ...
 
     @abstractmethod
     def window_provider(self) -> WindowProvider: ...
@@ -441,6 +439,9 @@ class StubPlatformAdapter(PlatformAdapter):
     def process_sandbox(self) -> ProcessSandbox:
         self._unavailable("process_sandbox")
 
+    def terminal_sessions(self) -> TerminalSessionProvider:
+        self._unavailable("terminal_session")
+
     def window_provider(self) -> WindowProvider:
         self._unavailable("window_provider")
 
@@ -471,6 +472,7 @@ __all__ = [
     "LocalIpc",
     "SessionMonitor",
     "ProcessSandbox",
+    "TerminalSessionProvider",
     "WindowProvider",
     "ScreenCapture",
     "PermissionBroker",

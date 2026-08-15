@@ -21,8 +21,10 @@ from packages.platform.shared.contracts import (
     SessionMonitor,
     SessionState,
 )
+from packages.platform.shared.terminal import TerminalSessionProvider
 from packages.platform.windows._errors import UnsupportedPlatformError
 from packages.platform.windows.adapter import WindowsPlatformAdapter
+from packages.platform.windows.conpty import WindowsConPTYManager
 from packages.platform.windows.local_ipc import WindowsNamedPipeIpc
 from packages.platform.windows.process_sandbox import WindowsProcessSandbox
 from packages.platform.windows.secret_store import WindowsCredentialStore
@@ -35,6 +37,7 @@ def test_native_classes_implement_real_abstract_contracts() -> None:
     assert issubclass(WindowsCredentialStore, SecretStore)
     assert issubclass(WindowsSessionMonitor, SessionMonitor)
     assert issubclass(WindowsProcessSandbox, ProcessSandbox)
+    assert issubclass(WindowsConPTYManager, TerminalSessionProvider)
     assert issubclass(WindowsPlatformAdapter, PlatformAdapter)
 
 
@@ -72,6 +75,30 @@ def test_non_windows_capability_report_is_explicit() -> None:
         assert report.capabilities == frozenset()
         assert set(report.unsupported_reasons) == set(Capability)
         assert all(report.unsupported_reasons.values())
+
+
+def test_process_sandbox_capability_requires_task_scoped_factory() -> None:
+    adapter = WindowsPlatformAdapter()
+
+    report = adapter.get_capabilities()
+
+    assert Capability.PROCESS_SANDBOX not in report.capabilities
+    assert "task-scoped WindowsIsolationBroker" in report.unsupported_reasons[
+        Capability.PROCESS_SANDBOX
+    ]
+
+
+def test_terminal_capability_matches_real_conpty_support() -> None:
+    adapter = WindowsPlatformAdapter()
+    report = adapter.get_capabilities()
+
+    if WindowsConPTYManager.is_supported():
+        assert Capability.TERMINAL_SESSION in report.capabilities
+        assert Capability.TERMINAL_SESSION not in report.unsupported_reasons
+        assert isinstance(adapter.terminal_sessions(), TerminalSessionProvider)
+    else:
+        assert Capability.TERMINAL_SESSION not in report.capabilities
+        assert report.unsupported_reasons[Capability.TERMINAL_SESSION]
 
 
 @pytest.mark.parametrize(

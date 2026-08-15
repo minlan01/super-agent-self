@@ -19,7 +19,9 @@ import os
 from dataclasses import dataclass
 from typing import Any
 
+from packages.executor.tools.base import ExecutionContext, ToolBase, ToolResult
 from packages.platform.shared.errors import SandboxUnavailable
+from packages.policy.unified_registry import tool_registry
 
 # Shell interpreters that must NEVER be launched via process.execute
 SHELL_INTERPRETERS: frozenset[str] = frozenset({
@@ -110,7 +112,9 @@ class ProcessExecuteRequest:
         - cwd must resolve inside workspace_root
         """
         # Check executable
-        abs_exec = os.path.abspath(self.executable)
+        abs_exec = os.path.normcase(
+            os.path.realpath(os.path.abspath(self.executable))
+        )
         exec_name = os.path.basename(abs_exec).lower()
         if exec_name in SHELL_INTERPRETERS:
             raise SandboxUnavailable(
@@ -124,11 +128,30 @@ class ProcessExecuteRequest:
             )
 
         # Check cwd is inside workspace
-        abs_cwd = os.path.abspath(self.cwd)
-        abs_workspace = os.path.abspath(workspace_root)
-        if not abs_cwd.startswith(abs_workspace):
+        abs_cwd = os.path.normcase(os.path.realpath(os.path.abspath(self.cwd)))
+        abs_workspace = os.path.normcase(
+            os.path.realpath(os.path.abspath(workspace_root))
+        )
+        try:
+            cwd_is_inside = os.path.commonpath((abs_workspace, abs_cwd)) == abs_workspace
+        except ValueError:
+            cwd_is_inside = False
+        if not cwd_is_inside:
             raise SandboxUnavailable(
                 f"cwd must be inside workspace: {abs_cwd} not in {abs_workspace}"
+            )
+
+        if not os.path.isfile(abs_exec):
+            raise SandboxUnavailable(f"executable does not exist: {abs_exec}")
+        try:
+            executable_is_inside = (
+                os.path.commonpath((abs_workspace, abs_exec)) == abs_workspace
+            )
+        except ValueError:
+            executable_is_inside = False
+        if not executable_is_inside:
+            raise SandboxUnavailable(
+                "process.execute executable must be inside the task workspace"
             )
 
 
@@ -144,9 +167,86 @@ class ProcessExecuteResult:
     duration_sec: float
 
 
+def _process_execute_check_fn(args: dict[str, Any]) -> tuple[bool, str]:
+    try:
+        ProcessExecuteRequest.from_dict(args)
+    except (TypeError, ValueError) as exc:
+        return False, str(exc)
+    return True, ""
+
+
+@tool_registry.register(
+    category="system",
+    risk_level="high",
+    check_fn=_process_execute_check_fn,
+    params_schema={
+        "type": "object",
+        "required": ["executable", "cwd"],
+        "properties": {
+            "executable": {"type": "string"},
+            "args": {"type": "array", "items": {"type": "string"}},
+            "cwd": {"type": "string"},
+            "env": {
+                "type": ["object", "null"],
+                "additionalProperties": {"type": "string"},
+            },
+            "timeout_sec": {"type": "number", "default": 30},
+            "version": {"type": "string", "default": PROCESS_EXECUTE_VERSION},
+        },
+        "additionalProperties": False,
+    },
+)
+class ProcessExecute(ToolBase):
+    """Execute a direct Workspace binary through the Windows sandbox."""
+
+    name = "process.execute"
+    description = "Execute a direct binary without a shell interpreter"
+
+    async def execute(
+        self,
+        args: dict[str, Any],
+        context: ExecutionContext,
+    ) -> ToolResult:
+        if os.name != "nt":
+            return ToolResult(
+                success=False,
+                error="process.execute currently requires Windows AppContainer",
+            )
+        try:
+            request = ProcessExecuteRequest.from_dict(args)
+            request.validate_security(context.workspace_root)
+
+            from .sandbox_factory import WindowsProcessSandboxFactory
+
+            exit_code, stdout, stderr = await WindowsProcessSandboxFactory.execute(
+                workspace_root=context.workspace_root,
+                executable=request.executable,
+                args=request.args,
+                cwd=request.cwd,
+                env=request.env,
+                timeout_sec=request.timeout_sec,
+            )
+        except Exception as exc:
+            return ToolResult(success=False, error=f"Failed to execute: {exc}")
+
+        stdout_text = stdout.decode("utf-8", errors="replace")
+        stderr_text = stderr.decode("utf-8", errors="replace")
+        return ToolResult(
+            success=exit_code == 0,
+            output={
+                "stdout": stdout_text,
+                "stderr": stderr_text,
+                "exit_code": exit_code,
+                "version": request.version,
+            },
+            error=stderr_text if exit_code != 0 else None,
+        )
+
+
 __all__ = [
     "PROCESS_EXECUTE_VERSION",
     "SHELL_INTERPRETERS",
     "ProcessExecuteRequest",
     "ProcessExecuteResult",
+    "ProcessExecute",
 ]

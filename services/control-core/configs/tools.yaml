@@ -57,6 +57,46 @@ tools:
     category: system
     risk_level: high
 
+  process.execute:
+    category: system
+    risk_level: high
+
+  terminal.open:
+    category: system
+    risk_level: high
+
+  terminal.write:
+    category: system
+    risk_level: high
+
+  terminal.read:
+    category: system
+    risk_level: medium
+
+  terminal.resize:
+    category: system
+    risk_level: medium
+
+  terminal.signal:
+    category: system
+    risk_level: high
+
+  terminal.attach:
+    category: system
+    risk_level: medium
+
+  terminal.disconnect:
+    category: system
+    risk_level: medium
+
+  terminal.heartbeat:
+    category: system
+    risk_level: low
+
+  terminal.close:
+    category: system
+    risk_level: high
+
   # ── Web tools ────────────────────────────────────────────────────────
   web.search:
     category: web

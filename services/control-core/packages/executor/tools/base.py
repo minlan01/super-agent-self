@@ -60,6 +60,8 @@ class ExecutionContext:
     browser_timeout: int = 30000
     tool_timeout: int = 120
     delegate_depth: int = 0
+    principal_id: str | None = None
+    workspace_id: str | None = None
     _browser_context: Any = field(default=None, repr=False)
 
     @property

@@ -29,6 +29,7 @@ import win32security
 
 from packages.platform.shared.contracts import IpcEndpoint, SandboxProfile, SecretRef
 from packages.platform.shared.errors import IpcAuthError, SandboxUnavailable, SecretAccessError
+from packages.platform.windows.isolation import create_default_isolation
 from packages.platform.windows.local_ipc import (
     MAX_MESSAGE_SIZE,
     WindowsNamedPipeIpc,
@@ -433,6 +434,215 @@ async def test_job_object_timeout_tree_and_output_limits() -> None:
         assert b"[TRUNCATED]" in output
     finally:
         await sandbox.kill_tree(handle)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_restricted_token_launch_is_verified_and_environment_is_filtered() -> None:
+    """The P3.9 path must launch the child with the broker token, not host Popen."""
+
+    import shutil
+    import tempfile
+
+    workspace = tempfile.mkdtemp(prefix="restricted_process_")
+    command = os.path.join(workspace, "cmd.exe")
+    shutil.copy2(
+        os.path.join(os.environ["SYSTEMROOT"], "System32", "cmd.exe"),
+        command,
+    )
+    broker = create_default_isolation(workspace)
+    sandbox = WindowsProcessSandbox(broker)
+    handle = None
+    try:
+        broker.initialize()
+        handle = await sandbox.create(
+            SandboxProfile(exec_timeout_sec=10, output_size_limit_mb=1)
+        )
+        code = (
+            "echo NORMAL=%NORMAL_VAR% & "
+            "if defined P3_HOST_ONLY "
+            "(echo HOST_ONLY=present) else (echo HOST_ONLY=absent)"
+        )
+        os.environ["P3_HOST_ONLY"] = "must-not-leak"
+        try:
+            rc, output, error = await sandbox.run(
+                handle,
+                command,
+                ["/d", "/v:off", "/c", code],
+                cwd=workspace,
+                env={"NORMAL_VAR": "allowed"},
+                timeout_sec=5,
+            )
+        finally:
+            del os.environ["P3_HOST_ONLY"]
+
+        assert rc == 0
+        assert error == b""
+        assert [line.rstrip() for line in output.splitlines()] == [
+            b"NORMAL=allowed",
+            b"HOST_ONLY=absent",
+        ]
+    finally:
+        if handle is not None:
+            await sandbox.kill_tree(handle)
+        broker.close()
+        shutil.rmtree(workspace, ignore_errors=True)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_broker_close_fails_closed_while_sandbox_handle_is_active() -> None:
+    """ACL and profile state cannot be released before the Job is closed."""
+
+    import shutil
+    import tempfile
+
+    workspace = tempfile.mkdtemp(prefix="restricted_process_closed_")
+    broker = create_default_isolation(workspace)
+    sandbox = WindowsProcessSandbox(broker)
+    handle = None
+    try:
+        broker.initialize()
+        handle = await sandbox.create(
+            SandboxProfile(exec_timeout_sec=10, output_size_limit_mb=1)
+        )
+        with pytest.raises(SandboxUnavailable, match="launches are active"):
+            broker.close()
+        assert handle.pid is None
+        await sandbox.kill_tree(handle)
+        broker.close()
+        with pytest.raises(SandboxUnavailable, match="AppContainer boundary"):
+            await sandbox.create(
+                SandboxProfile(exec_timeout_sec=10, output_size_limit_mb=1)
+            )
+    finally:
+        if handle is not None:
+            await sandbox.kill_tree(handle)
+        broker.close()
+        shutil.rmtree(workspace, ignore_errors=True)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_kill_tree_waits_for_active_run_before_releasing_broker() -> None:
+    """Closing a handle cannot release ACL/profile state during an active run."""
+
+    import shutil
+    import tempfile
+
+    workspace = tempfile.mkdtemp(prefix="restricted_process_race_")
+    command = os.path.join(workspace, "cmd.exe")
+    shutil.copy2(
+        os.path.join(os.environ["SYSTEMROOT"], "System32", "cmd.exe"),
+        command,
+    )
+    broker = create_default_isolation(workspace)
+    sandbox = WindowsProcessSandbox(broker)
+    handle = None
+    run_task = None
+    kill_task = None
+    try:
+        broker.initialize()
+        handle = await sandbox.create(
+            SandboxProfile(exec_timeout_sec=10, output_size_limit_mb=1)
+        )
+        run_task = asyncio.create_task(
+            sandbox.run(
+                handle,
+                command,
+                ["/d", "/c", "ping -n 3 127.0.0.1 >nul"],
+                cwd=workspace,
+                env={},
+                timeout_sec=5,
+            )
+        )
+        for _ in range(100):
+            if handle.pid is not None:
+                break
+            await asyncio.sleep(0.01)
+        assert handle.pid is not None
+
+        kill_task = asyncio.create_task(sandbox.kill_tree(handle))
+        with pytest.raises(SandboxUnavailable, match="launches are active"):
+            broker.close()
+
+        await kill_task
+        rc, _output, _error = await run_task
+        assert rc != 0
+        broker.close()
+        assert handle.closed
+        assert not handle.closing
+    finally:
+        if run_task is not None and not run_task.done():
+            run_task.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await run_task
+        if kill_task is not None:
+            await kill_task
+        elif handle is not None:
+            await sandbox.kill_tree(handle)
+        broker.close()
+        shutil.rmtree(workspace, ignore_errors=True)
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_restricted_token_cannot_read_user_profile_directory() -> None:
+    """The restricting SID must allow workspace access and deny a sibling path."""
+
+    import shutil
+    import tempfile
+
+    workspace = tempfile.mkdtemp(prefix="restricted_process_fs_")
+    outside = tempfile.mkdtemp(prefix="restricted_process_outside_")
+    command = os.path.join(workspace, "cmd.exe")
+    shutil.copy2(
+        os.path.join(os.environ["SYSTEMROOT"], "System32", "cmd.exe"),
+        command,
+    )
+    sentinel = os.path.join(outside, "sentinel.txt")
+    with open(sentinel, "w", encoding="utf-8") as stream:
+        stream.write("must-not-read")
+    broker = create_default_isolation(workspace, deny_paths=(outside,))
+    sandbox = WindowsProcessSandbox(broker)
+    handle = None
+    try:
+        broker.initialize()
+        handle = await sandbox.create(
+            SandboxProfile(exec_timeout_sec=10, output_size_limit_mb=1)
+        )
+        rc, output, error = await sandbox.run(
+            handle,
+            command,
+            ["/d", "/c", "echo allowed>inside.txt"],
+            cwd=workspace,
+            env={},
+            timeout_sec=5,
+        )
+        assert rc == 0
+        assert output == b""
+        assert error == b""
+        with open(os.path.join(workspace, "inside.txt"), encoding="utf-8") as stream:
+            assert stream.read().strip() == "allowed"
+
+        rc, output, error = await sandbox.run(
+            handle,
+            command,
+            ["/d", "/c", "type", sentinel],
+            cwd=workspace,
+            env={},
+            timeout_sec=5,
+        )
+
+        assert rc != 0
+        assert output == b""
+        assert b"Access is denied" in error
+    finally:
+        if handle is not None:
+            await sandbox.kill_tree(handle)
+        broker.close()
+        shutil.rmtree(workspace, ignore_errors=True)
+        shutil.rmtree(outside, ignore_errors=True)
 
 
 @pytest.mark.integration

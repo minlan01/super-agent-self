@@ -140,7 +140,11 @@ class TestBashExecute:
 
     @pytest.mark.asyncio
     async def test_timeout_expired(self, tool, context):
-        slow_cmd = f'"{sys.executable}" -c "import time; time.sleep(10)"'
+        slow_cmd = (
+            "for /L %i in (1,1,2147483647) do @rem"
+            if sys.platform == "win32"
+            else f'"{sys.executable}" -c "import time; time.sleep(10)"'
+        )
         result = await tool.execute(
             {"command": slow_cmd, "timeout": 1},
             context,

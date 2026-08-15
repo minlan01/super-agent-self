@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -57,8 +58,15 @@ def _bash_check_fn(args: dict) -> tuple[bool, str]:
         "required": ["command"],
         "properties": {
             "command": {"type": "string", "description": "Shell command to execute"},
-            "timeout": {"type": "integer", "description": "Timeout in seconds (max 120)", "default": 30},
-            "workdir": {"type": "string", "description": "Working directory (must be within workspace)"},
+            "timeout": {
+                "type": "integer",
+                "description": "Timeout in seconds (max 120)",
+                "default": 30,
+            },
+            "workdir": {
+                "type": "string",
+                "description": "Working directory (must be within workspace)",
+            },
         },
         "additionalProperties": False,
     },
@@ -68,6 +76,29 @@ class BashExecute(ToolBase):
 
     name = "shell.execute"
     description = "Execute a shell command in sandboxed environment"
+
+    @staticmethod
+    async def _execute_windows_isolated(
+        command: str,
+        *,
+        workspace_root: str,
+        workdir: str,
+        timeout: int,
+    ) -> tuple[int, bytes, bytes]:
+        from packages.platform.windows.sandbox_factory import (
+            WindowsProcessSandboxFactory,
+        )
+
+        shell = WindowsProcessSandboxFactory.windows_shell_executable()
+        return await WindowsProcessSandboxFactory.execute(
+            workspace_root=workspace_root,
+            executable=shell,
+            args=("/d", "/s", "/c", command),
+            cwd=workdir,
+            env={},
+            timeout_sec=timeout,
+            stage_executable=True,
+        )
 
     async def execute(self, args: dict[str, Any], context: ExecutionContext) -> ToolResult:
         command: str = args.get("command", "").strip()
@@ -95,15 +126,26 @@ class BashExecute(ToolBase):
         # 4. Execute
         proc = None
         try:
-            proc = await asyncio.create_subprocess_shell(
-                command,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                cwd=workdir,
-            )
-            stdout_bytes, stderr_bytes = await asyncio.wait_for(
-                proc.communicate(), timeout=timeout
-            )
+            if sys.platform == "win32":
+                exit_code, stdout_bytes, stderr_bytes = (
+                    await self._execute_windows_isolated(
+                        command,
+                        workspace_root=workspace_root,
+                        workdir=workdir,
+                        timeout=timeout,
+                    )
+                )
+            else:
+                proc = await asyncio.create_subprocess_shell(
+                    command,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                    cwd=workdir,
+                )
+                stdout_bytes, stderr_bytes = await asyncio.wait_for(
+                    proc.communicate(), timeout=timeout
+                )
+                exit_code = proc.returncode if proc.returncode is not None else -1
         except TimeoutError:
             if proc is not None:
                 proc.kill()
@@ -124,8 +166,6 @@ class BashExecute(ToolBase):
         # 5. Truncate output if too large
         stdout = stdout_bytes[:MAX_OUTPUT_BYTES].decode("utf-8", errors="replace")
         stderr = stderr_bytes[:MAX_OUTPUT_BYTES].decode("utf-8", errors="replace")
-        exit_code = proc.returncode if proc.returncode is not None else -1
-
         return ToolResult(
             success=(exit_code == 0),
             output={

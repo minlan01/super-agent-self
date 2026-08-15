@@ -296,6 +296,7 @@ class ExecutionOrchestrator:
         from packages.executor.tools.base import ExecutionContext
         ctx = ExecutionContext(
             task_id=task_id, step_id=step_id,
+            principal_id=tenant_id, workspace_id=tenant_id,
             workspace_root=workspace_root,
         )
 
@@ -415,6 +416,7 @@ class ExecutionOrchestrator:
         from packages.executor.tools.base import ExecutionContext
         ctx = ExecutionContext(
             task_id=task_id, step_id=step_id,
+            principal_id=tenant_id, workspace_id=tenant_id,
             workspace_root=workspace_root,
         )
 
@@ -529,6 +531,7 @@ class ExecutionOrchestrator:
             from packages.executor.tools.base import ExecutionContext
             ctx = ExecutionContext(
                 task_id=task_id, step_id=step_id,
+                principal_id=tenant_id, workspace_id=tenant_id,
                 workspace_root=workspace_root,
             )
 

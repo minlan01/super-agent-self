@@ -10,6 +10,8 @@ from packages.platform.windows.conpty import (
     ResizeRequest,
     SessionState,
     TerminalMessage,
+    TerminalMessageType,
+    TerminalOpenSpec,
     TerminalSession,
     is_conpty_available,
 )
@@ -155,14 +157,35 @@ class TestConPTYContract:
 
     def test_terminal_message_types(self):
         """TerminalMessage should support all message types."""
-        for msg_type in ["input", "output", "resize", "signal", "close", "error", "heartbeat"]:
-            msg = TerminalMessage(msg_type=msg_type, payload=b"test")
-            assert msg.msg_type == msg_type
+        for message_type in TerminalMessageType:
+            msg = TerminalMessage(
+                message_type=message_type,
+                payload=b"test",
+                sequence=1,
+            )
+            assert msg.message_type is message_type
+
+    def test_terminal_message_requires_positive_sequence(self):
+        with pytest.raises(ValueError, match="sequence"):
+            TerminalMessage(
+                message_type=TerminalMessageType.OUTPUT,
+                payload=b"test",
+                sequence=0,
+            )
+
+    def test_terminal_open_spec_rejects_protocol_downgrade(self):
+        with pytest.raises(ValueError, match="unsupported terminal protocol"):
+            TerminalOpenSpec(
+                executable=r"C:\Windows\System32\cmd.exe",
+                args=(),
+                cwd=_WORKSPACE,
+                protocol_version="0.9",
+            )
 
     def test_conpty_not_implemented_error(self):
         """ConPTYNotImplemented should be a CapabilityUnavailable."""
         err = ConPTYNotImplemented()
-        assert "conpty" in str(err).lower() or "not implemented" in str(err).lower()
+        assert "terminal_session" in str(err).lower()
 
     def test_is_conpty_available_returns_bool(self):
         """is_conpty_available should return a boolean."""

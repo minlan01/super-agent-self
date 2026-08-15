@@ -18,6 +18,7 @@ from packages.platform.shared.contracts import (
     WindowProvider,
 )
 from packages.platform.shared.errors import CapabilityUnavailable
+from packages.platform.shared.terminal import TerminalSessionProvider
 from packages.protocol.schemas.enums import Capability
 from packages.protocol.schemas.v1 import CapabilityReport
 
@@ -30,6 +31,7 @@ class WindowsPlatformAdapter(PlatformAdapter):
         self._secret: SecretStore | None = None
         self._session: SessionMonitor | None = None
         self._sandbox: ProcessSandbox | None = None
+        self._terminal: TerminalSessionProvider | None = None
 
     def platform_name(self) -> str:
         return "windows"
@@ -42,8 +44,8 @@ class WindowsPlatformAdapter(PlatformAdapter):
         return None if sys.platform == "win32" else "Windows-only capability on non-Windows host"
 
     def get_capabilities(self) -> CapabilityReport:
+        from .conpty import WindowsConPTYManager
         from .local_ipc import WindowsNamedPipeIpc
-        from .process_sandbox import WindowsProcessSandbox
         from .secret_store import WindowsCredentialStore
         from .session_monitor import WindowsSessionMonitor
 
@@ -66,9 +68,9 @@ class WindowsPlatformAdapter(PlatformAdapter):
                 "Windows WTS APIs unavailable",
             ),
             (
-                Capability.PROCESS_SANDBOX,
-                WindowsProcessSandbox.is_supported,
-                "Windows Job Object APIs unavailable",
+                Capability.TERMINAL_SESSION,
+                WindowsConPTYManager.is_supported,
+                "Windows CreatePseudoConsole APIs unavailable",
             ),
         )
         for capability, check, missing_reason in checks:
@@ -81,6 +83,11 @@ class WindowsPlatformAdapter(PlatformAdapter):
                 reasons[capability] = f"initialization check failed: {type(exc).__name__}"
 
         for capability, reason in (
+            (
+                Capability.PROCESS_SANDBOX,
+                "requires a task-scoped WindowsIsolationBroker; use "
+                "WindowsProcessSandboxFactory",
+            ),
             (Capability.WINDOW_PROVIDER, "P2 scope"),
             (Capability.SCREEN_CAPTURE, "P2 scope"),
             (Capability.PERMISSION_BROKER, "P3 scope"),
@@ -137,16 +144,23 @@ class WindowsPlatformAdapter(PlatformAdapter):
         return self._session
 
     def process_sandbox(self) -> ProcessSandbox:
-        from .process_sandbox import WindowsProcessSandbox
+        raise CapabilityUnavailable(
+            "process_sandbox",
+            "requires a task-scoped WindowsIsolationBroker; use "
+            "WindowsProcessSandboxFactory",
+        )
+
+    def terminal_sessions(self) -> TerminalSessionProvider:
+        from .conpty import WindowsConPTYManager
 
         self._require(
-            Capability.PROCESS_SANDBOX,
-            WindowsProcessSandbox.is_supported(),
-            "requires Windows Job Object APIs",
+            Capability.TERMINAL_SESSION,
+            WindowsConPTYManager.is_supported(),
+            "requires Windows 10 1809 or newer CreatePseudoConsole APIs",
         )
-        if self._sandbox is None:
-            self._sandbox = WindowsProcessSandbox()
-        return self._sandbox
+        if self._terminal is None:
+            self._terminal = WindowsConPTYManager()
+        return self._terminal
 
     def window_provider(self) -> WindowProvider:
         raise CapabilityUnavailable("window_provider", "P2 scope")

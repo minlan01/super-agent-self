@@ -14,3 +14,4 @@ from packages.executor.tools import (
     personal_tools,  # noqa: F401
     web_search_tool,  # noqa: F401
 )
+from packages.platform.windows import process_tools, terminal_tools  # noqa: F401

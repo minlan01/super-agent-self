@@ -31,6 +31,18 @@ def execute_tool(
     from packages.executor.tools.base import ExecutionContext, ToolResult
     from packages.policy.unified_registry import UnifiedToolRegistry
 
+    if tool_name in {"process.execute", "shell.execute"} or tool_name.startswith(
+        "terminal."
+    ):
+        return {
+            "success": False,
+            "output": None,
+            "error": (
+                f"Tool '{tool_name}' requires the audited ToolGateway task path; "
+                "direct CLI execution is disabled"
+            ),
+        }
+
     registry = UnifiedToolRegistry.get_instance()
     reg = registry.get_tool(tool_name)
 

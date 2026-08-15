@@ -1,5 +1,8 @@
 """Task CRUD routes — create, list, detail, cancel, execute, retry, batch."""
 
+from pathlib import Path
+from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import select
@@ -23,8 +26,8 @@ from packages.agent_core.schemas import (
     TaskListResponse,
     TaskResponse,
     TaskStepResponse,
-    TaskUpdate,
 )
+from packages.config import get_settings
 from packages.db.models import AuditEventType, Task, TaskStatus
 from packages.db.pagination import paginate
 from packages.db.repositories.audit_repo import AuditRepository
@@ -32,6 +35,21 @@ from packages.db.repositories.task_repo import TaskRepository
 from packages.db.session import run_async
 
 router = APIRouter(dependencies=[Depends(require_permission("tasks", "read"))])
+
+
+def _task_workspace_root(configured_root: str, task_id: str) -> Path:
+    """Return a task workspace that cannot escape the configured root."""
+
+    try:
+        canonical_task_id = str(UUID(task_id))
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail="Task not found") from exc
+
+    workspace_base = Path(configured_root).resolve()
+    workspace = (workspace_base / canonical_task_id).resolve()
+    if not workspace.is_relative_to(workspace_base):
+        raise HTTPException(status_code=400, detail="Invalid task workspace")
+    return workspace
 
 
 @router.post(
@@ -133,15 +151,20 @@ def get_task(
     "/{task_id}/execute",
     response_model=TaskExecutionResponse,
     summary="Execute a task",
-    description="Run the full lifecycle for a pending task: planning, policy check, and step-by-step execution.",
+    description=(
+        "Run the full lifecycle for a pending task: planning, policy check, "
+        "and step-by-step execution."
+    ),
     dependencies=[Depends(require_permission("tasks", "execute"))],
 )
 async def execute_task(task_id: str, db: Session = Depends(get_db)):
     """Execute a pending task: plan -> policy check -> execute."""
 
+    workspace_path = _task_workspace_root(get_settings().workspace_root, task_id)
     updated = await run_async(
         TaskRepository.atomic_status_transition,
         task_id, TaskStatus.PENDING, TaskStatus.PLANNING,
+        bind_engine=db.bind,
     )
     if updated is None:
         task = await run_async(TaskRepository.get_by_id, task_id)
@@ -152,11 +175,20 @@ async def execute_task(task_id: str, db: Session = Depends(get_db)):
             detail=f"Task cannot be executed — current status: '{task.status.value}'",
         )
 
+    task = updated
     orchestrator = get_orchestrator()
     edition = task.edition.value if hasattr(task.edition, "value") else task.edition
 
     from packages.executor.tools.base import ExecutionContext
-    context = ExecutionContext(task_id=task_id, step_id="orchestrator", edition=edition)
+    workspace_path.mkdir(parents=True, exist_ok=True)
+    context = ExecutionContext(
+        task_id=task_id,
+        step_id="orchestrator",
+        principal_id=str(task.user_id),
+        workspace_id=task_id,
+        edition=edition,
+        workspace_root=str(workspace_path),
+    )
 
     result = await orchestrator.run(
         db=db,
@@ -184,7 +216,10 @@ async def execute_task(task_id: str, db: Session = Depends(get_db)):
     "/{task_id}/cancel",
     response_model=TaskDetailResponse,
     summary="Cancel a task",
-    description="Cancel a task that is currently in pending, planning, or awaiting-approval status.",
+    description=(
+        "Cancel a task that is currently in pending, planning, or "
+        "awaiting-approval status."
+    ),
     dependencies=[Depends(require_permission("tasks", "write"))],
 )
 def cancel_task(task_id: str, db: Session = Depends(get_db)):
@@ -192,12 +227,27 @@ def cancel_task(task_id: str, db: Session = Depends(get_db)):
     task = TaskRepository.get_by_id(db, task_id, include_steps=False)
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
-    if task.status not in (TaskStatus.PENDING, TaskStatus.PLANNING, TaskStatus.AWAITING_APPROVAL):
-        raise HTTPException(status_code=400, detail=f"Cannot cancel task in status '{task.status.value}'")
+    if task.status not in (
+        TaskStatus.PENDING,
+        TaskStatus.PLANNING,
+        TaskStatus.AWAITING_APPROVAL,
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Cannot cancel task in status '{task.status.value}'",
+        )
 
-    updated = TaskRepository.atomic_status_transition(db, task_id, task.status, TaskStatus.CANCELLED)
+    updated = TaskRepository.atomic_status_transition(
+        db,
+        task_id,
+        task.status,
+        TaskStatus.CANCELLED,
+    )
     if updated is None:
-        raise HTTPException(status_code=409, detail="Task status changed concurrently — please retry")
+        raise HTTPException(
+            status_code=409,
+            detail="Task status changed concurrently — please retry",
+        )
 
     AuditRepository.create(
         db,
@@ -248,7 +298,10 @@ def retry_task(task_id: str, db: Session = Depends(get_db)):
 
     updated = TaskRepository.atomic_status_transition(db, task_id, task.status, TaskStatus.PENDING)
     if updated is None:
-        raise HTTPException(status_code=409, detail="Task status changed concurrently — please retry")
+        raise HTTPException(
+            status_code=409,
+            detail="Task status changed concurrently — please retry",
+        )
 
     AuditRepository.create(
         db,
