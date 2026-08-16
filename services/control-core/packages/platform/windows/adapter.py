@@ -32,6 +32,8 @@ class WindowsPlatformAdapter(PlatformAdapter):
         self._session: SessionMonitor | None = None
         self._sandbox: ProcessSandbox | None = None
         self._terminal: TerminalSessionProvider | None = None
+        self._window: WindowProvider | None = None
+        self._capture: ScreenCapture | None = None
 
     def platform_name(self) -> str:
         return "windows"
@@ -44,10 +46,12 @@ class WindowsPlatformAdapter(PlatformAdapter):
         return None if sys.platform == "win32" else "Windows-only capability on non-Windows host"
 
     def get_capabilities(self) -> CapabilityReport:
+        from .capture_wgc import WindowsGraphicsCapture
         from .conpty import WindowsConPTYManager
         from .local_ipc import WindowsNamedPipeIpc
         from .secret_store import WindowsCredentialStore
         from .session_monitor import WindowsSessionMonitor
+        from .uia import WindowsUIAWindowProvider
 
         capabilities: set[Capability] = set()
         reasons: dict[Capability, str] = {}
@@ -72,6 +76,16 @@ class WindowsPlatformAdapter(PlatformAdapter):
                 WindowsConPTYManager.is_supported,
                 "Windows CreatePseudoConsole APIs unavailable",
             ),
+            (
+                Capability.WINDOW_PROVIDER,
+                WindowsUIAWindowProvider.is_supported,
+                "uiautomation or native UI Automation initialization unavailable",
+            ),
+            (
+                Capability.SCREEN_CAPTURE,
+                WindowsGraphicsCapture.is_supported,
+                "windows-capture or Windows Graphics Capture unavailable",
+            ),
         )
         for capability, check, missing_reason in checks:
             try:
@@ -88,8 +102,6 @@ class WindowsPlatformAdapter(PlatformAdapter):
                 "requires a task-scoped WindowsIsolationBroker; use "
                 "WindowsProcessSandboxFactory",
             ),
-            (Capability.WINDOW_PROVIDER, "P2 scope"),
-            (Capability.SCREEN_CAPTURE, "P2 scope"),
             (Capability.PERMISSION_BROKER, "P3 scope"),
             (Capability.AUTO_START, "P4 scope"),
             (Capability.UPDATER, "P4 scope"),
@@ -163,10 +175,28 @@ class WindowsPlatformAdapter(PlatformAdapter):
         return self._terminal
 
     def window_provider(self) -> WindowProvider:
-        raise CapabilityUnavailable("window_provider", "P2 scope")
+        from .uia import WindowsUIAWindowProvider
+
+        self._require(
+            Capability.WINDOW_PROVIDER,
+            WindowsUIAWindowProvider.is_supported(),
+            "requires Windows and uiautomation",
+        )
+        if self._window is None:
+            self._window = WindowsUIAWindowProvider()
+        return self._window
 
     def screen_capture(self) -> ScreenCapture:
-        raise CapabilityUnavailable("screen_capture", "P2 scope")
+        from .capture_wgc import WindowsGraphicsCapture
+
+        self._require(
+            Capability.SCREEN_CAPTURE,
+            WindowsGraphicsCapture.is_supported(),
+            "requires Windows 10 1903+ and windows-capture",
+        )
+        if self._capture is None:
+            self._capture = WindowsGraphicsCapture(window_provider=self.window_provider())
+        return self._capture
 
     def permission_broker(self) -> PermissionBroker:
         raise CapabilityUnavailable("permission_broker", "P3 scope")

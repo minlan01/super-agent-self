@@ -53,3 +53,11 @@ Thumbs.db
 .agents/*
 !.agents/skills/
 !.agents/agents/
+
+# P4 build artifacts — never commit compiled binaries
+services/control-core/scripts/nuitka-build/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/.cargo/
+*.exe
+*.dll
+!**/testfixtures/**

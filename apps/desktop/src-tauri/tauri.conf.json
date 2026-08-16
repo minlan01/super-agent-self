@@ -27,7 +27,8 @@
         "silent": true
       },
       "nsis": {
-        "installMode": "currentUser"
+        "installMode": "currentUser",
+        "installerHooks": "nsis/reproducible-build.nsh"
       }
     }
   }

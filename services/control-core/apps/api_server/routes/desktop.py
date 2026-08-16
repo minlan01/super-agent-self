@@ -31,7 +31,11 @@ def _check_write_rate(client_ip: str) -> None:
 
     with _write_rate_lock:
         if now - _write_rate_last_cleanup > _WRITE_RATE_CLEANUP_INTERVAL:
-            stale_keys = [k for k, v in _write_rate_store.items() if not v or now - v[-1] > _WRITE_RATE_WINDOW]
+            stale_keys = [
+                key
+                for key, values in _write_rate_store.items()
+                if not values or now - values[-1] > _WRITE_RATE_WINDOW
+            ]
             for k in stale_keys:
                 del _write_rate_store[k]
             _write_rate_last_cleanup = now
@@ -50,10 +54,15 @@ class FileSystemRequest(BaseModel):
 
 
 class WindowRequest(BaseModel):
-    action: str = Field(default="list", pattern="^list$")
+    action: str = Field(default="list", pattern="^(list|bind)$")
+    window_id: str | None = Field(default=None, max_length=64)
 
 
-@router.post("/files", response_model=TaskExecutionResponse, dependencies=[Depends(require_permission("desktop", "write"))])
+@router.post(
+    "/files",
+    response_model=TaskExecutionResponse,
+    dependencies=[Depends(require_permission("desktop", "write"))],
+)
 async def file_system_operation(body: FileSystemRequest, request: Request) -> dict[str, Any]:
     """File system operations within workspace."""
     from pathlib import Path
@@ -85,9 +94,15 @@ async def file_system_operation(body: FileSystemRequest, request: Request) -> di
             raise HTTPException(status_code=404, detail="File not found")
         file_size = target.stat().st_size
         if file_size > _MAX_READ_SIZE:
-            raise HTTPException(status_code=413, detail=f"File too large: {file_size} bytes (max {_MAX_READ_SIZE})")
+            raise HTTPException(
+                status_code=413,
+                detail=f"File too large: {file_size} bytes (max {_MAX_READ_SIZE})",
+            )
         content = target.read_text(encoding="utf-8", errors="replace")
-        return {"success": True, "data": {"path": body.path, "content": content, "size": len(content)}}
+        return {
+            "success": True,
+            "data": {"path": body.path, "content": content, "size": len(content)},
+        }
 
     elif body.action == "write":
         if not body.content:
@@ -97,7 +112,11 @@ async def file_system_operation(body: FileSystemRequest, request: Request) -> di
         return {"success": True, "data": {"path": body.path, "written": len(body.content)}}
 
 
-@router.post("/windows", response_model=TaskExecutionResponse, dependencies=[Depends(require_permission("desktop", "read"))])
+@router.post(
+    "/windows",
+    response_model=TaskExecutionResponse,
+    dependencies=[Depends(require_permission("desktop", "read"))],
+)
 async def list_windows(body: WindowRequest) -> dict[str, Any]:
     """List desktop windows."""
     from packages.executor.tools.desktop_tools import WindowManagerTool
@@ -107,7 +126,7 @@ async def list_windows(body: WindowRequest) -> dict[str, Any]:
     class _Ctx:
         workspace_root = "."
 
-    result = await tool.execute({"action": "list"}, _Ctx())
+    result = await tool.execute(body.model_dump(), _Ctx())
 
     if not result.success:
         logger.warning("Window list failed: %s", result.error)
@@ -116,17 +135,23 @@ async def list_windows(body: WindowRequest) -> dict[str, Any]:
     return {"success": True, "data": result.output}
 
 
-@router.get("/screenshot", response_model=TaskExecutionResponse, dependencies=[Depends(require_permission("desktop", "read"))])
-async def take_screenshot() -> dict[str, Any]:
+@router.get(
+    "/screenshot",
+    response_model=TaskExecutionResponse,
+    dependencies=[Depends(require_permission("desktop", "read"))],
+)
+async def take_screenshot(window_id: str | None = None) -> dict[str, Any]:
     """Take a desktop screenshot."""
     from packages.executor.tools.desktop_tools import DesktopScreenshot
 
     tool = DesktopScreenshot()
 
-    class _Ctx:
-        workspace_root = "."
+    from packages.config import get_settings
 
-    result = await tool.execute({}, _Ctx())
+    class _Ctx:
+        workspace_root = get_settings().workspace_root
+
+    result = await tool.execute({"window_id": window_id}, _Ctx())
 
     if not result.success:
         logger.warning("Screenshot failed: %s", result.error)

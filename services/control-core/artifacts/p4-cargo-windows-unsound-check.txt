@@ -1,0 +1,10 @@
+=== event-listener@5.4.1 ===
+warning: nothing to print.
+
+To find dependencies that require specific target platforms, try to use option `--target all` first, and then narrow your search scope accordingly.
+exit_code=0
+=== glib@0.18.5 ===
+warning: nothing to print.
+
+To find dependencies that require specific target platforms, try to use option `--target all` first, and then narrow your search scope accordingly.
+exit_code=0

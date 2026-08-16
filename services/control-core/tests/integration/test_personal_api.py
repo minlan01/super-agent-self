@@ -1,18 +1,18 @@
 """Integration tests for Personal Edition API endpoints."""
 
 import os
-import pytest
-from unittest.mock import patch, MagicMock, AsyncMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-from packages.db.models import Base, Memory, MemoryType, Edition
-from packages.db.repositories.rbac_repo import RBACRepository
-from packages.db.repositories.auth_repo import AuthRepository
 from packages.auth.auth_service import create_access_token
 from packages.config import clear_settings_cache
+from packages.db.models import Base, Edition, Memory, MemoryType
+from packages.db.repositories.auth_repo import AuthRepository
+from packages.db.repositories.rbac_repo import RBACRepository
 
 
 @pytest.fixture
@@ -36,8 +36,8 @@ def app_and_client():
     RBACRepository.seed_default_roles_and_permissions(db)
     db.commit()
 
-    from packages.db.session import get_db
     from apps.api_server.main import app
+    from packages.db.session import get_db
 
     def _override_get_db():
         try:
@@ -79,10 +79,15 @@ def _auth_headers(token: str) -> dict[str, str]:
     return {"Authorization": f"Bearer {token}"}
 
 
-def _seed_reminder(db: Session, title: str = "Test Reminder") -> Memory:
+def _seed_reminder(
+    db: Session,
+    title: str = "Test Reminder",
+    *,
+    user_id: str = "default",
+) -> Memory:
     """Insert an active reminder into the database."""
     memory = Memory(
-        user_id="default",
+        user_id=user_id,
         edition=Edition.PERSONAL,
         memory_type=MemoryType.REMINDER,
         title=title,
@@ -167,8 +172,8 @@ class TestListReminders:
     @pytest.mark.integration
     def test_list_reminders_returns_active(self, app_and_client, admin_user_and_token):
         client, db = app_and_client
-        _, token, _ = admin_user_and_token
-        _seed_reminder(db, "Active Reminder")
+        user, token, _ = admin_user_and_token
+        _seed_reminder(db, "Active Reminder", user_id=user.id)
         db.commit()
 
         resp = client.get(
@@ -180,13 +185,32 @@ class TestListReminders:
         assert len(body["data"]) == 1
         assert body["data"][0]["title"] == "Active Reminder"
 
+    @pytest.mark.integration
+    def test_list_reminders_excludes_other_users(self, app_and_client, admin_user_and_token):
+        client, db = app_and_client
+        user, token, _ = admin_user_and_token
+        other = AuthRepository.create_user(
+            db, username="other-reminder-user", password="other-pass-123",
+        )
+        _seed_reminder(db, "Mine", user_id=user.id)
+        _seed_reminder(db, "Not Mine", user_id=other.id)
+        db.commit()
+
+        resp = client.get(
+            "/api/v1/personal/reminders",
+            headers=_auth_headers(token),
+        )
+
+        assert resp.status_code == 200
+        assert [item["title"] for item in resp.json()["data"]] == ["Mine"]
+
 
 class TestDismissReminder:
     @pytest.mark.integration
     def test_dismiss_reminder(self, app_and_client, admin_user_and_token):
         client, db = app_and_client
-        _, token, _ = admin_user_and_token
-        reminder = _seed_reminder(db, "Dismiss Me")
+        user, token, _ = admin_user_and_token
+        reminder = _seed_reminder(db, "Dismiss Me", user_id=user.id)
         db.commit()
 
         resp = client.post(
@@ -208,6 +232,27 @@ class TestDismissReminder:
             headers=_auth_headers(token),
         )
         assert resp.status_code == 404
+
+    @pytest.mark.integration
+    def test_cannot_dismiss_another_users_reminder(
+        self, app_and_client, admin_user_and_token,
+    ):
+        client, db = app_and_client
+        _, token, _ = admin_user_and_token
+        other = AuthRepository.create_user(
+            db, username="other-dismiss-user", password="other-pass-123",
+        )
+        reminder = _seed_reminder(db, "Not Mine", user_id=other.id)
+        db.commit()
+
+        resp = client.post(
+            f"/api/v1/personal/reminders/{reminder.id}/dismiss",
+            headers=_auth_headers(token),
+        )
+
+        assert resp.status_code == 404
+        db.refresh(reminder)
+        assert reminder.is_active is True
 
 
 # ── Daily Context ───────────────────────────────────────────────────────────
@@ -257,7 +302,9 @@ class TestPreferences:
 
         # Build a mock that satisfies MemoryResponse.model_validate fields
         from datetime import datetime, timezone
-        from packages.db.models import MemoryType as MT, Edition as Ed
+
+        from packages.db.models import Edition as Ed
+        from packages.db.models import MemoryType as MT
 
         mock_result = MagicMock()
         mock_result.id = "pref-001"

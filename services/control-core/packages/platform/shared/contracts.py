@@ -15,6 +15,7 @@ Design rules (spec §2.3 + §4.5):
 
 from __future__ import annotations
 
+import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -57,6 +58,21 @@ class Screenshot:
     height: int
     taken_at: datetime
     classification: Classification = Classification.CONFIDENTIAL
+
+
+@dataclass(frozen=True)
+class ScreenshotArtifact:
+    """Workspace-relative metadata for persisted screenshot bytes."""
+
+    artifact_id: str
+    relative_path: str
+    mime_type: str
+    width: int
+    height: int
+    sha256: str
+    classification: Classification
+    size_bytes: int
+    created_at: float = field(default_factory=time.time)
 
 
 @dataclass(frozen=True)
@@ -463,6 +479,7 @@ __all__ = [
     "SecretRef",
     "WindowInfo",
     "Screenshot",
+    "ScreenshotArtifact",
     "SessionState",
     "SandboxProfile",
     "UpdateManifest",

@@ -1,11 +1,15 @@
 """Tests for FileSystemTool and WindowManagerTool (Sprint 39 desktop automation)."""
 
 import os
+
 os.environ["TESTING"] = "1"
 
+from unittest.mock import AsyncMock, MagicMock
+
 import pytest
-from unittest.mock import AsyncMock, patch, MagicMock
+
 from packages.executor.tools.desktop_tools import FileSystemTool, WindowManagerTool
+from packages.platform.shared.contracts import WindowInfo
 
 
 class TestFileSystemTool:
@@ -64,7 +68,9 @@ class TestFileSystemTool:
     async def test_write_file(self, tmp_path):
         tool = FileSystemTool()
         ctx = MagicMock(workspace_root=str(tmp_path))
-        result = await tool.execute({"action": "write", "path": "new.txt", "content": "created"}, ctx)
+        result = await tool.execute(
+            {"action": "write", "path": "new.txt", "content": "created"}, ctx
+        )
 
         assert result.success is True
         assert (tmp_path / "new.txt").read_text() == "created"
@@ -100,7 +106,9 @@ class TestFileSystemTool:
     async def test_write_too_large(self, tmp_path):
         tool = FileSystemTool()
         ctx = MagicMock(workspace_root=str(tmp_path))
-        result = await tool.execute({"action": "write", "path": "big.txt", "content": "x" * 200_000}, ctx)
+        result = await tool.execute(
+            {"action": "write", "path": "big.txt", "content": "x" * 200_000}, ctx
+        )
 
         assert result.success is False
         assert "too large" in result.error.lower()
@@ -114,41 +122,56 @@ class TestWindowManagerTool:
         assert tool.name == "desktop.windows"
 
     @pytest.mark.asyncio
-    async def test_list_windows_windows(self):
-        tool = WindowManagerTool()
-        mock_proc = AsyncMock()
-        mock_proc.returncode = 0
-        mock_proc.communicate = AsyncMock(return_value=(
-            b'[{"Id": 1234, "ProcessName": "notepad", "MainWindowTitle": "test.txt"}]', b""
-        ))
+    async def test_list_windows_uses_platform_provider(self):
+        provider = MagicMock()
+        provider.list_windows = AsyncMock(return_value=[
+            WindowInfo(window_id="win32:1234", title="test.txt", pid=1234, ui_digest="digest")
+        ])
+        adapter = MagicMock()
+        adapter.window_provider.return_value = provider
+        tool = WindowManagerTool(adapter=adapter)
 
-        with patch("platform.system", return_value="Windows"), \
-             patch("asyncio.create_subprocess_exec", return_value=mock_proc):
-            ctx = MagicMock(workspace_root="/tmp")
-            result = await tool.execute({"action": "list"}, ctx)
+        result = await tool.execute({"action": "list"}, MagicMock(workspace_root="/tmp"))
 
         assert result.success is True
         assert len(result.output["windows"]) == 1
         assert result.output["windows"][0]["title"] == "test.txt"
+        assert result.output["windows"][0]["ui_digest"] == "digest"
 
     @pytest.mark.asyncio
     async def test_list_windows_empty(self):
-        tool = WindowManagerTool()
-        mock_proc = AsyncMock()
-        mock_proc.returncode = 0
-        mock_proc.communicate = AsyncMock(return_value=(b"", b""))
+        provider = MagicMock()
+        provider.list_windows = AsyncMock(return_value=[])
+        adapter = MagicMock()
+        adapter.window_provider.return_value = provider
+        tool = WindowManagerTool(adapter=adapter)
 
-        with patch("platform.system", return_value="Windows"), \
-             patch("asyncio.create_subprocess_exec", return_value=mock_proc):
-            ctx = MagicMock(workspace_root="/tmp")
-            result = await tool.execute({"action": "list"}, ctx)
+        result = await tool.execute({"action": "list"}, MagicMock(workspace_root="/tmp"))
 
         assert result.success is True
         assert result.output["windows"] == []
 
     @pytest.mark.asyncio
+    async def test_bind_window_returns_fresh_digest(self):
+        provider = MagicMock()
+        provider.bind_window = AsyncMock(return_value=WindowInfo(
+            window_id="win32:1234", title="test.txt", pid=1234, ui_digest="fresh"
+        ))
+        adapter = MagicMock()
+        adapter.window_provider.return_value = provider
+        tool = WindowManagerTool(adapter=adapter)
+
+        result = await tool.execute(
+            {"action": "bind", "window_id": "win32:1234"},
+            MagicMock(workspace_root="/tmp"),
+        )
+
+        assert result.success is True
+        assert result.output["window"]["ui_digest"] == "fresh"
+
+    @pytest.mark.asyncio
     async def test_unknown_action(self):
-        tool = WindowManagerTool()
+        tool = WindowManagerTool(adapter=MagicMock())
         ctx = MagicMock(workspace_root="/tmp")
         result = await tool.execute({"action": "close"}, ctx)
 

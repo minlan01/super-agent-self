@@ -1,0 +1,48 @@
+........................................................................ [  8%]
+........................................................................ [ 17%]
+........................................................................ [ 26%]
+........................................................................ [ 35%]
+........................................................................ [ 43%]
+........................................................................ [ 52%]
+........................................................................ [ 61%]
+........................................................................ [ 70%]
+........................................................................ [ 79%]
+........................................................................ [ 87%]
+........................................................................ [ 96%]
+............................                                             [100%]
+============================== warnings summary ===============================
+.venv-win\Lib\site-packages\fastapi\testclient.py:1
+  D:\agent\Agents\super-agent-self\services\control-core\.venv-win\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+packages\db\session.py:20
+  D:\agent\Agents\super-agent-self\services\control-core\packages\db\session.py:20: UserWarning: SECRET_KEY is set to the default value. Change it in production!
+    settings = get_settings()
+
+tests/unit/test_notification_ws_endpoint.py::TestNotificationWSEndpoint::test_rejects_invalid_token
+  D:\agent\Agents\super-agent-self\services\control-core\apps\api_server\routes\gateway_approvals.py:46: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ApprovalRequestResponse(BaseModel):
+
+tests/unit/test_notification_ws_endpoint.py::TestBroadcasterDualPush::test_broadcast_survives_chat_manager_failure
+tests/unit/test_notification_ws_endpoint.py::TestBroadcasterDualPush::test_broadcast_survives_notif_manager_failure
+tests/unit/test_notifications.py::TestNotificationBroadcaster::test_broadcast_notification_handles_exception
+tests/unit/test_orchestrator.py::TestOrchestratorRun::test_planning_failure
+tests/unit/test_redis_cache.py::TestCacheManagerFactory::test_factory_falls_back_when_redis_import_fails
+tests/unit/test_redis_cache.py::TestCacheManagerFactory::test_factory_falls_back_when_redis_connection_fails
+  D:\agent\Agents\super-agent-self\services\control-core\.venv-win\Lib\site-packages\structlog\stdlib.py:1098: UserWarning: Remove `format_exc_info` from your processor chain if you want pretty exceptions.
+    ed = p(logger, meth_name, cast(EventDict, ed))
+
+tests/unit/test_rate_limiter_dynamic.py::TestAdminEndpoints::test_get_rate_limits
+tests/unit/test_rate_limiter_dynamic.py::TestAdminEndpoints::test_reload_rate_limits
+tests/unit/test_rate_limiter_dynamic.py::TestAdminEndpoints::test_reload_preserves_old_on_invalid
+  D:\agent\Agents\super-agent-self\services\control-core\apps\api_server\dependencies.py:285: UserWarning: SECRET_KEY is set to the default value. Change it in production!
+    settings = get_settings()
+
+tests/unit/test_rate_limiter_dynamic.py::TestAdminEndpoints::test_get_rate_limits
+tests/unit/test_rate_limiter_dynamic.py::TestAdminEndpoints::test_reload_rate_limits
+tests/unit/test_rate_limiter_dynamic.py::TestAdminEndpoints::test_reload_preserves_old_on_invalid
+  D:\agent\Agents\super-agent-self\services\control-core\apps\api_server\dependencies.py:285: UserWarning: REQUIRE_AUTH is False. All API endpoints are publicly accessible!
+    settings = get_settings()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+820 passed, 15 warnings in 23.16s

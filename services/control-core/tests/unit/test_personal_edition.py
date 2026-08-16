@@ -281,7 +281,7 @@ class TestReminderService:
     def test_dismiss_reminder(self):
         db = _make_session()
         r = self.svc.create_reminder(db, title="Dismiss me")
-        result = self.svc.dismiss(db, r.id)
+        result = self.svc.dismiss(db, r.id, user_id="default")
         assert result is not None
         assert result.is_active is False
 
@@ -292,7 +292,7 @@ class TestReminderService:
 
     def test_dismiss_nonexistent_reminder(self):
         db = _make_session()
-        result = self.svc.dismiss(db, "nonexistent-id")
+        result = self.svc.dismiss(db, "nonexistent-id", user_id="default")
         assert result is None
         db.close()
 

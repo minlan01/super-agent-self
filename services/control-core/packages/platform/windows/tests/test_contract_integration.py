@@ -16,19 +16,23 @@ from packages.platform.shared.contracts import (
     PlatformAdapter,
     ProcessSandbox,
     SandboxProfile,
+    ScreenCapture,
     SecretRef,
     SecretStore,
     SessionMonitor,
     SessionState,
+    WindowProvider,
 )
 from packages.platform.shared.terminal import TerminalSessionProvider
 from packages.platform.windows._errors import UnsupportedPlatformError
 from packages.platform.windows.adapter import WindowsPlatformAdapter
+from packages.platform.windows.capture_wgc import WindowsGraphicsCapture
 from packages.platform.windows.conpty import WindowsConPTYManager
 from packages.platform.windows.local_ipc import WindowsNamedPipeIpc
 from packages.platform.windows.process_sandbox import WindowsProcessSandbox
 from packages.platform.windows.secret_store import WindowsCredentialStore
 from packages.platform.windows.session_monitor import WindowsSessionMonitor
+from packages.platform.windows.uia import WindowsUIAWindowProvider
 from packages.protocol.schemas.enums import Capability, ErrorCode
 
 
@@ -99,6 +103,25 @@ def test_terminal_capability_matches_real_conpty_support() -> None:
     else:
         assert Capability.TERMINAL_SESSION not in report.capabilities
         assert report.unsupported_reasons[Capability.TERMINAL_SESSION]
+
+
+def test_desktop_capabilities_match_real_native_support() -> None:
+    adapter = WindowsPlatformAdapter()
+    report = adapter.get_capabilities()
+
+    if WindowsUIAWindowProvider.is_supported():
+        assert Capability.WINDOW_PROVIDER in report.capabilities
+        assert isinstance(adapter.window_provider(), WindowProvider)
+    else:
+        assert Capability.WINDOW_PROVIDER not in report.capabilities
+        assert report.unsupported_reasons[Capability.WINDOW_PROVIDER]
+
+    if WindowsGraphicsCapture.is_supported():
+        assert Capability.SCREEN_CAPTURE in report.capabilities
+        assert isinstance(adapter.screen_capture(), ScreenCapture)
+    else:
+        assert Capability.SCREEN_CAPTURE not in report.capabilities
+        assert report.unsupported_reasons[Capability.SCREEN_CAPTURE]
 
 
 @pytest.mark.parametrize(

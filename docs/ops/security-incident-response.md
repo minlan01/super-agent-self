@@ -14,17 +14,9 @@
 
 ## 2. 紧急停止
 
-### 2.1 一键急停
+### 2.1 紧急停用
 
-```bash
-zcode emergency-stop
-```
-
-效果:
-- ≤1s: 停止接受新命令
-- ≤5s: 终止所有可安全终止的 Runner
-- 撤销所有未消费的 Grant / Lease
-- 冻结审计证据
+当前源码尚未实现 `zcode emergency-stop` 命令，也没有经过审计的 Grant/Lease 批量撤销 API。使用 [Emergency Disable Runbook](../runbooks/emergency-disable.md) 停止桌面与 control-core 进程、禁用高风险工具并执行有记录的 break-glass Grant 撤销。自动急停仍是 Windows GA 阻断项。
 
 ### 2.2 手动撤销 Grant
 
@@ -52,7 +44,7 @@ gi.revoke(grant_id)
 
 2. **证据保全**:
    - 不要重启服务 (内存证据)
-   - 导出审计日志: `zcode audit export --since <time>`
+   - 通过数据库只读副本或现有审计 API 导出事件；`zcode audit export` CLI 尚未实现
    - 复制 DB: `cp data/agent_platform.db /secure/location/`
    - 截图审批队列和 Effect 状态
 
@@ -64,7 +56,7 @@ gi.revoke(grant_id)
 4. **恢复**:
    - Rotate SECRET_KEY
    - Rotate 所有 API Key
-   - 从干净备份恢复: `zcode backup restore <pre-incident-id> --overwrite`
+   - 按 [Database Corruption Runbook](../runbooks/db-corruption.md) 从已验证备份离线恢复
    - 审查所有 PENDING 审批请求
 
 ### 3.2 P1: Grant 伪造 / 越权
@@ -87,11 +79,7 @@ gi.revoke(grant_id)
 
 ### 4.1 Hash Chain 检查
 
-```bash
-zcode audit verify-chain
-```
-
-验证审计事件的 hash chain 完整性。任何篡改都会导致校验失败。
+审计 hash-chain 验证 CLI 尚未实现。恢复或发布前必须通过现有审计测试和数据库证据核对；在专用 `verify-chain` 命令落地前，不得把本项标记为自动化通过。
 
 ### 4.2 Effect 完整性
 

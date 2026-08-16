@@ -1,19 +1,20 @@
 """Integration tests for webhook and messaging API endpoints."""
 
 import os
+from datetime import UTC, datetime
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
-from unittest.mock import AsyncMock, patch
 
-from packages.db.models import Base
-from packages.db.repositories.rbac_repo import RBACRepository
-from packages.db.repositories.auth_repo import AuthRepository
 from packages.auth.auth_service import create_access_token
 from packages.config import clear_settings_cache
+from packages.db.models import Base
+from packages.db.repositories.auth_repo import AuthRepository
+from packages.db.repositories.rbac_repo import RBACRepository
 
 
 @pytest.fixture
@@ -303,23 +304,30 @@ def test_message_history_returns_logged_messages(app_and_client, admin_headers):
     # Directly insert message logs via the repository
     from packages.db.repositories.messaging_repo import MessagingRepository
 
-    MessagingRepository.log_message(
-        db,
-        channel_id=channel_id,
-        direction="inbound",
-        platform="telegram",
-        sender_id="user-1",
-        content="Hello from Telegram",
-        status="received",
-    )
-    MessagingRepository.log_message(
-        db,
-        channel_id=channel_id,
-        direction="outbound",
-        platform="telegram",
-        content="Reply from agent",
-        status="sent",
-    )
+    fixed_now = datetime(2026, 8, 16, 2, 30, tzinfo=UTC)
+    with (
+        patch("packages.db.models.datetime") as clock,
+        patch("packages.db.models._last_model_timestamp", None),
+    ):
+        clock.now.return_value = fixed_now
+        inbound = MessagingRepository.log_message(
+            db,
+            channel_id=channel_id,
+            direction="inbound",
+            platform="telegram",
+            sender_id="user-1",
+            content="Hello from Telegram",
+            status="received",
+        )
+        outbound = MessagingRepository.log_message(
+            db,
+            channel_id=channel_id,
+            direction="outbound",
+            platform="telegram",
+            content="Reply from agent",
+            status="sent",
+        )
+    assert outbound.created_at > inbound.created_at
     db.commit()
 
     resp = client.get(f"/api/v1/messaging/history/{channel_id}", headers=admin_headers)

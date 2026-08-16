@@ -1,146 +1,175 @@
-# 离线部署指南 (Offline Deployment)
+# Offline Deployment Guide
 
-> 版本: P3
-> 更新: 2026-08-03
-> 适用: 无外网环境 (air-gapped) 部署
+> Updated: 2026-08-16
+> Scope: Windows desktop package and optional local control-core
+> Current release status: `NO-GO` for production offline distribution
 
-## 1. 前置准备 (在有网环境完成)
+## 1. Current Constraints
 
-### 1.1 下载安装包
+The current desktop bundle is an NSIS `.exe`, not MSI/MSIX. Its WebView2 mode is `downloadBootstrapper`, so a truly air-gapped target must already have a supported WebView2 Runtime. The packaged sidecar is still the P-1 health/echo spike rather than the real control-core service, and the local installer is not production-signed.
 
-在有网络的机器上:
-```bash
-# 下载最新 release (P4 阶段提供签名包)
-# Windows: zcode-setup-{version}.msi
-# Linux:   zcode-{version}.deb 或 .AppImage
-# macOS:   zcode-{version}.dmg
+Do not distribute the current `0.1.0` artifact as a production offline release.
 
-# 下载本地模型 (如需)
-ollama pull qwen2.5:7b
-# 将模型文件导出
-ollama export qwen2.5:7b > qwen2.5-7b.modelfile
+## 2. Build the Transfer Set on a Connected Windows Host
+
+Run from the repository root:
+
+```powershell
+cd 'D:\agent\Agents\super-agent-self'
+
+# Python wheel cache for self-hosted/local control-core deployment.
+New-Item -ItemType Directory -Force -Path '.\offline\wheels' | Out-Null
+& '.\services\control-core\.venv-win\Scripts\python.exe' -m pip download `
+  --requirement '.\services\control-core\requirements-win-locked.txt' `
+  --dest '.\offline\wheels'
+
+# Build the desktop and NSIS installer from locked dependencies.
+cd '.\apps\desktop'
+npm.cmd ci
+npm.cmd run tauri -- build --bundles nsis --ci
 ```
 
-### 1.2 下载 Python 依赖 (如自托管服务器)
+The release transfer set must contain:
 
-```bash
-# 在有网机器上下载所有 wheel
-pip download -r requirements.txt -d /offline/packages/
-pip download -r requirements-dev.txt -d /offline/packages/
+- Production-signed NSIS installer.
+- N-1 production-signed installer.
+- `requirements-win-locked.txt` and matching wheel directory when control-core is installed separately.
+- CycloneDX SBOM files.
+- Release gate record with source revision, SHA-256, signatures, test evidence and rollback point.
+- WebView2 Evergreen Standalone Installer when the target image does not already provide WebView2.
 
-# 打包
-tar czf offline-deps.tar.gz /offline/
+## 3. Verify Before Transfer
+
+```powershell
+$installer = Resolve-Path '.\src-tauri\target\release\bundle\nsis\Zcode Desktop Agent_<version>_x64-setup.exe'
+$signature = Get-AuthenticodeSignature -LiteralPath $installer
+$hash = Get-FileHash -Algorithm SHA256 -LiteralPath $installer
+
+$signature | Select-Object Status, StatusMessage, SignerCertificate, TimeStamperCertificate
+$hash
+
+if ($signature.Status -ne 'Valid') { throw 'installer is not production-signed' }
+if (-not $signature.TimeStamperCertificate) { throw 'trusted timestamp is missing' }
 ```
 
-### 1.3 校验签名
+Compare the SHA-256 with `docs/releases/v1.0-gate.md`. Copy the transfer set to approved media and record a second hash after copying.
 
-```bash
-# 验证安装包签名 (P4 阶段)
-codesign --verify zcode-setup-{version}.msi    # Windows
-dpkg-sig --verify zcode-{version}.deb           # Linux
-codesign --verify --deep zcode-{version}.dmg    # macOS
+## 4. Prepare the Air-Gapped Windows Target
+
+### 4.1 Confirm WebView2
+
+```powershell
+$webViewClient = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}'
+Get-ItemProperty -LiteralPath $webViewClient -ErrorAction SilentlyContinue |
+  Select-Object name, pv
 ```
 
-## 2. 离线安装
+If no supported runtime is present, install the approved offline Evergreen Standalone package before Zcode. The current `downloadBootstrapper` setting cannot download anything on an air-gapped host.
 
-### 2.1 Desktop Agent (Personal Profile)
+### 4.2 Verify Transfer Integrity Again
 
-1. 将安装包复制到目标机器 (U盘 / 内网传输)
-2. 运行安装程序
-3. 首次启动选择 "离线模式"
-4. 配置本地模型 (从离线模型文件导入)
-
-### 2.2 Self-hosted Server
-
-```bash
-# 1. 安装 Python 依赖
-pip install --no-index --find-links=/offline/packages/ -r requirements.txt
-
-# 2. 初始化数据库
-alembic upgrade head
-python scripts/init_db.py
-
-# 3. 设置 SECRET_KEY
-export SECRET_KEY="$(openssl rand -hex 32)"
-
-# 4. 启动
-uvicorn apps.api_server.main:app --host 0.0.0.0 --port 8000
+```powershell
+Get-FileHash -Algorithm SHA256 -LiteralPath '.\Zcode Desktop Agent_<version>_x64-setup.exe'
+Get-AuthenticodeSignature -LiteralPath '.\Zcode Desktop Agent_<version>_x64-setup.exe'
 ```
 
-### 2.3 企业静默安装
+Stop when the digest differs, the signature is not `Valid`, or the trusted timestamp is missing.
 
-```bash
-# Windows (MSI 静默安装)
-msiexec /i zcode-setup-{version}.msi /quiet INSTALLDIR="C:\Program Files\Zcode" SECRET_KEY="<key>"
+## 5. Install the Desktop Package
 
-# Linux (deb)
-sudo dpkg -i zcode-{version}.deb
-sudo zcode configure --secret-key "<key>" --workspace "/opt/zcode/workspace"
+The current NSIS configuration uses `currentUser`, so it installs without an administrator-only per-machine deployment mode.
+
+```powershell
+$installer = Resolve-Path '.\Zcode Desktop Agent_<version>_x64-setup.exe'
+$process = Start-Process -FilePath $installer -ArgumentList '/S' -Wait -PassThru
+if ($process.ExitCode -ne 0) { throw "installer failed: $($process.ExitCode)" }
 ```
 
-## 3. 离线模型配置
+Verify registration and installed files:
 
-### 3.1 导入 Ollama 模型
-
-```bash
-# 从离线文件导入
-ollama create qwen2.5:7b -f qwen2.5-7b.modelfile
-
-# 验证
-ollama list
-ollama run qwen2.5:7b "hello"
+```powershell
+$reg = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Zcode Desktop Agent'
+$installRoot = (Get-ItemProperty $reg).InstallLocation.Trim('"')
+Get-ChildItem -LiteralPath $installRoot -Recurse -File |
+  Select-Object FullName, Length
 ```
 
-### 3.2 模型路由配置
+Enterprise per-machine installation is not implemented in the current configuration. Do not use `msiexec`; there is no MSI artifact.
 
-编辑 `configs/app.yaml`:
-```yaml
-llm:
-  providers:
-    - name: "local-ollama"
-      type: "ollama"
-      url: "http://localhost:11434"
-      model: "qwen2.5:7b"
-      # 离线环境无 BYOK,只用本地模型
+## 6. Install Local Control-Core Dependencies When Required
+
+```powershell
+cd '.\services\control-core'
+& '.\.venv-win\Scripts\python.exe' -m pip install `
+  --no-index `
+  --find-links '..\..\offline\wheels' `
+  --requirement '.\requirements-win-locked.txt'
+
+& '.\.venv-win\Scripts\python.exe' -m pip check
+& '.\.venv-win\Scripts\python.exe' -m alembic upgrade head
 ```
 
-## 4. 离线更新
+Provision `SECRET_KEY` through the target organization's secret manager or service identity. Do not pass it in an installer command line, write it into the repository, or store it in deployment logs.
 
-离线环境无法使用自动更新。更新流程:
+For an interactive one-process test without command-history exposure:
 
-1. 在有网机器下载新版本安装包
-2. 校验签名
-3. 复制到离线机器
-4. 运行更新 (应用会自动备份当前版本)
-5. 验证: 检查 schema 版本 + 运行健康检查
-
-```bash
-# 更新前备份
-zcode backup create --notes "pre-update"
-
-# 安装新版本 (覆盖安装)
-
-# 验证
-zcode doctor    # 诊断检查
-alembic current # DB 版本
+```powershell
+$secure = Read-Host 'SECRET_KEY' -AsSecureString
+$ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
+try {
+  $env:SECRET_KEY = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr)
+  & '.\.venv-win\Scripts\python.exe' -m uvicorn apps.api_server.main:app --host 127.0.0.1 --port 8000
+} finally {
+  [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr)
+  Remove-Item Env:SECRET_KEY -ErrorAction SilentlyContinue
+}
 ```
 
-## 5. 离线环境限制
+## 7. Acceptance Checks
 
-| 功能 | 离线可用 | 说明 |
-|---|---|---|
-| 本地模型推理 | ✅ | Ollama 本地运行 |
-| 文件/Shell/浏览器工具 | ✅ | 完全本地 |
-| 审批/审计 | ✅ | 完全本地 |
-| BYOK (OpenAI/Claude) | ❌ | 需外网 |
-| Web 搜索 | ❌ | 需外网 |
-| 浏览器访问外部网站 | ❌ | 受 SSRF + 网络限制 |
-| 自动更新 | ❌ | 手动离线更新 |
-| 受控进化 (P7) | ✅ | 本地评估 + 人工晋升 |
+Desktop spike health:
 
-## 6. 安全注意事项
+```powershell
+Invoke-RestMethod 'http://127.0.0.1:9876/health' -TimeoutSec 10
+```
 
-- 离线环境的 SECRET_KEY 仍需安全分发 (不要写入安装脚本明文)
-- 安装包签名验证是离线环境的安全基线 (防供应链注入)
-- 本地模型同样需要审查 (模型文件本身可能含恶意内容)
-- 备份介质需物理安全 (离线备份包含完整数据)
+Real control-core readiness after it is integrated:
+
+```powershell
+Invoke-RestMethod 'http://127.0.0.1:8000/api/v1/health/ready' -TimeoutSec 10
+```
+
+Required offline acceptance evidence:
+
+- Install completes without network access.
+- WebView2 is present or installed from the approved offline package.
+- Desktop, sidecar and installer signatures are valid.
+- Health checks pass.
+- One read-only task and one approval-gated task pass.
+- Uninstall removes the app, registry entry, sidecar process and port listener.
+- N-1 reinstall and database restore are exercised.
+
+## 8. Offline Update and Rollback
+
+Use only manually transferred, production-signed packages until the signed updater exists. Follow [update-rollback.md](../runbooks/update-rollback.md) and create a validated backup before installing the new version.
+
+## 9. Uninstall
+
+```powershell
+$reg = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Zcode Desktop Agent'
+$uninstall = (Get-ItemProperty $reg).UninstallString.Trim('"')
+$process = Start-Process -FilePath $uninstall -ArgumentList '/S' -Wait -PassThru
+if ($process.ExitCode -ne 0) { throw "uninstall failed: $($process.ExitCode)" }
+```
+
+Verify the registry key, install directory, desktop/sidecar processes and ports `9876`/`8000` are absent.
+
+## 10. Production Gate
+
+Offline production deployment remains blocked until:
+
+- The real control-core replaces the spike sidecar.
+- Production signing and trusted timestamping cover all executable payloads and the installer.
+- WebView2 offline distribution is configured and tested.
+- Clean Windows 10 and Windows 11 offline VMs pass install, startup, task, rollback and uninstall checks.
+- A secure persistent secret-provisioning path is implemented.

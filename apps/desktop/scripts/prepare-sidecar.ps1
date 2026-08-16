@@ -5,7 +5,8 @@ param(
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
 if (-not $Source) {
-  $Source = Join-Path (Split-Path $projectRoot -Parent) 'sidecar-demo\dist-final\sidecar.dist'
+  $repository = Split-Path (Split-Path $projectRoot -Parent) -Parent
+  $Source = Join-Path $repository 'services\control-core\scripts\nuitka-build\dist-final\sidecar.dist'
 }
 $sourcePath = [IO.Path]::GetFullPath($Source)
 $resourceRoot = [IO.Path]::GetFullPath((Join-Path $projectRoot 'src-tauri\resources'))

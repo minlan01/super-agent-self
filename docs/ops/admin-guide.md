@@ -120,10 +120,10 @@ GET /api/v1/gateway-approvals?status=pending
 
 ### 6.1 备份策略
 
-- 每日自动备份 (cron)
-- 保留策略: 最近 7 天每日 + 最近 4 周每周
+- 当前通过 `POST /api/v1/admin/backup` 手工或由外部调度器触发
 - 备份位置: `data/backups/`
-- 验证: 每次备份后自动 checksum + integrity_check
+- `GET /api/v1/admin/backups/{backup_id}/validate` 提供按需 SQLite 校验
+- 自动调度、7 日/4 周保留策略和 SHA-256 清单尚未实现,必须由外部运维流程补齐
 
 ### 6.2 数据导出
 

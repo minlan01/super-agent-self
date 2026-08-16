@@ -78,36 +78,30 @@ POST /api/v1/gateway-approvals/{id}/resolve 检查 quorum 并决议
 
 ### 3.1 创建备份
 
-```bash
-zcode backup create [--notes "描述"]
+```powershell
+$headers = @{ Authorization = "Bearer $env:ZCODE_ADMIN_TOKEN" }
+Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:8000/api/v1/admin/backup' -Headers $headers
 ```
 
 备份包含:
-- SQLite 数据库快照 (VACUUM INTO 原子操作)
-- 工作区文件快照
-- 校验和清单 (SHA-256)
+- SQLite 在线备份 API 生成的数据库快照
+- 不包含工作区文件
+- 当前实现不自动生成 SHA-256 清单,发布/事件流程需另行记录摘要
 
 ### 3.2 查看备份
 
-```bash
-zcode backup list
+```powershell
+Invoke-RestMethod -Method Get -Uri 'http://127.0.0.1:8000/api/v1/admin/backups' -Headers $headers
 ```
 
 ### 3.3 恢复备份
 
-```bash
-zcode backup restore <backup-id> [--overwrite]
-```
-
-恢复前自动:
-1. 校验备份完整性 (checksum + DB integrity_check)
-2. 创建当前 DB 的安全副本 (.db.pre-restore)
-3. 覆盖恢复
+当前没有 `zcode backup restore` CLI。按 [Database Corruption Runbook](../runbooks/db-corruption.md) 停止服务、验证 SQLite、保留 `.pre-restore` 副本并离线恢复。
 
 ### 3.4 崩溃恢复
 
-- SQLite WAL 模式确保 kill -9 后无数据丢失
-- 重启后自动检查 schema 版本,需要时自动迁移
+- SQLite WAL 降低崩溃损坏风险,但不能保证所有强制终止场景零数据丢失
+- 重启前必须执行数据库完整性和 Alembic revision 检查
 
 ## 4. 浏览器隔离
 

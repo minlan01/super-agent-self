@@ -25,7 +25,6 @@ from __future__ import annotations
 import os
 import sys
 from pathlib import Path, PurePosixPath, PureWindowsPath
-from typing import Any
 
 import structlog
 
@@ -99,7 +98,15 @@ def resolve_path(
     else:
         pure_target = PurePosixPath(target_str)
 
-    if pure_target.is_absolute():
+    # Windows treats paths such as ``/etc/passwd`` and ``\etc\passwd`` as
+    # rooted on the current drive even though PureWindowsPath.is_absolute()
+    # returns False without an explicit drive letter.  They must not enter the
+    # relative-path branch because joining them discards the workspace root.
+    is_absolute_target = pure_target.is_absolute() or (
+        _is_windows() and bool(pure_target.root)
+    )
+
+    if is_absolute_target:
         # Check if it starts with the workspace root.
         target_abs = Path(target_str)
         if not _is_within_root(target_abs, root):

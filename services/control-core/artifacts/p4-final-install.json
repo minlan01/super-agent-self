@@ -1,0 +1,10 @@
+{
+  "installer": "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\bundle\\nsis\\Zcode Desktop Agent_0.1.0_x64-setup.exe",
+  "exit_code": 0,
+  "elapsed_s": 2.273,
+  "registry_present": true,
+  "install_root": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-p4-install-a39f787dd5e44533b3645f299c0d0e3f",
+  "desktop_present": true,
+  "sidecar_present": true,
+  "passed": true
+}

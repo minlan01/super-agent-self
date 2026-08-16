@@ -67,9 +67,23 @@ class ReminderService:
         )
         return list(db.scalars(stmt).all())
 
-    def dismiss(self, db: Session, reminder_id: str) -> Memory | None:
+    def dismiss(
+        self,
+        db: Session,
+        reminder_id: str,
+        *,
+        user_id: str,
+        edition: str = "personal",
+    ) -> Memory | None:
         """Dismiss (deactivate) a reminder."""
-        memory = db.get(Memory, reminder_id)
+        memory = db.scalar(
+            select(Memory).where(
+                Memory.id == reminder_id,
+                Memory.user_id == user_id,
+                Memory.edition == edition,
+                Memory.memory_type == MemoryType.REMINDER,
+            )
+        )
         if memory is None:
             return None
         memory.is_active = False

@@ -29,15 +29,17 @@ import hashlib
 import sys
 import time
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
+from packages.platform.shared.contracts import ScreenshotArtifact
 from packages.platform.shared.errors import CapabilityUnavailable
+from packages.platform.shared.errors import StaleUIState as PlatformStaleUIState
 
 DESKTOP_INPUT_VERSION = "1.0"
 SCREEN_CAPTURE_VERSION = "1.0"
 
 
-class Classification(str, Enum):
+class Classification(StrEnum):
     """Screenshot data classification levels."""
 
     PUBLIC = "public"
@@ -46,7 +48,7 @@ class Classification(str, Enum):
     RESTRICTED = "restricted"
 
 
-class StaleReason(str, Enum):
+class StaleReason(StrEnum):
     """Reasons why a UI state was found stale."""
 
     HWND_CHANGED = "hwnd_changed"
@@ -59,32 +61,36 @@ class StaleReason(str, Enum):
     UNKNOWN_FOCUS = "unknown_focus"
 
 
-@dataclass(slots=True, frozen=True)
-class StaleUIState(Exception):
-    """UI state changed before operation — no side effect was sent.
+class StaleUIState(PlatformStaleUIState):
+    """Enriched stale-state error; callers must re-bind instead of retrying."""
 
-    The caller should NOT retry the operation. Instead, re-list windows
-    and re-bind to obtain a fresh digest.
-    """
+    def __init__(
+        self,
+        reason: StaleReason,
+        expected_digest: str,
+        actual_digest: str,
+        detail: str = "",
+    ) -> None:
+        self.reason = reason
+        self.expected_digest = expected_digest
+        self.actual_digest = actual_digest
+        self.detail = detail
+        message = (
+            f"StaleUIState({reason.value}): expected={expected_digest[:8]} "
+            f"actual={actual_digest[:8]}"
+        )
+        if detail:
+            message += f" {detail}"
+        super().__init__(message)
 
-    reason: StaleReason
-    expected_digest: str
-    actual_digest: str
-    detail: str = ""
 
-    def __str__(self) -> str:
-        return f"StaleUIState({self.reason.value}): {self.detail}"
-
-
-# Make StaleUIState properly raiseable
-# (dataclass with Exception base works but needs __post_init__ to set Exception args)
-def _make_stale_exception(reason: StaleReason, expected: str, actual: str, detail: str = "") -> Exception:
-    """Create a StaleUIState exception."""
-    exc = Exception(f"StaleUIState({reason.value}): expected={expected[:8]} actual={actual[:8]} {detail}")
-    exc.reason = reason  # type: ignore[attr-defined]
-    exc.expected_digest = expected  # type: ignore[attr-defined]
-    exc.actual_digest = actual  # type: ignore[attr-defined]
-    return exc
+def _make_stale_exception(
+    reason: StaleReason,
+    expected: str,
+    actual: str,
+    detail: str = "",
+) -> StaleUIState:
+    return StaleUIState(reason, expected, actual, detail)
 
 
 @dataclass(slots=True, frozen=True)
@@ -171,24 +177,6 @@ class ScreenshotResult:
     topology_version: int | None = None
 
 
-@dataclass(slots=True, frozen=True)
-class ScreenshotArtifact:
-    """Metadata for a saved screenshot artifact.
-
-    File save only happens in task workspace. No arbitrary output paths.
-    """
-
-    artifact_id: str
-    relative_path: str  # relative to workspace root
-    mime_type: str
-    width: int
-    height: int
-    sha256: str
-    classification: Classification
-    size_bytes: int
-    created_at: float = field(default_factory=time.time)
-
-
 def compute_ui_digest(
     hwnd: int, pid: int, title: str, bounds: tuple[int, int, int, int],
 ) -> str:
@@ -267,7 +255,8 @@ def is_uia_available() -> bool:
         return False
     try:
         import ctypes
-        uiautomation = ctypes.windll.uiautomation
+
+        getattr(ctypes.windll, "uiautomation")
         return True
     except Exception:
         return False
@@ -293,6 +282,7 @@ __all__ = [
     "SCREEN_CAPTURE_VERSION",
     "Classification",
     "StaleReason",
+    "StaleUIState",
     "WindowSnapshot",
     "UIAElement",
     "DesktopActionResult",

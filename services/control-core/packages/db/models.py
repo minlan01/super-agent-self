@@ -2,7 +2,8 @@
 
 import enum
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+from threading import Lock
 from typing import Any
 
 from sqlalchemy import (
@@ -27,8 +28,20 @@ def _uuid() -> str:
     return str(uuid.uuid4())
 
 
+_timestamp_lock = Lock()
+_last_model_timestamp: datetime | None = None
+
+
 def _now() -> datetime:
-    return datetime.now(UTC)
+    """Return a process-local, strictly increasing UTC timestamp."""
+    global _last_model_timestamp
+
+    with _timestamp_lock:
+        candidate = datetime.now(UTC)
+        if _last_model_timestamp is not None and candidate <= _last_model_timestamp:
+            candidate = _last_model_timestamp + timedelta(microseconds=1)
+        _last_model_timestamp = candidate
+        return candidate
 
 
 # ── Enums ──────────────────────────────────────────────────────────────────

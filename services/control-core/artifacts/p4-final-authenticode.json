@@ -1,0 +1,11 @@
+{
+    "sign_status":  "UnknownError",
+    "verify_status":  "UnknownError",
+    "signer":  "CN=Zcode Spike Temporary a63ab29d-00ad-42ec-90c1-59be420922ed",
+    "tampered_status":  "HashMismatch",
+    "signature_present":  true,
+    "valid_passed":  false,
+    "tamper_passed":  true,
+    "source_unchanged":  true,
+    "passed":  true
+}

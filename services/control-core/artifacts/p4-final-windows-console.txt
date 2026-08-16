@@ -1,0 +1,10 @@
+.................................................ssss................... [ 41%]
+...................................s.................................... [ 83%]
+.............................                                            [100%]
+============================== warnings summary ===============================
+packages\db\session.py:20
+  D:\agent\Agents\super-agent-self\services\control-core\packages\db\session.py:20: UserWarning: SECRET_KEY is set to the default value. Change it in production!
+    settings = get_settings()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+168 passed, 5 skipped, 1 warning in 10.04s

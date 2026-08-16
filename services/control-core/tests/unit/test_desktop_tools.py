@@ -1,222 +1,216 @@
-"""Tests for Desktop tools — Click, Type, Screenshot."""
+"""Tests for stale-gated desktop input and WGC screenshot tools."""
 
-from unittest.mock import MagicMock, patch
+from __future__ import annotations
+
+from datetime import UTC, datetime
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
 from packages.executor.tools.desktop_tools import DesktopClick, DesktopScreenshot, DesktopType
+from packages.platform.shared.contracts import Screenshot
+from packages.platform.windows.desktop import CoordinateClickResult, DesktopActionResult
+from packages.protocol.schemas.enums import Classification
 
 
-def _inject_mock_pyautogui(mock_pg=None):
-    """Inject a mock pyautogui into sys.modules so local `import pyautogui` succeeds."""
-    if mock_pg is None:
-        mock_pg = MagicMock()
-    mock_pg.FAILSAFE = True
-    mock_pg.PAUSE = 0.5
-    return mock_pg
-
-
-# ── DesktopClick ──────────────────────────────────────────────────────────────
+def _adapter(*, window_provider=None, screen_capture=None):  # type: ignore[no-untyped-def]
+    adapter = MagicMock()
+    adapter.window_provider.return_value = window_provider or MagicMock()
+    adapter.screen_capture.return_value = screen_capture or MagicMock()
+    return adapter
 
 
 class TestDesktopClick:
-    def test_name(self):
+    def test_name(self) -> None:
         assert DesktopClick().name == "desktop.click"
 
     @pytest.mark.asyncio
-    async def test_missing_coordinates(self):
-        tool = DesktopClick()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({}, MagicMock())
+    async def test_requires_window_and_digest(self) -> None:
+        result = await DesktopClick(adapter=_adapter()).execute({}, MagicMock())
+
         assert result.success is False
-        assert "coordinates" in result.error.lower()
+        assert "window_id" in result.error
+        assert "expected_ui_digest" in result.error
 
     @pytest.mark.asyncio
-    async def test_missing_y_coordinate(self):
-        tool = DesktopClick()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"x": 100}, MagicMock())
+    async def test_coordinate_click_is_disabled_without_explicit_approval(self) -> None:
+        provider = MagicMock()
+        provider.coordinate_click = AsyncMock()
+        tool = DesktopClick(adapter=_adapter(window_provider=provider))
+
+        result = await tool.execute(
+            {
+                "window_id": "win32:1",
+                "expected_ui_digest": "digest",
+                "x": 10,
+                "y": 20,
+            },
+            MagicMock(),
+        )
+
         assert result.success is False
+        assert "explicit approval" in result.error
+        provider.coordinate_click.assert_not_awaited()
 
     @pytest.mark.asyncio
-    async def test_missing_x_coordinate(self):
-        tool = DesktopClick()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"y": 200}, MagicMock())
-        assert result.success is False
-
-    @pytest.mark.asyncio
-    async def test_pyautogui_not_installed(self):
-        tool = DesktopClick()
-        with patch.dict("sys.modules", {"pyautogui": None}):
-            result = await tool.execute({"x": 100, "y": 200}, MagicMock())
-            assert result.success is False
-            assert "pyautogui" in result.error
-
-    @pytest.mark.asyncio
-    async def test_click_success(self):
-        tool = DesktopClick()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"x": 100, "y": 200}, MagicMock())
-        assert result.success is True
-        assert result.output["action"] == "click"
-        assert result.output["x"] == 100
-        assert result.output["y"] == 200
-
-    @pytest.mark.asyncio
-    async def test_click_with_options(self):
-        tool = DesktopClick()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute(
-                {"x": 50, "y": 60, "button": "right", "clicks": 2},
-                MagicMock(),
+    async def test_semantic_uia_click(self) -> None:
+        provider = MagicMock()
+        provider.invoke = AsyncMock(
+            return_value=DesktopActionResult(
+                success=True,
+                window_id="win32:1",
+                action="invoke",
+                pre_digest="digest",
+                post_digest="new-digest",
             )
+        )
+        tool = DesktopClick(adapter=_adapter(window_provider=provider))
+
+        result = await tool.execute(
+            {
+                "window_id": "win32:1",
+                "expected_ui_digest": "digest",
+                "automation_id": "save-button",
+                "control_type": "Button",
+            },
+            MagicMock(),
+        )
+
         assert result.success is True
-        mock_pg.click.assert_called_once_with(x=50, y=60, button="right", clicks=2)
+        assert result.output["pre_digest"] == "digest"
+        assert result.output["post_digest"] == "new-digest"
+        provider.invoke.assert_awaited_once()
 
     @pytest.mark.asyncio
-    async def test_click_exception_handled(self):
-        tool = DesktopClick()
-        mock_pg = _inject_mock_pyautogui()
-        mock_pg.click.side_effect = Exception("Screen not found")
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"x": 0, "y": 0}, MagicMock())
-        assert result.success is False
-        assert "Screen not found" in result.error
+    async def test_approved_coordinate_fallback(self) -> None:
+        provider = MagicMock()
+        provider.coordinate_click = AsyncMock(
+            return_value=CoordinateClickResult(
+                success=True,
+                window_id="win32:1",
+                pre_digest="digest",
+                post_digest="new-digest",
+                physical_coords=(10, 20),
+                logical_coords=(10, 20),
+                dpi=96,
+                monitor_id="m1",
+                error=None,
+            )
+        )
+        tool = DesktopClick(adapter=_adapter(window_provider=provider))
 
+        result = await tool.execute(
+            {
+                "window_id": "win32:1",
+                "expected_ui_digest": "digest",
+                "x": 10,
+                "y": 20,
+                "coordinate_fallback_approved": True,
+            },
+            MagicMock(),
+        )
 
-# ── DesktopType ───────────────────────────────────────────────────────────────
+        assert result.success is True
+        provider.coordinate_click.assert_awaited_once()
 
 
 class TestDesktopType:
-    def test_name(self):
+    def test_name(self) -> None:
         assert DesktopType().name == "desktop.type"
 
     @pytest.mark.asyncio
-    async def test_empty_text_rejected(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": ""}, MagicMock())
+    async def test_requires_semantic_target(self) -> None:
+        result = await DesktopType(adapter=_adapter()).execute(
+            {"text": "hello", "window_id": "win32:1", "expected_ui_digest": "digest"},
+            MagicMock(),
+        )
+
         assert result.success is False
-        assert "required" in result.error.lower()
+        assert "semantic UIA selector" in result.error
 
     @pytest.mark.asyncio
-    async def test_no_text_key_rejected(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({}, MagicMock())
-        assert result.success is False
+    async def test_text_too_long(self) -> None:
+        result = await DesktopType(adapter=_adapter()).execute(
+            {
+                "text": "a" * 501,
+                "window_id": "win32:1",
+                "expected_ui_digest": "digest",
+                "automation_id": "input",
+            },
+            MagicMock(),
+        )
 
-    @pytest.mark.asyncio
-    async def test_text_too_long(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "a" * 501}, MagicMock())
         assert result.success is False
         assert "too long" in result.error.lower()
 
     @pytest.mark.asyncio
-    async def test_text_at_max_length_ok(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "a" * 500}, MagicMock())
+    async def test_type_uses_uia_value_pattern(self) -> None:
+        provider = MagicMock()
+        provider.set_text = AsyncMock(
+            return_value=DesktopActionResult(
+                success=True,
+                window_id="win32:1",
+                action="set_value",
+                pre_digest="digest",
+                post_digest="new-digest",
+            )
+        )
+        tool = DesktopType(adapter=_adapter(window_provider=provider))
+
+        result = await tool.execute(
+            {
+                "text": "Hello World",
+                "window_id": "win32:1",
+                "expected_ui_digest": "digest",
+                "automation_id": "input",
+                "control_type": "Edit",
+            },
+            MagicMock(),
+        )
+
         assert result.success is True
-
-    @pytest.mark.asyncio
-    async def test_dangerous_ctrl_blocked(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "ctrl"}, MagicMock())
-        assert result.success is False
-        assert "Blocked" in result.error
-
-    @pytest.mark.asyncio
-    async def test_dangerous_alt_blocked(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "alt"}, MagicMock())
-        assert result.success is False
-
-    @pytest.mark.asyncio
-    async def test_dangerous_delete_blocked(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "delete"}, MagicMock())
-        assert result.success is False
-
-    @pytest.mark.asyncio
-    async def test_longer_text_with_ctrl_allowed(self):
-        """Text longer than 20 chars containing 'ctrl' is allowed (safety only blocks short combos)."""
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "I want to control the output"}, MagicMock())
-        assert result.success is True
-
-    @pytest.mark.asyncio
-    async def test_type_success(self):
-        tool = DesktopType()
-        mock_pg = _inject_mock_pyautogui()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            result = await tool.execute({"text": "Hello World"}, MagicMock())
-        assert result.success is True
-        assert result.output["action"] == "type"
         assert result.output["chars"] == 11
-
-
-# ── DesktopScreenshot ─────────────────────────────────────────────────────────
+        provider.set_text.assert_awaited_once()
 
 
 class TestDesktopScreenshot:
-    def test_name(self):
+    def test_name(self) -> None:
         assert DesktopScreenshot().name == "desktop.screenshot"
 
     @pytest.mark.asyncio
-    async def test_pyautogui_not_installed(self):
-        tool = DesktopScreenshot()
-        with patch.dict("sys.modules", {"pyautogui": None}):
-            result = await tool.execute({}, MagicMock(workspace_root="/tmp"))
-            assert result.success is False
+    async def test_screenshot_is_workspace_relative_and_confidential(self, tmp_path) -> None:
+        capture = MagicMock()
+        capture.grab = AsyncMock(
+            return_value=Screenshot(
+                data=b"\x89PNG\r\n\x1a\ncontent",
+                mime_type="image/png",
+                width=640,
+                height=480,
+                taken_at=datetime.now(UTC),
+            )
+        )
+        tool = DesktopScreenshot(adapter=_adapter(screen_capture=capture))
 
-    @pytest.mark.asyncio
-    async def test_screenshot_success(self, tmp_path):
-        tool = DesktopScreenshot()
-        mock_pg = _inject_mock_pyautogui()
-        mock_img = MagicMock()
-        mock_pg.screenshot.return_value = mock_img
-
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            context = MagicMock(workspace_root=str(tmp_path))
-            result = await tool.execute({}, context)
+        result = await tool.execute(
+            {"window_id": "win32:1"},
+            MagicMock(workspace_root=str(tmp_path)),
+        )
 
         assert result.success is True
         assert len(result.artifacts) == 1
-        mock_img.save.assert_called_once()
+        assert not result.artifacts[0].startswith(str(tmp_path))
+        assert result.output["artifact"]["classification"] == Classification.CONFIDENTIAL.value
+        assert (tmp_path / result.artifacts[0]).read_bytes().startswith(b"\x89PNG")
+        capture.grab.assert_awaited_once_with(window_id="win32:1")
 
     @pytest.mark.asyncio
-    async def test_screenshot_creates_directory(self, tmp_path):
-        tool = DesktopScreenshot()
-        mock_pg = _inject_mock_pyautogui()
-        mock_img = MagicMock()
-        mock_pg.screenshot.return_value = mock_img
+    async def test_capture_failure_does_not_create_artifact(self, tmp_path) -> None:
+        capture = MagicMock()
+        capture.grab = AsyncMock(side_effect=PermissionError("capture denied"))
+        tool = DesktopScreenshot(adapter=_adapter(screen_capture=capture))
 
-        ws = tmp_path / "workspace"
-        ws.mkdir()
-        with patch.dict("sys.modules", {"pyautogui": mock_pg}):
-            context = MagicMock(workspace_root=str(ws))
-            result = await tool.execute({}, context)
+        result = await tool.execute({}, MagicMock(workspace_root=str(tmp_path)))
 
-        assert result.success is True
-        assert (ws / "screenshots").exists()
+        assert result.success is False
+        assert result.artifacts == []
+        assert not (tmp_path / "screenshots").exists()

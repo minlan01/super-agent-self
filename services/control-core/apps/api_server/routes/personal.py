@@ -8,17 +8,17 @@ from sqlalchemy.orm import Session
 
 from apps.api_server.dependencies import get_current_user, get_db, require_permission
 from packages.agent_core.edition_manager import EditionManager
-from packages.db.models import User
 from packages.agent_core.schemas import (
-    MemoryResponse,
-    ReminderCreateResponse,
-    ReminderListResponse,
     DailyContextResponse,
+    EditionListResponse,
+    MemoryResponse,
     PreferenceListResponse,
     PreferenceSaveResponse,
-    EditionListResponse,
+    ReminderCreateResponse,
+    ReminderListResponse,
     ResponseBase,
 )
+from packages.db.models import User
 from packages.personal_context.personal_context_service import PersonalContextService
 from packages.personal_context.reminder_service import ReminderService
 
@@ -89,7 +89,7 @@ def list_reminders(
 ):
     """List active (non-expired, non-dismissed) reminders."""
     svc = _get_reminder_service()
-    reminders = svc.list_active(db)
+    reminders = svc.list_active(db, user_id=str(current_user.id))
     return {
         "success": True,
         "data": [MemoryResponse.model_validate(r).model_dump() for r in reminders],
@@ -104,7 +104,11 @@ def dismiss_reminder(
 ):
     """Dismiss (deactivate) a reminder."""
     svc = _get_reminder_service()
-    reminder = svc.dismiss(db, reminder_id)
+    reminder = svc.dismiss(
+        db,
+        reminder_id,
+        user_id=str(current_user.id),
+    )
     if reminder is None:
         raise HTTPException(status_code=404, detail="Reminder not found")
     return {
@@ -124,7 +128,7 @@ def get_daily_context(
 ):
     """Get today's daily context including reminders and preference count."""
     svc = _get_context_service()
-    context = svc.get_daily_context(db)
+    context = svc.get_daily_context(db, user_id=str(current_user.id))
     return {"success": True, "data": context}
 
 
@@ -138,7 +142,7 @@ def get_preferences(
 ):
     """Get all active user preferences."""
     svc = _get_context_service()
-    prefs = svc.get_user_preferences(db)
+    prefs = svc.get_user_preferences(db, user_id=str(current_user.id))
     return {"success": True, "data": prefs}
 
 

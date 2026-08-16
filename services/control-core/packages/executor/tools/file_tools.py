@@ -63,6 +63,18 @@ class FileWriteDocx(ToolBase):
     description = "Write content to a Word document"
 
     async def execute(self, args: dict[str, Any], context: ExecutionContext) -> ToolResult:
+        output_path = args.get("output_path", "output.docx")
+        title = args.get("title", "Document")
+        paragraphs: list[str] = args.get("paragraphs", [])
+        tables: list[dict[str, Any]] = args.get("tables", [])
+
+        # Reject workspace escapes before probing optional dependencies.
+        base = Path(context.outputs_path)
+        full_path = base / output_path
+        safe, err = _check_path_within_base(full_path, base)
+        if not safe:
+            return ToolResult(success=False, error=err)
+
         try:
             from docx import Document  # type: ignore[import-untyped]
         except ImportError:
@@ -70,18 +82,6 @@ class FileWriteDocx(ToolBase):
                 success=False,
                 error="python-docx not installed. Install with: pip install python-docx",
             )
-
-        output_path = args.get("output_path", "output.docx")
-        title = args.get("title", "Document")
-        paragraphs: list[str] = args.get("paragraphs", [])
-        tables: list[dict[str, Any]] = args.get("tables", [])
-
-        # Workspace safety check
-        base = Path(context.outputs_path)
-        full_path = base / output_path
-        safe, err = _check_path_within_base(full_path, base)
-        if not safe:
-            return ToolResult(success=False, error=err)
 
         # Build document
         doc = Document()
