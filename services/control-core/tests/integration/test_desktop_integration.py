@@ -121,6 +121,10 @@ class TestDesktopFilesAPI:
 
 
 class TestDesktopWindowsAPI:
+    @pytest.mark.skipif(
+        __import__("sys").platform != "win32",
+        reason="window_provider is Windows-only; stub fails closed elsewhere (correct)",
+    )
     def test_list_windows(self, app_and_client, admin_token):
         client, _ = app_and_client
         resp = client.post(
@@ -132,3 +136,21 @@ class TestDesktopWindowsAPI:
         data = resp.json()
         assert data["success"] is True
         assert "windows" in data["data"]
+
+    def test_list_windows_fails_closed_off_windows(self, app_and_client, admin_token):
+        """Off Windows the stub provider must NOT return success (P0.2:
+        no silent fallback) — the route reports capability unavailability."""
+        import sys
+
+        if sys.platform == "win32":
+            pytest.skip("fail-closed semantics only observable off Windows")
+
+        client, _ = app_and_client
+        resp = client.post(
+            "/api/v1/desktop/windows",
+            json={"action": "list"},
+            headers={"Authorization": f"Bearer {admin_token}"},
+        )
+        assert resp.status_code != 200, (
+            "stub window_provider must fail closed, not fabricate a window list"
+        )
