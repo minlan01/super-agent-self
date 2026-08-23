@@ -249,6 +249,13 @@ class AuditEvent(_TimestampMixin, Base):
     event_type: Mapped[AuditEventType] = mapped_column(Enum(AuditEventType), nullable=False)
     actor: Mapped[str] = mapped_column(String(100), default="system")
     detail: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
+    # Hash chain (spec: audit tamper-evidence). entry_hash covers
+    # (prev_entry_hash, id, created_at, event_type, actor, task_id,
+    # step_id, canonical detail JSON). Rows written before the chain
+    # existed have NULL hashes — the verifier treats the first hashed
+    # row as the chain head.
+    prev_entry_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    entry_hash: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
 
     task: Mapped["Task | None"] = relationship(back_populates="audit_events")
 

@@ -931,12 +931,39 @@ def main(argv: list[str] | None = None) -> None:
         launcher_pid = int(launcher_text)
     except ValueError as exc:
         raise SystemExit("ZCODE_LAUNCHER_PID is required (fail closed)") from exc
-    resource_root = _resource_root()
-    prepare_runtime_environment(resource_root)
+
+    # Configure logging BEFORE any heavyweight bootstrap: a cold install
+    # (fresh DB + first-run migrations + first import of the FastAPI app
+    # tree) can take tens of seconds, and without staged progress logs the
+    # sidecar log stays empty while launcher readiness probes time out
+    # with nothing to diagnose (see p4-installed-1.0.0-diagnostic, where
+    # log_exists=true but log_tail was empty).
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
+    boot_started = time.monotonic()
+
+    resource_root = _resource_root()
+    LOGGER.info("sidecar cold-boot: pid=%s launcher=%s", os.getpid(), launcher_pid)
+    prepare_runtime_environment(resource_root)
+    LOGGER.info(
+        "sidecar boot stage done: runtime env prepared in %.3fs",
+        time.monotonic() - boot_started,
+    )
+
+    migration_started = time.monotonic()
     run_migrations(resource_root)
+    LOGGER.info(
+        "sidecar boot stage done: migrations in %.3fs",
+        time.monotonic() - migration_started,
+    )
+
+    http_started = time.monotonic()
     token = secrets.token_hex(32)
     http = start_http_server(token, resource_root=resource_root)
+    LOGGER.info(
+        "sidecar boot stage done: http api started (port=%s) in %.3fs",
+        http.port,
+        time.monotonic() - http_started,
+    )
     dispatcher = IpcServer(
         http.port,
         token,

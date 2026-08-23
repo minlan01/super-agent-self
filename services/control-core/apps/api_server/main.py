@@ -522,6 +522,7 @@ _FULL_ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
     ("audit", "/api/v1/audit", ["audit"]),
     ("approvals", "/api/v1/approvals", ["approvals"]),
     ("gateway_approvals", "/api/v1/gateway-approvals", ["gateway-approvals"]),
+    ("effects", "/api/v1/effects", ["effects"]),
     ("export", "/api/v1/export", ["export"]),
     ("files", "/api/v1/files", ["files"]),
     ("personal", "/api/v1/personal", ["personal"]),
@@ -551,6 +552,7 @@ _DESKTOP_ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
     ("tasks", "/api/v1/tasks", ["tasks"]),
     ("approvals", "/api/v1/approvals", ["approvals"]),
     ("gateway_approvals", "/api/v1/gateway-approvals", ["gateway-approvals"]),
+    ("effects", "/api/v1/effects", ["effects"]),
 ]
 
 _ROUTE_REGISTRY = _DESKTOP_ROUTE_REGISTRY if _is_desktop_api else _FULL_ROUTE_REGISTRY

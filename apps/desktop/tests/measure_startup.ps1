@@ -24,7 +24,7 @@ function Wait-Ready {
     [System.Diagnostics.Process]$Parent,
     [string]$LogPath,
     [Diagnostics.Stopwatch]$StartupWatch,
-    [int]$TimeoutSeconds = 15
+    [int]$TimeoutSeconds = 60  # cold install (fresh DB + migrations + first import) can exceed 15s
   )
   $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
   while ((Get-Date) -lt $deadline) {

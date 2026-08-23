@@ -1,0 +1,65 @@
+# cargo-deny policy — licenses (P4 blocker #9)
+# Usage: cargo deny --workspace check licenses
+# CI installs cargo-deny and enforces this file on every build.
+
+[advisories]
+version = 2
+# Advisory DB is checked separately (already 0 advisories per gate record).
+
+[licenses]
+version = 2
+
+# ── Approved open-source licenses ─────────────────────────────────────────
+# Permissive (unconditional approval):
+#   MIT, Apache-2.0, BSD-2/3-Clause, ISC, Zlib, 0BSD, Unicode-3.0/DFS,
+#   MPL-2.0 (file-level copyleft, weak), BSD-Source-Code
+# Copyleft — case-by-case, NOT blanket-approved:
+#   GPL/LGPL/AGPL/SSPL require legal review and are denied by default.
+# Unlicense/CC0-1.0: public domain, approved for this project.
+allow = [
+  "MIT",
+  "Apache-2.0",
+  "Apache-2.0 WITH LLVM-exception",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "0BSD",
+  "ISC",
+  "Zlib",
+  "Unicode-3.0",
+  "Unicode-DFS-2016",
+  "MPL-2.0",
+  "BSD-Source-Code",
+  "Unlicense",
+  "CC0-1.0",
+]
+
+# Exceptions granted per-crate with rationale (reviewed, expire with this file):
+exceptions = []
+
+# Unlicensed crates: deny (fail closed). If a transitive dep ships without a
+# license expression, it needs a reviewed exception above or removal.
+unlicensed = "deny"
+
+# Confidence threshold for license detection from source files.
+confidence-threshold = 0.93
+
+[[licenses.clarify]]
+# ring: license detectable only from LICENSE file
+name = "ring"
+expression = "MIT AND ISC AND OpenSSL-3.0"
+license-files = [{ path = "LICENSE", hash = 0xbd0eed23 }]
+
+[[licenses.clarify]]
+name = "webpki"
+expression = "ISC"
+
+[bans]
+# Duplicated versions warn (not deny) — review in CI output.
+multiple-versions = "warn"
+deny = []
+
+[sources]
+# Only crates.io (and vendored path deps) — no git dependencies in release builds.
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
