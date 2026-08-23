@@ -1,0 +1,564 @@
+﻿{
+    "generated_at":  "2026-08-23T03:49:43.9512125+08:00",
+    "exe":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\tauri-spike.exe",
+    "sidecar":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\resources\\sidecar\\sidecar.exe",
+    "exe_sha256":  "6A89D49EA3A9D60EEA5C4CD3F5E203B103924B61DFE9B69003F700A410C12ACB",
+    "sidecar_sha256":  "F533F91F79CBCBE839F496CC7EC11638C37F21C41242A7E84A0222C265686B8D",
+    "runs":  [
+                 {
+                     "run":  1,
+                     "parent_pid":  13772,
+                     "parent_exited":  false,
+                     "start_return_s":  0.613,
+                     "first_sidecar_log_s":  2.639,
+                     "ready_s":  5.535,
+                     "log_path":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                     "log_tail":  [
+                                      {
+                                          "value":  "2026-08-23 03:49:30,610 INFO zcode.sidecar Installed verified SQLite bootstrap at C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\agent_platform.db",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  0
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:30,624 INFO zcode.sidecar SQLite schema already at packaged revision p4_task_step_approval",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  1
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:33,100 INFO zcode.sidecar control-core HTTP server ready on 127.0.0.1:61271",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  2
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:33,404 INFO zcode.sidecar Named Pipe DACL restricted to current SID S-1-5-21-1129836404-732126736-1881850612-1001",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  3
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:33,468 INFO zcode.sidecar control-core sidecar transport ready: pipe=\\\\.\\pipe\\zcode-control-core-v1",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  4
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:33,481 INFO zcode.sidecar control-core sidecar ready: pipe=\\\\.\\pipe\\zcode-control-core-v1",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-7fc4c2edfa64446bb63fa6e545601bc6\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  5
+                                      }
+                                  ]
+                 },
+                 {
+                     "run":  2,
+                     "parent_pid":  14848,
+                     "parent_exited":  false,
+                     "start_return_s":  0.341,
+                     "first_sidecar_log_s":  2.352,
+                     "ready_s":  5.828,
+                     "log_path":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                     "log_tail":  [
+                                      {
+                                          "value":  "2026-08-23 03:49:37,089 INFO zcode.sidecar Installed verified SQLite bootstrap at C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\agent_platform.db",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  0
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:37,098 INFO zcode.sidecar SQLite schema already at packaged revision p4_task_step_approval",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  1
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:40,123 INFO zcode.sidecar control-core HTTP server ready on 127.0.0.1:64588",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  2
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:40,383 INFO zcode.sidecar Named Pipe DACL restricted to current SID S-1-5-21-1129836404-732126736-1881850612-1001",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  3
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:40,438 INFO zcode.sidecar control-core sidecar transport ready: pipe=\\\\.\\pipe\\zcode-control-core-v1",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  4
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:40,521 INFO zcode.sidecar control-core sidecar ready: pipe=\\\\.\\pipe\\zcode-control-core-v1",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-a4c280b9dace489e868af423ad357e0f\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  5
+                                      }
+                                  ]
+                 },
+                 {
+                     "run":  3,
+                     "parent_pid":  12140,
+                     "parent_exited":  false,
+                     "start_return_s":  0.193,
+                     "first_sidecar_log_s":  1.25,
+                     "ready_s":  2.904,
+                     "log_path":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                     "log_tail":  [
+                                      {
+                                          "value":  "2026-08-23 03:49:42,057 INFO zcode.sidecar Installed verified SQLite bootstrap at C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\agent_platform.db",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  0
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:42,066 INFO zcode.sidecar SQLite schema already at packaged revision p4_task_step_approval",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  1
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:43,357 INFO zcode.sidecar control-core HTTP server ready on 127.0.0.1:55157",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  2
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:43,655 INFO zcode.sidecar Named Pipe DACL restricted to current SID S-1-5-21-1129836404-732126736-1881850612-1001",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  3
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:43,656 INFO zcode.sidecar control-core sidecar transport ready: pipe=\\\\.\\pipe\\zcode-control-core-v1",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  4
+                                      },
+                                      {
+                                          "value":  "2026-08-23 03:49:43,693 INFO zcode.sidecar control-core sidecar ready: pipe=\\\\.\\pipe\\zcode-control-core-v1",
+                                          "PSPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs\\sidecar.log",
+                                          "PSParentPath":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-startup-diag-6b0917c7dcb74da89241206f5d0ffc69\\logs",
+                                          "PSChildName":  "sidecar.log",
+                                          "PSDrive":  {
+                                                          "CurrentLocation":  "",
+                                                          "Name":  "C",
+                                                          "Provider":  "Microsoft.PowerShell.Core\\FileSystem",
+                                                          "Root":  "C:\\",
+                                                          "Description":  "OS",
+                                                          "MaximumSize":  null,
+                                                          "Credential":  "System.Management.Automation.PSCredential",
+                                                          "DisplayRoot":  null
+                                                      },
+                                          "PSProvider":  {
+                                                             "ImplementingType":  "Microsoft.PowerShell.Commands.FileSystemProvider",
+                                                             "HelpFile":  "System.Management.Automation.dll-Help.xml",
+                                                             "Name":  "FileSystem",
+                                                             "PSSnapIn":  "Microsoft.PowerShell.Core",
+                                                             "ModuleName":  "Microsoft.PowerShell.Core",
+                                                             "Module":  null,
+                                                             "Description":  "",
+                                                             "Capabilities":  52,
+                                                             "Home":  "C:\\Users\\minlan01",
+                                                             "Drives":  "C D"
+                                                         },
+                                          "ReadCount":  5
+                                      }
+                                  ]
+                 }
+             ]
+}

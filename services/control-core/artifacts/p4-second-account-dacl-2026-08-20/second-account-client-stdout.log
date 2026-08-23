@@ -1,0 +1,7 @@
+{
+    "connected":  false,
+    "exception_type":  "System.UnauthorizedAccessException",
+    "hresult":  "0x80070005",
+    "native_error":  5,
+    "message":  "对路径的访问被拒绝。"
+}

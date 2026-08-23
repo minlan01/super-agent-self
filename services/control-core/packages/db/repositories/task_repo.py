@@ -117,7 +117,9 @@ class TaskRepository:
 
     @staticmethod
     def add_step(db: Session, task_id: str, schema: TaskStepCreate) -> TaskStep:
+        task = db.get(Task, task_id)
         step = TaskStep(
+            tenant_id=task.tenant_id if task is not None else "default",
             task_id=task_id,
             step_order=schema.step_order,
             tool_name=schema.tool_name,
@@ -129,6 +131,11 @@ class TaskRepository:
         db.flush()
         db.refresh(step)
         return step
+
+    @staticmethod
+    def get_step_by_id(db: Session, step_id: str) -> TaskStep | None:
+        """Return one step for approval resume and reconciliation paths."""
+        return db.get(TaskStep, step_id)
 
     @staticmethod
     def update_step(db: Session, step_id: str, schema: TaskStepUpdate) -> TaskStep | None:

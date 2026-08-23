@@ -1,0 +1,40 @@
+{
+  "date": "2026-08-22",
+  "command": "services/control-core/.venv-win/Scripts/python.exe services/control-core/scripts/nuitka-build/smoke_client.py --sidecar apps/desktop/src-tauri/resources/sidecar/sidecar.exe --api-smoke",
+  "exit_code": 0,
+  "hello": {
+    "ok": true,
+    "version": 1,
+    "http_port": 50961,
+    "sidecar_pid": 19908,
+    "schema_version": "1.0.0",
+    "http_token": "<redacted>"
+  },
+  "ping": {
+    "ok": true,
+    "pong": true
+  },
+  "health": {
+    "status": 200,
+    "api_ready_at_first_probe": false
+  },
+  "api_smoke": {
+    "username": "<redacted>",
+    "register_status": 201,
+    "login_status": 200,
+    "task_create_status": 201,
+    "task_list_status": 200,
+    "approvals_list_status": 200,
+    "registered": true,
+    "authenticated": true,
+    "task_created": true,
+    "task_listed": true,
+    "approvals_listed": true
+  },
+  "shutdown": {
+    "ok": true,
+    "bye": true
+  },
+  "passed": true,
+  "note": "Runtime bearer token and generated account identifier were redacted before retaining this evidence."
+}

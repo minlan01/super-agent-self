@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\minlan01\AppData\Local\Temp\ZCODE-~3\sidecar\control_core_sidecar.py", line 24, in <module>
+  File "C:\Users\minlan01\AppData\Local\Temp\ZCODE-~3\sidecar\packages\platform\windows\sidecar_host.py", line 591, in main
+  File "C:\Users\minlan01\AppData\Local\Temp\ZCODE-~3\sidecar\packages\platform\windows\sidecar_host.py", line 328, in _resource_root
+RuntimeError: could not locate the control-core resource root

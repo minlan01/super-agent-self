@@ -1,0 +1,16 @@
+.................................                                        [100%]
+============================== warnings summary ===============================
+.venv-win\Lib\site-packages\fastapi\testclient.py:1
+  D:\agent\Agents\super-agent-self\services\control-core\.venv-win\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+packages\db\session.py:20
+  D:\agent\Agents\super-agent-self\services\control-core\packages\db\session.py:20: UserWarning: SECRET_KEY is set to the default value. Change it in production!
+    settings = get_settings()
+
+tests/test_p4_task_approval_flow.py::test_gateway_resolve_hook_is_only_for_real_task_step
+  D:\agent\Agents\super-agent-self\services\control-core\apps\api_server\routes\gateway_approvals.py:46: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class ApprovalRequestResponse(BaseModel):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+33 passed, 3 warnings in 48.42s

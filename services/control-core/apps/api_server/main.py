@@ -1,5 +1,6 @@
 """FastAPI application — Controlled Agent Platform."""
 
+import importlib
 import logging
 import os
 import time
@@ -15,18 +16,21 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from apps.api_server.dependencies import _resolve_current_user, require_permission
 from packages.agent_core.schemas import HealthResponse
 from packages.agent_core.version import __version__
 from packages.config import get_settings
 from packages.db.session import (
     Base,  # noqa: F401 — kept for re-export; migrations handled by Alembic
 )
-from packages.middleware.prometheus import PrometheusMiddleware
 from packages.middleware.rate_limiter import RateLimiter
 from packages.observability.structured_logger import setup_logging
 
 logger = logging.getLogger(__name__)
+
+_API_PROFILE = os.getenv("ZCODE_API_PROFILE", "full").strip().lower()
+if _API_PROFILE not in {"desktop", "full"}:
+    raise RuntimeError(f"unsupported ZCODE_API_PROFILE: {_API_PROFILE}")
+_is_desktop_api = _API_PROFILE == "desktop"
 
 # Load settings and initialize structured logging
 _settings = get_settings()
@@ -78,14 +82,15 @@ async def lifespan(app: FastAPI):
         from packages.db.session import engine
         Base.metadata.create_all(bind=engine)
 
-    # Seed builtin task templates
-    from apps.api_server.routes.templates import seed_builtin_templates
     from packages.db.session import SessionLocal
     with SessionLocal() as _seed_db:
         try:
-            seed_builtin_templates(_seed_db)
-            _seed_db.commit()
-            logger.info("Builtin templates seeded")
+            if not _is_desktop_api:
+                from apps.api_server.routes.templates import seed_builtin_templates
+
+                seed_builtin_templates(_seed_db)
+                _seed_db.commit()
+                logger.info("Builtin templates seeded")
 
             try:
                 from packages.auth.rbac import get_rbac_service
@@ -145,8 +150,7 @@ async def lifespan(app: FastAPI):
         logger.warning("Cost flush on shutdown failed: %s", e)
 
     try:
-        from packages.cron.scheduler import get_scheduler
-        scheduler = get_scheduler()
+        scheduler = getattr(app.state, "cron_scheduler", None)
         if scheduler is not None:
             scheduler.stop()
             logger.info("Cron scheduler stopped")
@@ -154,9 +158,8 @@ async def lifespan(app: FastAPI):
         logger.warning("Cron scheduler stop failed: %s", e)
 
     try:
-        from packages.mcp.mcp_client import get_mcp_client
-        mcp = get_mcp_client()
-        if mcp is not None and mcp._connected:
+        mcp = getattr(app.state, "mcp_client", None)
+        if mcp is not None and mcp.connected:
             await mcp.disconnect()
             logger.info("MCP client disconnected")
     except Exception as e:
@@ -359,7 +362,12 @@ app.add_middleware(RequestBodyLimitMiddleware)
 
 # ── Prometheus Metrics ──────────────────────────────────────────────────────
 
-app.add_middleware(PrometheusMiddleware)
+if not _is_desktop_api:
+    PrometheusMiddleware = importlib.import_module(
+        "packages.middleware.prometheus"
+    ).PrometheusMiddleware
+
+    app.add_middleware(PrometheusMiddleware)
 
 
 # ── Rate Limiting ────────────────────────────────────────────────────────────
@@ -429,16 +437,18 @@ def health_check() -> HealthResponse:
     return HealthResponse()
 
 
-from apps.api_server.routes.health import router as health_router  # noqa: E402
+if not _is_desktop_api:
+    health_router = importlib.import_module("apps.api_server.routes.health").router
 
-app.include_router(health_router, prefix="/api/v1/health", tags=["health"])
+    app.include_router(health_router, prefix="/api/v1/health", tags=["health"])
 
 
 # ── Prometheus Metrics ──────────────────────────────────────────────────────
 
-from apps.api_server.routes.metrics import router as metrics_router  # noqa: E402
+if not _is_desktop_api:
+    metrics_router = importlib.import_module("apps.api_server.routes.metrics").router
 
-app.include_router(metrics_router, prefix="/api/v1/metrics", tags=["metrics"])
+    app.include_router(metrics_router, prefix="/api/v1/metrics", tags=["metrics"])
 
 
 # ── Global exception handlers ─────────────────────────────────────────────────
@@ -505,9 +515,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONR
 
 # ── Routers ──────────────────────────────────────────────────────────────────
 
-import importlib
-
-_ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
+_FULL_ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
     ("tasks", "/api/v1/tasks", ["tasks"]),
     ("memory", "/api/v1/memory", ["memory"]),
     ("skills", "/api/v1/skills", ["skills"]),
@@ -538,32 +546,44 @@ _ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
     ("marketplace", "/api/v1/marketplace", ["marketplace"]),
 ]
 
+_DESKTOP_ROUTE_REGISTRY: list[tuple[str, str, list[str]]] = [
+    ("auth", "/api/v1/auth", ["auth"]),
+    ("tasks", "/api/v1/tasks", ["tasks"]),
+    ("approvals", "/api/v1/approvals", ["approvals"]),
+    ("gateway_approvals", "/api/v1/gateway-approvals", ["gateway-approvals"]),
+]
+
+_ROUTE_REGISTRY = _DESKTOP_ROUTE_REGISTRY if _is_desktop_api else _FULL_ROUTE_REGISTRY
+
 for module_name, prefix, tags in _ROUTE_REGISTRY:
     mod = importlib.import_module(f"apps.api_server.routes.{module_name}")
     app.include_router(mod.router, prefix=prefix, tags=tags)
 
-from apps.api_server.routes.ws import router as ws_router  # noqa: E402
+if not _is_desktop_api:
+    ws_router = importlib.import_module("apps.api_server.routes.ws").router
 
-app.include_router(ws_router)
+    app.include_router(ws_router)
 
 
 # ── GraphQL ────────────────────────────────────────────────────────────────
 
-from strawberry.fastapi import GraphQLRouter  # noqa: E402
+if not _is_desktop_api:
+    GraphQLRouter = importlib.import_module("strawberry.fastapi").GraphQLRouter
+    _get_graphql_db = importlib.import_module("packages.db.session").get_db
+    schema = importlib.import_module("packages.graphql.schema").schema
+    _resolve_current_user = importlib.import_module(
+        "apps.api_server.dependencies"
+    )._resolve_current_user
 
-from packages.db.session import get_db as _get_graphql_db  # noqa: E402
-from packages.graphql.schema import schema  # noqa: E402
+    async def _graphql_context(
+        db=Depends(_get_graphql_db),
+        user=Depends(_resolve_current_user),
+    ):
+        return {"db": db, "user": user}
 
 
-async def _graphql_context(
-    db=Depends(_get_graphql_db),
-    user=Depends(_resolve_current_user),
-):
-    return {"db": db, "user": user}
-
-
-graphql_app = GraphQLRouter(
-    schema,
-    context_getter=_graphql_context,
-)
-app.include_router(graphql_app, prefix="/api/v1/graphql", tags=["graphql"])
+    graphql_app = GraphQLRouter(
+        schema,
+        context_getter=_graphql_context,
+    )
+    app.include_router(graphql_app, prefix="/api/v1/graphql", tags=["graphql"])

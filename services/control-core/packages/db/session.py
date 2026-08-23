@@ -36,8 +36,12 @@ def _build_engine():
 
     # Ensure data directory exists for SQLite
     if db_url.startswith("sqlite"):
-        data_dir = Path("./data")
-        data_dir.mkdir(exist_ok=True)
+        # Create the parent of the configured database, not a cwd-relative
+        # ``./data`` directory.  Installed sidecars run from Program Files and
+        # keep their writable SQLite database under %LOCALAPPDATA%.
+        sqlite_path = db_url.removeprefix("sqlite:///")
+        if sqlite_path != ":memory:":
+            Path(sqlite_path).expanduser().resolve().parent.mkdir(parents=True, exist_ok=True)
 
     is_sqlite = db_url.startswith("sqlite")
 

@@ -1,0 +1,11 @@
+﻿{
+    "temporary_account":  "zcode_p4_a643488f",
+    "account_created":  true,
+    "account_removed":  true,
+    "sidecar_ready":  true,
+    "client_exit_code":  5,
+    "access_denied":  true,
+    "expected_win32_error":  5,
+    "error":  null,
+    "passed":  true
+}

@@ -13,6 +13,10 @@ class ToolResult:
     output: Any = None
     error: str | None = None
     artifacts: list[str] = field(default_factory=list)  # file paths, screenshot paths, etc.
+    # Gateway execution metadata.  These fields remain optional so legacy
+    # ToolRunner callers and existing tools keep the original contract.
+    status: str | None = None
+    approval_request_id: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -20,6 +24,8 @@ class ToolResult:
             "output": self.output,
             "error": self.error,
             "artifacts": self.artifacts,
+            "status": self.status,
+            "approval_request_id": self.approval_request_id,
         }
 
 
@@ -62,6 +68,7 @@ class ExecutionContext:
     delegate_depth: int = 0
     principal_id: str | None = None
     workspace_id: str | None = None
+    tenant_id: str = "default"
     _browser_context: Any = field(default=None, repr=False)
 
     @property

@@ -1,0 +1,11 @@
+﻿{
+    "pipe":  "\\\\.\\pipe\\zcode-control-core-v1-measure-16292",
+    "samples":  100,
+    "successes":  100,
+    "failures":  0,
+    "p50_ms":  3.253,
+    "p95_ms":  13.992,
+    "max_ms":  36.007,
+    "passed":  true,
+    "log":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-ipc-v1-72401fda589a44509a5ac120472f085e\\sidecar.log"
+}

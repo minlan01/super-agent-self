@@ -1,0 +1,17 @@
+{
+    "startup_s":  1.236,
+    "parent_pid":  18784,
+    "sidecar_pid":  12088,
+    "forced_parent_cleanup":  true,
+    "normal_close_cleanup":  true,
+    "restart_pids":  [
+                         364,
+                         4272,
+                         19504,
+                         13616
+                     ],
+    "first_three_restarted":  true,
+    "fourth_crash_stopped":  true,
+    "final_sidecar_released":  true,
+    "passed":  true
+}

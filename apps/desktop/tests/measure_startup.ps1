@@ -1,43 +1,85 @@
 param(
   [int]$Runs = 3,
-  [string]$Exe = 'D:\agent\tauri-spike\src-tauri\target\release\tauri-spike.exe',
-  [string]$Python = 'D:\agent\sidecar-demo\.venv312\Scripts\python.exe',
-  [string]$Sidecar = 'D:\agent\tauri-spike\sidecar.py'
+  [string]$Exe,
+  [string]$Python,
+  [string]$Sidecar
 )
 
 $ErrorActionPreference = 'Stop'
-$env:ZCODE_PYTHON = $Python
-$env:ZCODE_SIDECAR = $Sidecar
-$measurements = New-Object System.Collections.Generic.List[double]
+$repository = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..\..'))
+if (-not $Exe) { $Exe = Join-Path $repository 'apps\desktop\src-tauri\target\release\tauri-spike.exe' }
+if (-not (Test-Path -LiteralPath $Exe)) { throw "Desktop executable not found: $Exe" }
+if ($Python) { $env:ZCODE_PYTHON = $Python }
+if ($Sidecar) { $env:ZCODE_SIDECAR = $Sidecar }
 
-for ($run = 1; $run -le $Runs; $run++) {
-  if (Get-NetTCPConnection -LocalPort 9876 -State Listen -ErrorAction SilentlyContinue) {
-    throw "port 9876 occupied before run $run"
+function Get-SidecarChild {
+  param([int]$ParentPid)
+  return Get-CimInstance Win32_Process | Where-Object {
+    $_.ParentProcessId -eq $ParentPid -and $_.CommandLine -match 'control_core_sidecar|sidecar\.exe'
+  } | Select-Object -First 1
+}
+
+function Wait-Ready {
+  param(
+    [System.Diagnostics.Process]$Parent,
+    [string]$LogPath,
+    [Diagnostics.Stopwatch]$StartupWatch,
+    [int]$TimeoutSeconds = 15
+  )
+  $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
+  while ((Get-Date) -lt $deadline) {
+    # HasExited performs the required state check. Calling Refresh() on every
+    # 20 ms poll performs an extra Windows process query and can add seconds to
+    # the measured launch time on a GUI process.
+    if ($Parent.HasExited) { return $null }
+    if (Test-Path -LiteralPath $LogPath) {
+      $log = Get-Content -LiteralPath $LogPath -Raw -ErrorAction SilentlyContinue
+      if ($log -match 'control-core sidecar ready') {
+        # Stop the clock at the readiness signal. WMI process-tree lookup is
+        # intentionally outside the measured interval because it is slow and
+        # can add several seconds of noise on a busy Windows host.
+        # Freeze the end-to-end launch clock before the WMI process-tree lookup.
+        $StartupWatch.Stop()
+        $elapsed = [math]::Round($StartupWatch.Elapsed.TotalSeconds, 3)
+        $child = $null
+        for ($attempt = 0; $attempt -lt 20 -and -not $child; $attempt++) {
+          $child = Get-SidecarChild $Parent.Id
+          if (-not $child) { Start-Sleep -Milliseconds 25 }
+        }
+        if (-not $child) { throw "Sidecar PID was not visible after readiness for parent $($Parent.Id)" }
+        return [pscustomobject]@{ sidecar_pid = [int]$child.ProcessId; elapsed_s = $elapsed }
+      }
+    }
+    Start-Sleep -Milliseconds 20
   }
+  return $null
+}
+
+$measurements = New-Object System.Collections.Generic.List[double]
+for ($run = 1; $run -le $Runs; $run++) {
+  $dataDir = Join-Path ([IO.Path]::GetTempPath()) ("zcode-startup-" + [Guid]::NewGuid().ToString('N'))
+  $logPath = Join-Path $dataDir 'logs\sidecar.log'
+  $env:ZCODE_DATA_DIR = $dataDir
   $parent = $null
+  $ready = $null
   try {
     $watch = [Diagnostics.Stopwatch]::StartNew()
     $parent = Start-Process -FilePath $Exe -PassThru
-    $healthy = $false
-    while (-not $healthy -and $watch.Elapsed.TotalSeconds -lt 15) {
-      if ($parent.HasExited) { throw "Tauri exited during run $run" }
-      try {
-        $response = Invoke-RestMethod 'http://127.0.0.1:9876/health' -TimeoutSec 1 -ErrorAction Stop
-        $healthy = ($response.status -eq 'ready' -and $response.nonce -and [int]$response.pid -gt 0)
-      } catch {
-        Start-Sleep -Milliseconds 50
-      }
-    }
-    $watch.Stop()
-    if (-not $healthy) { throw "health timeout during run $run" }
-    $measurements.Add($watch.Elapsed.TotalSeconds)
+    $ready = Wait-Ready $parent $logPath $watch
+    if (-not $ready) { throw "Desktop did not complete sidecar startup during run $run" }
+    # Wait-Ready stops its own clock at the readiness log line before doing
+    # the WMI process-tree lookup, so PID discovery cannot inflate startup.
+    $measurements.Add([double]$ready.elapsed_s)
   } finally {
     if ($parent -and -not $parent.HasExited) {
       Stop-Process -Id $parent.Id -Force -ErrorAction SilentlyContinue
     }
-    $deadline = (Get-Date).AddSeconds(5)
-    while ((Get-Date) -lt $deadline -and (Get-NetTCPConnection -LocalPort 9876 -State Listen -ErrorAction SilentlyContinue)) {
+    $cleanupDeadline = (Get-Date).AddSeconds(5)
+    while ($ready -and (Get-Process -Id $ready.sidecar_pid -ErrorAction SilentlyContinue) -and (Get-Date) -lt $cleanupDeadline) {
       Start-Sleep -Milliseconds 50
+    }
+    if ($ready -and (Get-Process -Id $ready.sidecar_pid -ErrorAction SilentlyContinue)) {
+      throw "Job Object cleanup left sidecar PID $($ready.sidecar_pid) after run $run"
     }
   }
 }

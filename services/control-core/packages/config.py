@@ -102,6 +102,11 @@ def get_settings() -> Settings:
     # Override DATABASE_URL from environment if present
     db_url = os.getenv("DATABASE_URL", db_cfg.get("url", "sqlite:///./data/agent_platform.db"))
 
+    workspace_root = os.getenv(
+        "APP_WORKSPACE_ROOT",
+        os.getenv("ZCODE_WORKSPACE_ROOT", ws_cfg.get("root", "./workspace")),
+    )
+
     settings = Settings(
         app_name=app_cfg.get("name", "Controlled Agent Platform"),
         version=app_cfg.get("version", __version__),
@@ -131,7 +136,7 @@ def get_settings() -> Settings:
                 str(sec_cfg.get("require_auth", True)),
             ).lower() in ("1", "true", "yes"),
         ),
-        workspace_root=ws_cfg.get("root", "./workspace"),
+        workspace_root=workspace_root,
         max_file_size_mb=ws_cfg.get("max_file_size_mb", 50),
     )
 

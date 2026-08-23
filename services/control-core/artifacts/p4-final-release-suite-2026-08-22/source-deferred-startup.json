@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-08-22T12:37:46.8408175+08:00",
+  "mode": "source-production-deferred-desktop-api",
+  "resource_root": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-source-resource-deferred-046ea232c4bb4a838955d41a027993ff",
+  "runs": [
+    {
+      "run": 1,
+      "host_ready_s": 1.965,
+      "api_ready_s": 7.894,
+      "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-source-deferred-929c43a9c3d243679d3eec948d96ecab"
+    },
+    {
+      "run": 2,
+      "host_ready_s": 2.356,
+      "api_ready_s": 8.149,
+      "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-source-deferred-e10d91b3516542c28d6849345dd5dd3a"
+    },
+    {
+      "run": 3,
+      "host_ready_s": 1.914,
+      "api_ready_s": 7.049,
+      "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-source-deferred-26bd1769f3ed41fd89d8309fd01d3bbf"
+    }
+  ],
+  "host_ready_max_s": 2.356,
+  "api_ready_max_s": 8.149,
+  "host_gate_passed": true,
+  "api_initialized_all_runs": true
+}

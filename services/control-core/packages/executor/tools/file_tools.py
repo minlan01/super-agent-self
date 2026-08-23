@@ -218,6 +218,51 @@ class FileRead(ToolBase):
 
 @tool_registry.register(
     category="file",
+    risk_level="high",
+    emoji="🗑️",
+    params_schema={
+        "type": "object",
+        "required": ["path"],
+        "properties": {
+            "path": {"type": "string", "description": "Relative file path under workspace"},
+        },
+        "additionalProperties": False,
+    },
+)
+class FileDelete(ToolBase):
+    """Delete one regular file inside the task workspace.
+
+    Directory deletion and symlink traversal are intentionally unsupported;
+    the high-risk policy gate must approve this operation before invocation.
+    """
+
+    name = "file.delete"
+    description = "Delete one file from the task workspace"
+
+    async def execute(self, args: dict[str, Any], context: ExecutionContext) -> ToolResult:
+        rel_path = args.get("path", "")
+        if not isinstance(rel_path, str) or not rel_path.strip():
+            return ToolResult(success=False, error="path is required")
+
+        base = Path(context.workspace_root)
+        full_path = base / rel_path
+        safe, err = _check_path_within_base(full_path, base)
+        if not safe:
+            return ToolResult(success=False, error=err)
+        if not full_path.exists():
+            return ToolResult(success=False, error="File not found")
+        if not full_path.is_file():
+            return ToolResult(success=False, error="Only regular files can be deleted")
+
+        try:
+            await asyncio.to_thread(full_path.unlink)
+        except OSError as exc:
+            return ToolResult(success=False, error=f"Failed to delete file: {exc}")
+        return ToolResult(success=True, output=str(full_path), artifacts=[str(full_path)])
+
+
+@tool_registry.register(
+    category="file",
     risk_level="low",
     emoji="📁",
     params_schema={

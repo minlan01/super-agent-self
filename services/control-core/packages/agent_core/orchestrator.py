@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from pathlib import Path
 from typing import Any
 
 from packages.agent_core.schemas import AuditEventCreate, TaskCreate, TaskUpdate
 from packages.agent_core.task_state import InvalidTransition, TaskStateMachine
-from packages.db.models import AuditEventType, TaskStatus
+from packages.config import get_settings
+from packages.db.models import AuditEventType, StepStatus, TaskStatus
 from packages.db.repositories.audit_repo import AuditRepository
+from packages.db.repositories.approval_request_repo import ApprovalRequestRepository
 from packages.db.repositories.task_repo import TaskRepository
 from packages.db.session import run_async
 from packages.executor.executor_service import ExecutorService
@@ -168,6 +171,156 @@ class Orchestrator:
             "success": result.get("success", False),
         }
 
+    async def execute_existing(
+        self,
+        task_id: str,
+        *,
+        context: ExecutionContext | None = None,
+        db: Any = None,
+        memories: list[dict[str, Any]] | None = None,
+        skills: list[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        """Plan and execute an already persisted task.
+
+        The API creates the task before this method is called.  Keeping this
+        path separate from ``run`` prevents a second task row from being
+        created when a user presses Execute in the desktop client.
+        """
+        self._test_db = db
+        ra = self._ra()
+        task = await ra(TaskRepository.get_by_id, task_id, False)
+        if task is None:
+            raise ValueError(f"Task {task_id} not found")
+
+        edition = task.edition.value if hasattr(task.edition, "value") else task.edition
+        if task.status == TaskStatus.PENDING:
+            task = await self._transition(task, TaskStatus.PLANNING)
+        elif task.status == TaskStatus.AWAITING_APPROVAL:
+            return {
+                "task_id": task.id,
+                "status": task.status.value,
+                "results": [],
+                "success": False,
+                "awaiting_approval": True,
+            }
+        else:
+            return {
+                "task_id": task.id,
+                "status": task.status.value,
+                "results": [],
+                "success": task.status == TaskStatus.COMPLETED,
+                "already_started": task.status == TaskStatus.PLANNING,
+            }
+
+        plan = await self._plan_phase(task, task.goal, edition, memories, skills)
+        if plan is None:
+            return {"task_id": task.id, "status": "failed", "success": False}
+
+        task = await self._transition(task, TaskStatus.EXECUTING)
+        if context is None:
+            workspace_root = str(Path(get_settings().workspace_root) / task.id)
+            context = ExecutionContext(
+                task_id=task.id,
+                step_id="orchestrator",
+                principal_id=str(task.user_id),
+                workspace_id=task.id,
+                tenant_id=getattr(task, "tenant_id", "default"),
+                edition=edition,
+                workspace_root=workspace_root,
+            )
+
+        result = await self.executor.execute_plan(task.id, plan, context, db=db)
+        task = await ra(TaskRepository.get_by_id, task.id, False)
+        status = task.status.value if task is not None else "failed"
+        return {
+            "task_id": task_id,
+            "status": status,
+            "plan": {"steps": [{"step_id": s.step_id, "tool": s.tool_name} for s in plan.steps]},
+            "results": result.get("results", []),
+            "success": result.get("success", False),
+            "awaiting_approval": result.get("awaiting_approval", False),
+        }
+
+    async def resume_after_approval(
+        self,
+        approval_request_id: str,
+        *,
+        db: Any = None,
+    ) -> dict[str, Any]:
+        """Resume the exact persisted step bound to an approved request."""
+        self._test_db = db
+        ra = self._ra()
+        req = await ra(ApprovalRequestRepository.get_by_id, approval_request_id)
+        if req is None:
+            raise ValueError(f"Approval request {approval_request_id} not found")
+        step = await ra(TaskRepository.get_step_by_id, req.step_run_id)
+        if step is None:
+            raise ValueError(f"Approval step {req.step_run_id} not found")
+        task = await ra(TaskRepository.get_by_id, step.task_id, False)
+        if task is None or task.tenant_id != req.tenant_id:
+            raise ValueError("Approval request task binding mismatch")
+
+        # Resolution is idempotent. Only the exact suspended step/task pair
+        # may cross the effect boundary; later resolve calls return state.
+        if (
+            task.status != TaskStatus.AWAITING_APPROVAL
+            or step.status != StepStatus.AWAITING_APPROVAL
+            or step.approval_request_id != approval_request_id
+        ):
+            return {
+                "task_id": task.id,
+                "status": task.status.value,
+                "success": task.status == TaskStatus.COMPLETED,
+                "already_resumed": True,
+            }
+
+        edition = task.edition.value if hasattr(task.edition, "value") else task.edition
+        workspace_root = str(Path(get_settings().workspace_root) / task.id)
+        context = ExecutionContext(
+            task_id=task.id,
+            step_id=step.id,
+            principal_id=str(task.user_id),
+            workspace_id=task.id,
+            tenant_id=task.tenant_id,
+            edition=edition,
+            workspace_root=workspace_root,
+        )
+
+        # The resolver only calls this for a newly terminal request.  A stale
+        # duplicate call must never execute a second time.
+        if req.status.value not in ("approved", "rejected"):
+            return {"task_id": task.id, "status": task.status.value, "success": False}
+
+        if req.status.value == "approved" and task.status == TaskStatus.AWAITING_APPROVAL:
+            task = await self._transition(task, TaskStatus.EXECUTING)
+
+        from packages.planner.plan_validator import Plan
+        plan = None
+        for event in await ra(AuditRepository.list_by_task, task.id):
+            detail = event.detail or {}
+            if event.event_type == AuditEventType.PLAN_GENERATED and detail.get("plan"):
+                plan = Plan.model_validate(detail["plan"])
+                break
+        if plan is None:
+            plan = Plan(
+                reasoning="approval resume",
+                steps=[{"step_id": step.step_order, "tool_name": step.tool_name, "args": step.args or {}}],
+            )
+
+        result = await self.executor.resume_after_approval(
+            task_id=task.id,
+            approval_request_id=approval_request_id,
+            step=step,
+            plan=plan,
+            context=context,
+            db=db,
+            approved=req.status.value == "approved",
+        )
+        refreshed = await ra(TaskRepository.get_by_id, task.id, False)
+        result["task_id"] = task.id
+        result["status"] = refreshed.status.value if refreshed is not None else result.get("status", "failed")
+        return result
+
     async def run_with_plan(
         self,
         task_id: str,
@@ -231,7 +384,10 @@ class Orchestrator:
                 AuditRepository.create, AuditEventCreate(
                     task_id=task.id, edition=edition,
                     event_type=AuditEventType.PLAN_GENERATED,
-                    detail={"steps_count": len(plan.steps)},
+                    detail={
+                        "steps_count": len(plan.steps),
+                        "plan": plan.model_dump(mode="json"),
+                    },
                 )
             )
             logger.info("Plan generated for task %s: %d steps", task.id, len(plan.steps))

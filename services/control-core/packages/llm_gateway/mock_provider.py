@@ -38,6 +38,42 @@ _DEFAULT_PLAN = {
     ]
 }
 
+_READ_SMOKE_PLAN = {
+    "reasoning": "Create a workspace fixture and read it back through the controlled file tool.",
+    "steps": [
+        {
+            "step_id": 1,
+            "tool_name": "file.write_markdown",
+            "args": {"output_path": "read-target.md", "content": "# P4 read smoke\n"},
+            "reasoning": "Create a deterministic workspace file for the read operation.",
+        },
+        {
+            "step_id": 2,
+            "tool_name": "file.read",
+            "args": {"path": "outputs/read-target.md"},
+            "reasoning": "Read the workspace file through the low-risk file tool.",
+        },
+    ],
+}
+
+_DELETE_APPROVAL_PLAN = {
+    "reasoning": "Create a workspace fixture, then request approval before deleting it.",
+    "steps": [
+        {
+            "step_id": 1,
+            "tool_name": "file.write_markdown",
+            "args": {"output_path": "approval-target.md", "content": "# P4 approval smoke\n"},
+            "reasoning": "Create the file that the approved destructive step will remove.",
+        },
+        {
+            "step_id": 2,
+            "tool_name": "file.delete",
+            "args": {"path": "outputs/approval-target.md"},
+            "reasoning": "Delete the workspace file only after a human approval is recorded.",
+        },
+    ],
+}
+
 
 @dataclass
 class MockProviderConfig:
@@ -81,6 +117,13 @@ class MockProvider(BaseLLMProvider):
                 break
 
         plan = _DEFAULT_PLAN
+        # Deterministic desktop acceptance plans. The user message is separate
+        # from the system tool summary, so these checks only match the goal.
+        goal = last_user_msg.lower()
+        if "file.delete" in goal or "delete" in goal or "删除" in last_user_msg:
+            plan = _DELETE_APPROVAL_PLAN
+        elif "file.read" in goal or "read" in goal or "读取" in last_user_msg:
+            plan = _READ_SMOKE_PLAN
         # Try to find a matching pre-defined response by keyword
         if self.planning_responses and last_user_msg:
             for keyword, response_json in self.planning_responses.items():

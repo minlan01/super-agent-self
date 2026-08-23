@@ -1,0 +1,12 @@
+{
+    "runs":  3,
+    "seconds":  [
+                    5.673,
+                    2.671,
+                    2.902
+                ],
+    "min_s":  2.671,
+    "median_s":  2.902,
+    "max_s":  5.673,
+    "all_passed":  false
+}

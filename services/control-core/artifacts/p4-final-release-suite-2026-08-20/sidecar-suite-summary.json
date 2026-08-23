@@ -1,0 +1,10 @@
+﻿{
+    "python":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\.venv-win\\Scripts\\python.exe",
+    "desktop_exe":  "C:\\Users\\minlan01\\AppData\\Local\\Programs\\ZcodeDesktopAgent-P4-release-e8b1c626c72b4d5dafc0cbcde5c4d60b\\tauri-spike.exe",
+    "ipc_contract_unit":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-20\\ipc-contract-unit.txt",
+    "ipc_pipe_integration":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-20\\ipc-pipe-integration.txt",
+    "powershell_ipc":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-20\\ipc-powershell.json",
+    "desktop_startup":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-20\\desktop-startup.json",
+    "desktop_lifecycle":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-20\\desktop-lifecycle.json",
+    "passed":  true
+}

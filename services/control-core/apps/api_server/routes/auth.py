@@ -42,6 +42,31 @@ _failed_login_lock = threading.Lock()
 _failed_login_last_cleanup: float = 0.0
 
 
+def _ensure_rbac_role(db: Session, user: User) -> None:
+    """Ensure a newly-created or legacy user has one effective RBAC role."""
+
+    from packages.auth.rbac import get_rbac_service
+    from packages.db.repositories.rbac_repo import RBACRepository
+
+    if RBACRepository.get_user_roles(db, user.id):
+        return
+    # Startup normally seeds these rows. The fallback keeps registration safe
+    # when an operator creates a user during a minimal/isolated bootstrap.
+    get_rbac_service().seed_if_empty(db)
+    role_name = "admin" if getattr(user.role, "value", user.role) == "admin" else None
+    if role_name:
+        role = RBACRepository.get_role_by_name(db, role_name)
+        assignment = (
+            RBACRepository.assign_role_to_user(db, user_id=user.id, role_id=role.id)
+            if role
+            else None
+        )
+    else:
+        assignment = RBACRepository.assign_default_role(db, user.id)
+    if assignment is None:
+        raise RuntimeError("default RBAC role is not available")
+
+
 def _cleanup_failed_login_store() -> None:
     global _failed_login_last_cleanup
     now = time.time()
@@ -124,6 +149,7 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)):
         password=body.password,
         email=body.email,
     )
+    _ensure_rbac_role(db, user)
 
     AuditRepository.create(db, AuditEventCreate(
         event_type=AuditEventType.USER_REGISTERED,
@@ -156,6 +182,8 @@ def login(body: LoginRequest, request: Request, response: Response, db: Session 
 
     if not user.is_active:
         raise HTTPException(status_code=403, detail="Account is disabled")
+
+    _ensure_rbac_role(db, user)
 
     _clear_failed_logins(body.username)
 
@@ -268,6 +296,8 @@ async def _process_sso_login(code: str, state: str | None, db: Session):
 
     user, is_new_user = sso.find_or_create_user(db, user_info)
     db.flush()
+    if is_new_user:
+        _ensure_rbac_role(db, user)
 
     AuditRepository.create(db, AuditEventCreate(
         event_type=AuditEventType.SSO_USER_CREATED if is_new_user else AuditEventType.SSO_LOGIN,

@@ -120,6 +120,8 @@ class TaskStepUpdate(BaseModel):
     status: StepStatus | None = None
     result: str | None = None
     error: str | None = None
+    requires_approval: bool | None = None
+    approval_request_id: str | None = None
     capability_token_hash: str | None = None
 
 
@@ -132,6 +134,7 @@ class TaskStepResponse(BaseModel):
     risk_level: RiskLevel
     requires_approval: bool
     status: StepStatus
+    approval_request_id: str | None = None
     capability_token_hash: str | None = None
     result: str | None = None
     error: str | None = None

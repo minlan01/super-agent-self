@@ -38,6 +38,10 @@ tools:
     category: file
     risk_level: low
 
+  file.delete:
+    category: file
+    risk_level: high
+
   file.list:
     category: file
     risk_level: low

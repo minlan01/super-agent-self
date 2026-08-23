@@ -1,0 +1,16 @@
+﻿{
+    "date":  "2026-08-22",
+    "installer":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\bundle\\nsis\\Zcode Desktop Agent_1.0.0_x64-setup.exe",
+    "installer_version":  "1.0.0",
+    "install_exit_code":  0,
+    "install_root_present":  true,
+    "desktop_present":  true,
+    "sidecar_present":  true,
+    "startup_passed":  false,
+    "startup_output":  "",
+    "uninstall_present":  true,
+    "uninstall_exit_code":  0,
+    "install_root_absent_after_uninstall":  true,
+    "residual_process_count":  0,
+    "passed":  false
+}

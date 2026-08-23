@@ -141,6 +141,7 @@ class ExecutorService:
         results = []
         failed = False
         cancelled = False
+        awaiting_approval = False
 
         for plan_step in plan.steps:
             if failed:
@@ -163,10 +164,13 @@ class ExecutorService:
                 cancelled = True
                 continue
 
-            step_result, should_fail = await self._execute_single_step(
+            step_result, should_fail, step_waiting = await self._execute_single_step(
                 task_id, plan_step, context, ra,
             )
             results.append(step_result)
+            if step_waiting:
+                awaiting_approval = True
+                break
             if should_fail:
                 failed = True
                 continue
@@ -187,6 +191,14 @@ class ExecutorService:
                     failed = True
 
         plan_duration = time.perf_counter() - plan_start
+        if awaiting_approval:
+            await self._mark_task_awaiting_approval(task_id, results, ra)
+            return {
+                "task_id": task_id,
+                "results": results,
+                "success": False,
+                "awaiting_approval": True,
+            }
         await self._finalize_task(task_id, results, failed, cancelled, ra=ra, plan_duration=plan_duration)
         try:
             from packages.middleware.prometheus import registry
@@ -203,7 +215,7 @@ class ExecutorService:
         plan_step: Any,
         context: ExecutionContext,
         ra,
-    ) -> tuple[dict[str, Any], bool]:
+    ) -> tuple[dict[str, Any], bool, bool]:
         step = await ra(
             TaskRepository.add_step, task_id, TaskStepCreate(
                 step_order=plan_step.step_id,
@@ -211,6 +223,92 @@ class ExecutorService:
                 args=plan_step.args,
             )
         )
+
+        # The Gateway owns the policy decision in production.  Calling the
+        # legacy policy branch first would intercept WAIT_APPROVAL and prevent
+        # ApprovalRequest creation entirely.
+        if self._execution_orchestrator is not None:
+            result = await self._execute_via_orchestrator(
+                task_id=task_id,
+                step_id=step.id,
+                plan_step=plan_step,
+                policy_result=None,
+                context=context,
+                ra=ra,
+            )
+            result_status = getattr(result, "status", None)
+            if result_status == "awaiting_approval":
+                await ra(
+                    TaskRepository.update_step,
+                    step.id,
+                    TaskStepUpdate(
+                        status=StepStatus.AWAITING_APPROVAL,
+                        requires_approval=True,
+                        approval_request_id=getattr(result, "approval_request_id", None),
+                        error=result.error,
+                    ),
+                )
+                await ra(
+                    AuditRepository.create,
+                    AuditEventCreate(
+                        task_id=task_id,
+                        step_id=step.id,
+                        event_type=AuditEventType.APPROVAL_REQUESTED,
+                        detail={
+                            "tool_name": plan_step.tool_name,
+                            "approval_request_id": getattr(result, "approval_request_id", None),
+                            "risk_level": "high",
+                        },
+                    ),
+                )
+                await _ws_broadcast(task_id, "step_awaiting_approval", {
+                    "step_id": step.id,
+                    "tool": plan_step.tool_name,
+                    "approval_request_id": getattr(result, "approval_request_id", None),
+                    "reason": result.error,
+                })
+                return {
+                    "step": plan_step.step_id,
+                    "tool": plan_step.tool_name,
+                    "status": "awaiting_approval",
+                    "approval_request_id": getattr(result, "approval_request_id", None),
+                    "reason": result.error,
+                }, False, True
+
+            if result_status == "rejected":
+                await ra(
+                    TaskRepository.update_step,
+                    step.id,
+                    TaskStepUpdate(status=StepStatus.REJECTED, error=result.error),
+                )
+                return {
+                    "step": plan_step.step_id,
+                    "tool": plan_step.tool_name,
+                    "status": "rejected",
+                    "reason": result.error,
+                }, True, False
+
+            await ra(
+                TaskRepository.update_step,
+                step.id,
+                TaskStepUpdate(
+                    status=StepStatus.COMPLETED if result.success else StepStatus.FAILED,
+                    result=str(result.output) if result.success and result.output is not None else None,
+                    error=None if result.success else result.error,
+                ),
+            )
+            await _ws_broadcast(task_id, "step_completed" if result.success else "step_failed", {
+                "step_id": step.id, "tool": plan_step.tool_name,
+                "success": result.success,
+            })
+            return {
+                "step": plan_step.step_id,
+                "tool": plan_step.tool_name,
+                "status": "completed" if result.success else "failed",
+                "output": result.output,
+                "artifacts": result.artifacts,
+                "_raw_result": result,
+            }, not result.success, False
 
         policy_result = self.policy_engine.check(
             task_id=task_id,
@@ -262,7 +360,7 @@ class ExecutorService:
                     "tool": plan_step.tool_name,
                     "status": "awaiting_approval",
                     "reason": policy_result.reason,
-                }, True  # should_fail=True stops the plan loop; resume re-enters
+                }, True, False  # legacy path; gateway path above is authoritative
 
             # Genuinely denied by policy
             await ra(
@@ -287,7 +385,7 @@ class ExecutorService:
                 "tool": plan_step.tool_name,
                 "status": "rejected",
                 "reason": policy_result.reason,
-            }, True
+            }, True, False
 
         token_hash = hashlib.sha256(policy_result.token.encode()).hexdigest()[:32]
         await ra(
@@ -336,7 +434,169 @@ class ExecutorService:
             "output": result.output,
             "artifacts": result.artifacts,
             "_raw_result": result,
-        }, False
+        }, False, False
+
+    async def _mark_task_awaiting_approval(self, task_id: str, results: list[dict[str, Any]], ra) -> None:
+        """Move the task to a resumable non-terminal approval state."""
+        task = await ra(TaskRepository.get_by_id, task_id, False)
+        if task is not None and task.status == TaskStatus.EXECUTING:
+            await ra(
+                TaskRepository.atomic_status_transition,
+                task_id,
+                TaskStatus.EXECUTING,
+                TaskStatus.AWAITING_APPROVAL,
+            )
+        elif task is not None and task.status != TaskStatus.AWAITING_APPROVAL:
+            await ra(TaskRepository.update, task_id, TaskUpdate(status=TaskStatus.AWAITING_APPROVAL))
+        await _ws_broadcast(task_id, "task_awaiting_approval", {
+            "steps_completed": sum(1 for r in results if r.get("status") == "completed"),
+        })
+
+    async def resume_after_approval(
+        self,
+        *,
+        task_id: str,
+        approval_request_id: str,
+        step: Any,
+        plan: Plan,
+        context: ExecutionContext,
+        db: Any = None,
+        approved: bool,
+    ) -> dict[str, Any]:
+        """Resume one approved step and continue the persisted plan.
+
+        The already-created ``TaskStep`` is reused for the approved operation;
+        only later plan steps create new rows.  This prevents a second copy of
+        the approved effect and keeps the approval binding auditable.
+        """
+        ra = self._ra(db)
+        results: list[dict[str, Any]] = []
+
+        if not approved:
+            await ra(
+                TaskRepository.update_step,
+                step.id,
+                TaskStepUpdate(
+                    status=StepStatus.REJECTED,
+                    requires_approval=False,
+                    error="approval rejected",
+                ),
+            )
+            await ra(
+                AuditRepository.create,
+                AuditEventCreate(
+                    task_id=task_id,
+                    step_id=step.id,
+                    event_type=AuditEventType.APPROVAL_REJECTED,
+                    detail={"approval_request_id": approval_request_id},
+                ),
+            )
+            result = {
+                "step": step.step_order,
+                "tool": step.tool_name,
+                "status": "rejected",
+                "reason": "approval rejected",
+            }
+            results.append(result)
+            await self._finalize_task(task_id, results, True, ra=ra)
+            return {"status": "rejected", "results": results, "success": False}
+
+        if self._execution_orchestrator is None:
+            raise RuntimeError("approval resume requires ExecutionOrchestrator")
+
+        resumed = await self._execution_orchestrator.resume_after_approval_async(
+            approval_request_id=approval_request_id,
+            task_id=task_id,
+            step_id=step.id,
+            tool_name=step.tool_name,
+            args=step.args or {},
+            edition=context.edition,
+            tenant_id=getattr(context, "tenant_id", "default") or "default",
+            requester_principal_id=getattr(context, "principal_id", None) or "system",
+            workspace_root=context.workspace_root,
+            db=self._test_db,
+        )
+
+        if resumed.status != "completed":
+            await ra(
+                TaskRepository.update_step,
+                step.id,
+                TaskStepUpdate(
+                    status=StepStatus.REJECTED if resumed.status == "rejected" else StepStatus.FAILED,
+                    requires_approval=False,
+                    error=resumed.error,
+                ),
+            )
+            await self._finalize_task(
+                task_id,
+                [{
+                    "step": step.step_order,
+                    "tool": step.tool_name,
+                    "status": resumed.status,
+                    "reason": resumed.error,
+                }],
+                True,
+                ra=ra,
+            )
+            return {
+                "status": resumed.status,
+                "results": [{"step": step.step_order, "tool": step.tool_name, "status": resumed.status}],
+                "success": False,
+            }
+
+        await ra(
+            TaskRepository.update_step,
+            step.id,
+            TaskStepUpdate(
+                status=StepStatus.COMPLETED,
+                requires_approval=False,
+                result=str(resumed.output) if resumed.output is not None else None,
+                error=None,
+            ),
+        )
+        await ra(
+            AuditRepository.create,
+            AuditEventCreate(
+                task_id=task_id,
+                step_id=step.id,
+                event_type=AuditEventType.APPROVAL_GRANTED,
+                detail={"approval_request_id": approval_request_id},
+            ),
+        )
+        results.append({
+            "step": step.step_order,
+            "tool": step.tool_name,
+            "status": "completed",
+            "output": resumed.output,
+            "artifacts": resumed.artifacts or [],
+        })
+
+        failed = False
+        for plan_step in plan.steps:
+            if plan_step.step_id <= step.step_order:
+                continue
+            step_result, should_fail, waiting = await self._execute_single_step(
+                task_id, plan_step, context, ra,
+            )
+            results.append(step_result)
+            if waiting:
+                await self._mark_task_awaiting_approval(task_id, results, ra)
+                return {
+                    "status": "awaiting_approval",
+                    "results": results,
+                    "success": False,
+                    "awaiting_approval": True,
+                }
+            if should_fail:
+                failed = True
+                break
+
+        await self._finalize_task(task_id, results, failed, ra=ra)
+        return {
+            "status": "failed" if failed else "completed",
+            "results": results,
+            "success": not failed,
+        }
 
     async def _finalize_task(
         self,
@@ -441,7 +701,7 @@ class ExecutorService:
         task_id: str,
         step_id: str,
         plan_step: Any,
-        policy_result: Any,
+        policy_result: Any | None,
         context: ExecutionContext,
         ra,
     ) -> Any:
@@ -462,6 +722,20 @@ class ExecutorService:
             plan_step=plan_step, policy_result=policy_result,
             context=context,
         )
+
+        # WAIT_APPROVAL and DENY are terminal for this attempt, not transient
+        # tool failures.  Retrying either would duplicate approval requests or
+        # bypass the human decision boundary.
+        if getattr(step_result, "status", None) in {"awaiting_approval", "rejected"}:
+            from packages.executor.tools.base import ToolResult
+            return ToolResult(
+                success=False,
+                output=step_result.output,
+                error=step_result.error,
+                artifacts=step_result.artifacts or [],
+                status=step_result.status,
+                approval_request_id=step_result.approval_request_id,
+            )
 
         # Gateway failure → evaluate retry eligibility
         if not step_result.success:
@@ -496,6 +770,7 @@ class ExecutorService:
                         success=False,
                         error=f"UNKNOWN_OUTCOME: {step_result.error}",
                         artifacts=step_result.artifacts or [],
+                        status="failed",
                     )
 
             # Deterministic FAILED or idempotent UNKNOWN: one retry via orchestrator
@@ -525,6 +800,8 @@ class ExecutorService:
             output=step_result.output or "",
             error=step_result.error,
             artifacts=step_result.artifacts or [],
+            status=step_result.status,
+            approval_request_id=step_result.approval_request_id,
         )
 
     async def _orchestrator_execute(
@@ -543,8 +820,10 @@ class ExecutorService:
             tool_name=plan_step.tool_name,
             args=plan_step.args,
             edition=context.edition,
-            tenant_id=getattr(context, "tenant_id", "default"),
+            tenant_id=getattr(context, "tenant_id", "default") or "default",
+            requester_principal_id=getattr(context, "principal_id", None) or "system",
             workspace_root=context.workspace_root,
+            db=self._test_db,
         )
         return step_result
 

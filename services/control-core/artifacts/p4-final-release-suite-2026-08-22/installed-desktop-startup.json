@@ -1,0 +1,14 @@
+Desktop did not complete sidecar startup during r
+un 1
+At D:\agent\Agents\super-agent-self\apps\desktop\
+tests\measure_startup.ps1:63 char:24
++ ... t $ready) { throw "Desktop did not complete
+ sidecar startup during ru ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped:  
+   (Desktop did not...up during run 1:String) [  
+  ], RuntimeException
+    + FullyQualifiedErrorId : Desktop did not co 
+   mplete sidecar startup during run 1
+ 

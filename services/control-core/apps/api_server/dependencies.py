@@ -194,13 +194,15 @@ async def get_current_actor_scope(
     roles: frozenset[str] = frozenset()
     permissions: frozenset[str] = frozenset()
     try:
-        from packages.auth.rbac import RBACService
-        rbac = RBACService(db)
-        role_names = rbac.get_user_roles(user.id)
+        from packages.auth.rbac import get_rbac_service
+        from packages.db.repositories.rbac_repo import RBACRepository
+
+        rbac = get_rbac_service()
+        role_names = {role.name for role in RBACRepository.get_user_roles(db, user.id)}
         roles = frozenset(role_names)
-        permissions = frozenset(
-            rbac.get_role_permissions(r) for r in role_names
-        ) if role_names else frozenset()
+        permissions = frozenset(RBACRepository.get_user_permission_strings(db, user.id))
+        if not role_names and rbac.rbac_enabled:
+            logger.warning("User %s has no RBAC role assignment", user.id)
     except Exception:
         # RBAC not configured → at least carry the role from User.role
         roles = frozenset({str(user.role.value) if hasattr(user.role, "value") else str(user.role)})

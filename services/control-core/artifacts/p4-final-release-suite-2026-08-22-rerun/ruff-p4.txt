@@ -1,0 +1,365 @@
+F401 [*] `ctypes` imported but unused
+  --> packages\platform\windows\sidecar_host.py:11:8
+   |
+ 9 | import argparse
+10 | import asyncio
+11 | import ctypes
+   |        ^^^^^^
+12 | import hashlib
+13 | import hmac
+   |
+help: Remove unused import: `ctypes`
+   |
+10 | import asyncio
+   - import ctypes
+11 | import hashlib
+   |
+
+UP035 [*] Import from `collections.abc` instead: `Mapping`
+  --> packages\platform\windows\sidecar_host.py:29:1
+   |
+27 | from dataclasses import dataclass
+28 | from pathlib import Path
+29 | from typing import Any, Mapping
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+30 |
+31 | LOGGER = logging.getLogger("zcode.sidecar")
+   |
+help: Import from `collections.abc`
+   |
+28 | from pathlib import Path
+   - from typing import Any, Mapping
+29 + from typing import Any
+30 + from collections.abc import Mapping
+31 |
+   |
+
+N818 Exception name `ProtocolFailure` should be named with an Error suffix
+  --> packages\platform\windows\sidecar_host.py:47:7
+   |
+47 | class ProtocolFailure(Exception):
+   |       ^^^^^^^^^^^^^^^
+48 |     """A protocol-level failure that can be returned to the peer."""
+   |
+
+E501 Line too long (102 > 100)
+  --> packages\platform\windows\sidecar_host.py:56:101
+   |
+56 | def _error(message: Mapping[str, Any] | None, code: str, detail: str | None = None) -> dict[str, Any]:
+   |                                                                                                     ^^
+57 |     error: dict[str, Any] = {"code": code}
+58 |     if detail:
+   |
+
+E501 Line too long (102 > 100)
+   --> packages\platform\windows\sidecar_host.py:126:101
+    |
+124 |         self.http_port = int(http_port)
+125 |         self.http_token = http_token
+126 |         self.run_nonce = run_nonce if run_nonce is not None else os.environ.get("ZCODE_RUN_NONCE", "")
+    |                                                                                                     ^^
+127 |         self.sidecar_pid = sidecar_pid or os.getpid()
+128 |         self.started_at = time.monotonic()
+    |
+
+E501 Line too long (101 > 100)
+   --> packages\platform\windows\sidecar_host.py:201:101
+    |
+199 |         path = params.get("path")
+200 |         headers = params.get("headers") or {}
+201 |         if not isinstance(method, str) or not method or not method.isascii() or not method.isalpha():
+    |                                                                                                     ^
+202 |             return _error(message, "E_BAD_REQUEST")
+203 |         method = method.upper()
+    |
+
+E501 Line too long (101 > 100)
+   --> packages\platform\windows\sidecar_host.py:220:101
+    |
+218 |             for key, value in headers.items()
+219 |             if key.lower()
+220 |             not in {"host", "connection", "content-length", "transfer-encoding", HTTP_HEADER.lower()}
+    |                                                                                                     ^
+221 |         }
+222 |         request_id = params.get("request_id")
+    |
+
+E501 Line too long (101 > 100)
+   --> packages\platform\windows\sidecar_host.py:237:101
+    |
+235 |         else:
+236 |             try:
+237 |                 payload = json.dumps(body, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    |                                                                                                     ^
+238 |             except (TypeError, ValueError):
+239 |                 return _error(message, "E_BAD_REQUEST")
+    |
+
+E501 Line too long (103 > 100)
+   --> packages\platform\windows\sidecar_host.py:246:101
+    |
+244 |         url = f"http://{HTTP_HOST}:{self.http_port}{path}"
+245 |         try:
+246 |             request = urllib.request.Request(url, data=payload, headers=request_headers, method=method)
+    |                                                                                                     ^^^
+247 |             opener = self._proxy_opener or urllib.request.urlopen
+248 |             response = opener(request, timeout=DEFAULT_HTTP_TIMEOUT)
+    |
+
+E501 Line too long (106 > 100)
+   --> packages\platform\windows\sidecar_host.py:283:101
+    |
+281 |             return
+282 |         headers = dict(scope.get("headers") or [])
+283 |         presented = headers.get(HTTP_HEADER.lower().encode("ascii"), b"").decode("utf-8", errors="ignore")
+    |                                                                                                     ^^^^^^
+284 |         if not hmac.compare_digest(presented, self.token):
+285 |             if scope.get("type") == "websocket":
+    |
+
+E501 Line too long (118 > 100)
+   --> packages\platform\windows\sidecar_host.py:293:101
+    |
+291 |                     "type": "http.response.start",
+292 |                     "status": 401,
+293 |                     "headers": [(b"content-type", b"application/json"), (b"content-length", str(len(body)).encode())],
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^
+294 |                 }
+295 |             )
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> packages\platform\windows\sidecar_host.py:681:5
+    |
+679 |       if _bootstrap_sqlite_if_current(resource_root):
+680 |           return
+681 | /     from alembic import command
+682 | |     from alembic.config import Config
+    | |_____________________________________^
+683 |
+684 |       # Alembic's ``Config(path)`` reads ini files through the Windows locale
+    |
+help: Organize imports
+    |
+680 |         return
+    -     from alembic import command
+681 |     from alembic.config import Config
+682 |
+683 +     from alembic import command
+684 +
+685 |     # Alembic's ``Config(path)`` reads ini files through the Windows locale
+    |
+
+E501 Line too long (103 > 100)
+   --> packages\platform\windows\sidecar_host.py:771:101
+    |
+769 |         import win32security
+770 |
+771 |         token = win32security.OpenProcessToken(win32api.GetCurrentProcess(), win32security.TOKEN_QUERY)
+    |                                                                                                     ^^^
+772 |         try:
+773 |             sid, _ = win32security.GetTokenInformation(token, win32security.TokenUser)
+    |
+
+E501 Line too long (104 > 100)
+   --> packages\platform\windows\sidecar_host.py:968:101
+    |
+966 |         if not pipe.listening_event.wait(timeout=5):
+967 |             if pipe_failure:
+968 |                 raise RuntimeError("control-core Named Pipe initialization failed") from pipe_failure[0]
+    |                                                                                                     ^^^^
+969 |             raise RuntimeError("control-core Named Pipe did not become ready")
+970 |         LOGGER.info("control-core sidecar transport ready: pipe=%s", pipe.pipe_path)
+    |
+
+E501 Line too long (107 > 100)
+   --> packages\platform\windows\sidecar_host.py:978:101
+    |
+976 |         # preserving fail-closed behavior for business traffic.
+977 |         if pipe_failure:
+978 |             raise RuntimeError("control-core Named Pipe stopped before API readiness") from pipe_failure[0]
+    |                                                                                                     ^^^^^^^
+979 |         LOGGER.info("control-core sidecar ready: pipe=%s", pipe.pipe_path)
+980 |         pipe_thread.join()
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts\nuitka-build\control_core_sidecar.py:20:1
+   |
+18 |     sys.path.insert(0, str(root))
+19 |
+20 | from packages.platform.windows.sidecar_host import main  # noqa: E402
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Organize imports
+   |
+21 |
+   -
+22 | if __name__ == "__main__":
+   |
+
+E402 Module level import not at top of file
+  --> scripts\nuitka-build\smoke_client.py:25:1
+   |
+23 |     sys.path.insert(0, str(ROOT))
+24 |
+25 | from packages.platform.windows.sidecar_host import MAX_FRAME_SIZE, decode_frame, encode_frame
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Move module level imports to top of file
+
+E501 Line too long (110 > 100)
+   --> scripts\nuitka-build\smoke_client.py:170:101
+    |
+168 |         "--api-smoke",
+169 |         action="store_true",
+170 |         help="exercise registration, login, task creation, listing, and approvals through the IPC HTTP proxy",
+    |                                                                                                     ^^^^^^^^^^
+171 |     )
+172 |     args = parser.parse_args()
+    |
+
+E501 Line too long (108 > 100)
+   --> scripts\nuitka-build\smoke_client.py:233:101
+    |
+231 |                     "POST",
+232 |                     "/api/v1/tasks",
+233 |                     body={"goal": "Read the packaged P4 smoke workspace metadata", "edition": "enterprise"},
+    |                                                                                                     ^^^^^^^^
+234 |                     token=token,
+235 |                 )
+    |
+
+E501 Line too long (123 > 100)
+   --> scripts\nuitka-build\smoke_client.py:243:101
+    |
+241 |                 status, listed = _http_request(stream, next_id, "GET", "/api/v1/tasks", token=token)
+242 |                 next_id += 1
+243 |                 if status != 200 or not any(item.get("id") == task_id for item in listed.get("data", {}).get("items", [])):
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+244 |                     raise RuntimeError(f"task listing failed: HTTP {status} {listed}")
+    |
+
+E501 Line too long (107 > 100)
+   --> scripts\nuitka-build\smoke_client.py:246:101
+    |
+244 |                     raise RuntimeError(f"task listing failed: HTTP {status} {listed}")
+245 |
+246 |                 status, approvals = _http_request(stream, next_id, "GET", "/api/v1/approvals", token=token)
+    |                                                                                                     ^^^^^^^
+247 |                 next_id += 1
+248 |                 if status != 200 or not isinstance(approvals.get("data"), list):
+    |
+
+E501 Line too long (104 > 100)
+   --> scripts\nuitka-build\smoke_client.py:260:101
+    |
+258 |                 }
+259 |
+260 |             shutdown = _request(stream, {"v": 1, "id": next_id, "method": "ipc.shutdown", "params": {}})
+    |                                                                                                     ^^^^
+261 |         result = {"hello": hello, "ping": ping, "health": health, "shutdown": shutdown}
+262 |         if api_smoke is not None:
+    |
+
+E501 Line too long (112 > 100)
+  --> tests\integration\test_sidecar_pipe_windows.py:22:101
+   |
+20 | from packages.platform.windows.sidecar_host import MAX_FRAME_SIZE, decode_frame, encode_frame
+21 |
+22 | pytestmark = [pytest.mark.integration, pytest.mark.skipif(sys.platform != "win32", reason="Windows Named Pipe")]
+   |                                                                                                     ^^^^^^^^^^^^
+23 |
+24 | CONTROL_CORE = Path(__file__).resolve().parents[2]
+   |
+
+UP037 [*] Remove quotes from type annotation
+  --> tests\integration\test_sidecar_pipe_windows.py:34:64
+   |
+33 |     @classmethod
+34 |     def connect(cls, pipe_path: str, timeout: float = 20.0) -> "PipeClient":
+   |                                                                ^^^^^^^^^^^^
+35 |         import pywintypes
+36 |         import win32con
+   |
+help: Remove quotes
+   |
+33 |     @classmethod
+   -     def connect(cls, pipe_path: str, timeout: float = 20.0) -> "PipeClient":
+34 +     def connect(cls, pipe_path: str, timeout: float = 20.0) -> PipeClient:
+35 |         import pywintypes
+   |
+
+E501 Line too long (108 > 100)
+   --> tests\integration\test_sidecar_pipe_windows.py:128:101
+    |
+127 |     def log_text(self) -> str:
+128 |         return self.log_path.read_text(encoding="utf-8", errors="replace") if self.log_path.exists() else ""
+    |                                                                                                     ^^^^^^^^
+
+E501 Line too long (101 > 100)
+   --> tests\integration\test_sidecar_pipe_windows.py:166:101
+    |
+164 |                     try:
+165 |                         if running.hello(client).get("ok"):
+166 |                             client.request({"v": 1, "id": 2, "method": "ipc.shutdown", "params": {}})
+    |                                                                                                     ^
+167 |                     finally:
+168 |                         client.close()
+    |
+
+E501 Line too long (101 > 100)
+   --> tests\integration\test_sidecar_pipe_windows.py:264:101
+    |
+264 | def test_oversized_frame_returns_contract_error_and_server_recovers(sidecar: RunningSidecar) -> None:
+    |                                                                                                     ^
+265 |     client = sidecar.connect()
+266 |     try:
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests\unit\test_ipc_contract.py:3:1
+   |
+ 1 |   """Unit coverage for the formal Windows IPC v1 contract."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | import io
+ 6 | | import struct
+ 7 | | import urllib.error
+ 8 | | from email.message import Message
+ 9 | | from typing import Any
+10 | |
+11 | | import pytest
+12 | | from fastapi import FastAPI
+13 | | from fastapi.testclient import TestClient
+14 | |
+15 | | from packages.platform.windows.sidecar_host import (
+16 | |     HTTP_HEADER,
+17 | |     IpcServer,
+18 | |     IpcSession,
+19 | |     MAX_FRAME_SIZE,
+20 | |     ProtocolFailure,
+21 | |     SidecarTokenGate,
+22 | |     decode_frame,
+23 | |     encode_frame,
+24 | | )
+   | |_^
+help: Organize imports
+   |
+16 |     HTTP_HEADER,
+17 +     MAX_FRAME_SIZE,
+18 |     IpcServer,
+19 |     IpcSession,
+   -     MAX_FRAME_SIZE,
+20 |     ProtocolFailure,
+   |
+
+E501 Line too long (104 > 100)
+   --> tests\unit\test_ipc_contract.py:217:101
+    |
+215 |     with TestClient(SidecarTokenGate(app, "internal-token")) as client:
+216 |         assert client.get("/health").status_code == 401
+217 |         assert client.get("/health", headers={HTTP_HEADER: "internal-token"}).json() == {"status": "ok"}
+    |                                                                                                     ^^^^
+
+Found 29 errors.
+[*] 6 fixable with the `--fix` option.

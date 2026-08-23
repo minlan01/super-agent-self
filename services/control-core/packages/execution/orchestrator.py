@@ -216,12 +216,146 @@ class ExecutionOrchestrator:
             db = SessionLocal()
 
         try:
-            return self._execute_step_inner_async(
+            return await self._execute_step_inner_async(
                 db=db, task_id=task_id, step_id=step_id,
                 tool_name=tool_name, args=args, edition=edition,
                 tenant_id=tenant_id,
                 requester_principal_id=requester_principal_id,
                 workspace_root=workspace_root,
+            )
+        finally:
+            if owns_session and db is not None:
+                try:
+                    db.commit()
+                except Exception:
+                    db.rollback()
+                finally:
+                    db.close()
+
+    async def resume_after_approval_async(
+        self,
+        *,
+        approval_request_id: str,
+        task_id: str,
+        step_id: str,
+        tool_name: str,
+        args: dict[str, Any],
+        edition: str = "enterprise",
+        tenant_id: str = "default",
+        requester_principal_id: str = "system",
+        workspace_root: str = "./workspace",
+        db: Session | None = None,
+    ) -> StepExecutionResult:
+        """Async-native approval resume for FastAPI/ExecutorService paths.
+
+        The synchronous ``resume_after_approval`` remains for CLI/tests.  This
+        method deliberately performs the same binding checks without calling
+        ``asyncio.run`` from an active event loop.
+        """
+        owns_session = db is None
+        if owns_session:
+            db = SessionLocal()
+
+        try:
+            svc = self._approval_factory(db)
+            req = svc.get_request(approval_request_id)
+            if req is None:
+                return StepExecutionResult(
+                    step_id=step_id, tool_name=tool_name,
+                    status="rejected", error="approval request not found",
+                )
+            if req.tenant_id != tenant_id or req.step_run_id != step_id:
+                return StepExecutionResult(
+                    step_id=step_id, tool_name=tool_name,
+                    status="rejected", error="approval request binding mismatch",
+                )
+            if req.tool_name != tool_name or req.status != ApprovalRequestStatus.APPROVED:
+                return StepExecutionResult(
+                    step_id=step_id, tool_name=tool_name,
+                    status="rejected",
+                    error=f"approval status is {req.status.value}, or tool binding changed",
+                )
+
+            args_hash = self._compute_args_hash(args)
+            if req.normalized_args_hash != args_hash:
+                return StepExecutionResult(
+                    step_id=step_id, tool_name=tool_name,
+                    status="rejected", error="approval arguments no longer match",
+                )
+
+            # Re-check policy after approval.  A policy change invalidates the
+            # old approval instead of silently granting the changed request.
+            policy_result = self.policy_engine.check(
+                task_id=task_id, step_id=step_id,
+                tool_name=tool_name, args=args, edition=edition,
+            )
+            if not policy_result.allowed and not policy_result.requires_approval:
+                return StepExecutionResult(
+                    step_id=step_id, tool_name=tool_name,
+                    status="rejected", error=policy_result.reason,
+                )
+
+            gi = self._grant_factory(db)
+            lm = self._lease_factory(db)
+            gw = self._gw_factory(db)
+            security_digest = self._compute_security_digest(args, req.resolution_id or "")
+            issued = gi.issue(
+                tenant_id=tenant_id,
+                step_run_id=step_id,
+                tool_name=tool_name,
+                bound_args_hash=args_hash,
+                risk_level=req.risk_level,
+                resource_scope={"workspace_id": tenant_id},
+                security_context_digest=security_digest,
+                approval_resolution_id=req.resolution_id,
+            )
+            lease = lm.acquire(
+                tenant_id=tenant_id,
+                worker_id=f"executor-{task_id}",
+                step_run_id=step_id,
+            )
+
+            from packages.executor.tools.base import ExecutionContext
+            ctx = ExecutionContext(
+                task_id=task_id, step_id=step_id,
+                principal_id=requester_principal_id,
+                workspace_id=tenant_id,
+                tenant_id=tenant_id,
+                workspace_root=workspace_root,
+                edition=edition,
+            )
+            effect_class = (
+                EffectClassDB.READ_ONLY
+                if req.risk_level == "low"
+                else EffectClassDB.NON_RETRYABLE
+            )
+            result = await gw.invoke(
+                handle=issued.handle,
+                lease_id=lease.lease_id,
+                tool_name=tool_name,
+                args=args,
+                context=ctx,
+                effect_class=effect_class,
+                tenant_id=tenant_id,
+                security_context_digest=security_digest,
+            )
+            if result.success:
+                return StepExecutionResult(
+                    step_id=step_id, tool_name=tool_name,
+                    status="completed", effect_id=result.effect_id,
+                    output=result.tool_result.output if result.tool_result else None,
+                    artifacts=result.tool_result.artifacts if result.tool_result else [],
+                    receipt_status=result.receipt_status,
+                    effect_class=effect_class,
+                    success=True,
+                )
+            return StepExecutionResult(
+                step_id=step_id, tool_name=tool_name,
+                status="failed", effect_id=result.effect_id,
+                error=result.error,
+                artifacts=result.tool_result.artifacts if result.tool_result else [],
+                receipt_status=result.receipt_status,
+                effect_class=effect_class,
             )
         finally:
             if owns_session and db is not None:
@@ -500,7 +634,7 @@ class ExecutionOrchestrator:
                 )
 
             # Re-check policy (content may have changed).
-            policy_result = self.policy_engine.check(
+            self.policy_engine.check(
                 task_id=task_id, step_id=step_id,
                 tool_name=tool_name, args=args, edition=edition,
             )

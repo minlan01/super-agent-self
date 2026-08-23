@@ -1,0 +1,10 @@
+{
+    "python":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\.venv-win\\Scripts\\python.exe",
+    "desktop_exe":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\tauri-spike.exe",
+    "ipc_contract_unit":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-22-rerun\\ipc-contract-unit.txt",
+    "ipc_pipe_integration":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-22-rerun\\ipc-pipe-integration.txt",
+    "powershell_ipc":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-22-rerun\\ipc-powershell.json",
+    "desktop_startup":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-22-rerun\\desktop-startup.json",
+    "desktop_lifecycle":  "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-22-rerun\\desktop-lifecycle.json",
+    "passed":  true
+}

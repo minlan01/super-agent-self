@@ -116,6 +116,27 @@ class TestMockProvider:
         assert data["steps"][0]["tool_name"] == "file.read"
 
     @pytest.mark.asyncio
+    async def test_generate_json_delete_goal_returns_approval_plan(self):
+        provider = self._make_provider()
+        resp = await provider.generate_json(
+            [LLMMessage(role="user", content="file.delete approval smoke")]
+        )
+        data = json.loads(resp.content)
+        assert [step["tool_name"] for step in data["steps"]] == [
+            "file.write_markdown",
+            "file.delete",
+        ]
+
+    @pytest.mark.asyncio
+    async def test_generate_json_read_goal_returns_read_plan(self):
+        provider = self._make_provider()
+        resp = await provider.generate_json(
+            [LLMMessage(role="user", content="file.read smoke")]
+        )
+        data = json.loads(resp.content)
+        assert [step["tool_name"] for step in data["steps"]][-1] == "file.read"
+
+    @pytest.mark.asyncio
     async def test_generate_json_keyword_no_match_falls_back_to_default(self):
         provider = self._make_provider(
             mock_config={"planning_responses": {"xyz": '{"steps": []}'}}

@@ -1,0 +1,5 @@
+2026-08-22T18:28:23.072602Z [info     ] Starting Controlled Agent Platform v3.11.0 (edition=enterprise) [apps.api_server.main]
+2026-08-22T18:28:23.090116Z [info     ] Database URL: sqlite           [apps.api_server.main]
+2026-08-22T18:28:23.180621Z [info     ] RBAC config loaded: enabled=%s, %d public routes, %d authenticated routes [packages.auth.rbac] positional_args=(True, 7, 4)
+2026-08-22T18:28:23.910155Z [info     ] Seeded %d default roles        [packages.auth.rbac] positional_args=(4,)
+2026-08-22T18:28:23.958952Z [info     ] control-core desktop API ready [zcode.sidecar]

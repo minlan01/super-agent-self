@@ -1,6 +1,6 @@
 # Emergency Disable Runbook
 
-> Updated: 2026-08-16
+> Updated: 2026-08-20
 > Scope: Windows desktop and local control-core
 > Current status: manual break-glass procedure; one-command emergency stop is `BLOCKED`
 
@@ -45,11 +45,13 @@ foreach ($processId in $serverPids) {
 Verify containment:
 
 ```powershell
-Get-NetTCPConnection -LocalPort 9876,8000 -State Listen -ErrorAction SilentlyContinue
+Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue |
+  Where-Object { $_.OwningProcess -in @($targets.ProcessId) }
 Get-Process tauri-spike,sidecar -ErrorAction SilentlyContinue
 ```
 
-Expected result: no listener and no matching desktop/sidecar process.
+Expected result: no listener owned by the recorded desktop/sidecar process and
+no matching desktop/sidecar process.
 
 ## 3. Disable High-Risk Tools Before Restart
 
@@ -105,7 +107,7 @@ Do not restart repeatedly before capturing state.
 - All unconsumed grants from the affected database are revoked.
 - High-risk tools stay disabled until reviewed.
 - Evidence bundle and incident timeline are preserved.
-- A fixed, signed build passes health, read-only and approval-gated smoke tests.
+- A fixed, signed build passes IPC readiness, read-only and approval-gated smoke tests.
 
 ## 8. Required Product Work
 

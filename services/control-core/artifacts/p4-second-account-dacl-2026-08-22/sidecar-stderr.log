@@ -1,0 +1,6 @@
+2026-08-23 02:28:15,284 INFO zcode.sidecar Installed verified SQLite bootstrap at C:\Users\minlan01\AppData\Local\Temp\zcode-dacl-d40ccb62\agent_platform.db
+2026-08-23 02:28:15,290 INFO zcode.sidecar SQLite schema already at packaged revision p4_task_step_approval
+2026-08-23 02:28:16,994 INFO zcode.sidecar control-core HTTP server ready on 127.0.0.1:51951
+2026-08-23 02:28:17,663 INFO zcode.sidecar Named Pipe DACL restricted to current SID S-1-5-21-1129836404-732126736-1881850612-1001
+2026-08-23 02:28:17,714 INFO zcode.sidecar control-core sidecar transport ready: pipe=\\.\pipe\zcode-control-core-v1-second-account-d40ccb62
+2026-08-23 02:28:17,725 INFO zcode.sidecar control-core sidecar ready: pipe=\\.\pipe\zcode-control-core-v1-second-account-d40ccb62

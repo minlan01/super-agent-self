@@ -54,10 +54,21 @@ Thumbs.db
 !.agents/skills/
 !.agents/agents/
 
-# P4 build artifacts — never commit compiled binaries
-services/control-core/scripts/nuitka-build/
+# P4 build artifacts — never commit compiled binaries. Keep reproducible build
+# sources and smoke tooling visible to Git.
+services/control-core/scripts/nuitka-build/*
+!services/control-core/scripts/nuitka-build/build.ps1
+!services/control-core/scripts/nuitka-build/requirements-build.lock
+!services/control-core/scripts/nuitka-build/sidecar.py
+!services/control-core/scripts/nuitka-build/control_core_sidecar.py
+!services/control-core/scripts/nuitka-build/create_bootstrap_db.py
+!services/control-core/scripts/nuitka-build/smoke_client.py
 apps/desktop/src-tauri/target/
 apps/desktop/src-tauri/.cargo/
 *.exe
 *.dll
 !**/testfixtures/**
+
+# Nuitka sidecar build output (regenerate via scripts/nuitka-build/build.ps1)
+apps/desktop/src-tauri/resources/sidecar/
+nuitka-crash-report.xml

@@ -1,6 +1,6 @@
 # Update and Rollback Runbook
 
-> Updated: 2026-08-16
+> Updated: 2026-08-20
 > Scope: Windows NSIS package
 > Current status: manual signed-package procedure only; automatic updater is `BLOCKED`
 
@@ -53,17 +53,18 @@ if (-not $signature.TimeStamperCertificate) { throw 'trusted timestamp is missin
 
 ## 4. Manual Update
 
-1. Stop the desktop application and verify port `9876` is released.
+1. Stop the desktop application and verify the sidecar process and its random
+   loopback listener are released.
 2. Run the approved NSIS installer silently or interactively.
 3. Start the application.
-4. Verify desktop sidecar health and, after real control-core integration, `/api/v1/health/ready`.
+4. Verify desktop IPC readiness and run the packaged control-core API smoke.
 5. Run one read-only task and one approval-gated task before expanding rollout.
 
 ```powershell
 $process = Start-Process -FilePath $installer -ArgumentList '/S' -Wait -PassThru
 if ($process.ExitCode -ne 0) { throw "installer failed: $($process.ExitCode)" }
 
-Invoke-RestMethod 'http://127.0.0.1:9876/health' -TimeoutSec 10
+Get-Process -Name tauri-spike,sidecar -ErrorAction SilentlyContinue
 ```
 
 ## 5. Roll Back to N-1

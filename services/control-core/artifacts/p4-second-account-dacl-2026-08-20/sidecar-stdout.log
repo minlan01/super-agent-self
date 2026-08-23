@@ -1,0 +1,8 @@
+2026-08-20T05:33:16.935318Z [info     ] Starting Controlled Agent Platform v3.11.0 (edition=enterprise) [apps.api_server.main]
+2026-08-20T05:33:16.938324Z [info     ] Database URL: sqlite           [apps.api_server.main]
+2026-08-20T05:33:16.987519Z [info     ] Builtin templates seeded       [apps.api_server.main]
+2026-08-20T05:33:16.993512Z [info     ] RBAC config loaded: enabled=%s, %d public routes, %d authenticated routes [packages.auth.rbac] positional_args=(True, 7, 4)
+2026-08-20T05:33:17.064029Z [info     ] Seeded %d default roles        [packages.auth.rbac] positional_args=(4,)
+2026-08-20T05:33:17.077593Z [info     ] control-core HTTP server ready on 127.0.0.1:49709 [zcode.sidecar]
+2026-08-20T05:33:17.078193Z [info     ] control-core sidecar ready: pipe=\\.\pipe\zcode-control-core-v1-second-account-a643488f [zcode.sidecar]
+2026-08-20T05:33:17.093142Z [info     ] Named Pipe DACL restricted to current SID S-1-5-21-1129836404-732126736-1881850612-1001 [zcode.sidecar]

@@ -22,7 +22,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
-from apps.api_server.dependencies import get_current_actor_scope, get_db
+from apps.api_server.dependencies import get_current_actor_scope, get_db, get_orchestrator
 from packages.approval.approval_service import (
     ApprovalService,
     DuplicateVoteError,
@@ -100,6 +100,7 @@ def list_pending_approvals(
     else:
         # For non-pending, do a simple scan (production would add pagination).
         from sqlalchemy import select
+
         from packages.db.models import ApprovalRequestModel
 
         items = list(db.scalars(
@@ -174,7 +175,7 @@ def cast_vote(
 
 
 @router.post("/{request_id}/resolve", response_model=ResolutionResponse)
-def resolve_approval(
+async def resolve_approval(
     request_id: str,
     db: Session = Depends(get_db),
     scope: ActorScope = Depends(get_current_actor_scope),
@@ -197,6 +198,13 @@ def resolve_approval(
 
     result = svc.resolve(request_id)
     db.commit()
+
+    # Only task-bound gateway approvals trigger execution resumption.  The
+    # legacy/API fixture approvals may intentionally have no TaskStep row.
+    if result.status in (ApprovalRequestStatus.APPROVED, ApprovalRequestStatus.REJECTED):
+        from packages.db.models import TaskStep
+        if db.get(TaskStep, req.step_run_id) is not None:
+            await get_orchestrator().resume_after_approval(request_id)
 
     return ResolutionResponse(
         request_id=result.request_id,

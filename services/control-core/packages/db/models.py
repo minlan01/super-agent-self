@@ -61,6 +61,7 @@ class StepStatus(str, enum.Enum):
     PENDING = "pending"
     POLICY_CHECK = "policy_check"
     APPROVED = "approved"
+    AWAITING_APPROVAL = "awaiting_approval"
     REJECTED = "rejected"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -215,6 +216,7 @@ class TaskStep(_TimestampMixin, Base):
     risk_level: Mapped[RiskLevel] = mapped_column(Enum(RiskLevel), default=RiskLevel.LOW)
     requires_approval: Mapped[bool] = mapped_column(Boolean, default=False)
     status: Mapped[StepStatus] = mapped_column(Enum(StepStatus), default=StepStatus.PENDING)
+    approval_request_id: Mapped[str | None] = mapped_column(String(36), nullable=True, index=True)
     capability_token_hash: Mapped[str | None] = mapped_column(String(128), nullable=True)
     result: Mapped[str | None] = mapped_column(Text, nullable=True)
     error: Mapped[str | None] = mapped_column(Text, nullable=True)

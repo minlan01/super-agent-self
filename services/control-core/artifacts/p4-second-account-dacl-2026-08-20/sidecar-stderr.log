@@ -1,0 +1,26 @@
+2026-08-20 13:33:15,312 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.schemas
+2026-08-20 13:33:15,332 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.tables
+2026-08-20 13:33:15,332 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.types
+2026-08-20 13:33:15,332 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.constraints
+2026-08-20 13:33:15,332 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.defaults
+2026-08-20 13:33:15,332 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.comments
+2026-08-20 13:33:15,332 INFO alembic.runtime.plugins setup plugin alembic.autogenerate.checkconstraint_byname
+2026-08-20 13:33:15,532 INFO alembic.runtime.migration Context impl SQLiteImpl.
+2026-08-20 13:33:15,536 INFO alembic.runtime.migration Will assume non-transactional DDL.
+2026-08-20 13:33:15,563 INFO alembic.runtime.migration Running upgrade  -> 3aa7020a9881, initial_schema_10_tables
+2026-08-20 13:33:15,635 INFO alembic.runtime.migration Running upgrade 3aa7020a9881 -> 84cab4f1b67a, add_users_table
+2026-08-20 13:33:15,650 INFO alembic.runtime.migration Running upgrade 84cab4f1b67a -> a1b2c3d4e5f6, add_task_templates_and_dependencies
+2026-08-20 13:33:15,665 INFO alembic.runtime.migration Running upgrade a1b2c3d4e5f6 -> b2c3d4e5f6a7, add_notifications_table
+2026-08-20 13:33:15,679 INFO alembic.runtime.migration Running upgrade b2c3d4e5f6a7 -> c3d4e5f6a7b8, add messaging and marketplace tables
+2026-08-20 13:33:15,728 INFO alembic.runtime.migration Running upgrade c3d4e5f6a7b8 -> d4e5f6a7b8c9, add rbac tables
+2026-08-20 13:33:15,762 INFO alembic.runtime.migration Running upgrade d4e5f6a7b8c9 -> e5f6a7b8c9d0, add llm_cost_records and skill_run fields
+2026-08-20 13:33:15,785 INFO alembic.runtime.migration Running upgrade e5f6a7b8c9d0 -> f1a2b3c4d5e6, add missing indexes and user updated_at
+2026-08-20 13:33:15,809 INFO alembic.runtime.migration Running upgrade f1a2b3c4d5e6 -> g2h3i4j5k6l7, add remaining missing indexes
+2026-08-20 13:33:15,830 INFO alembic.runtime.migration Running upgrade g2h3i4j5k6l7 -> h3i4j5k6l7m8, add skill benchmark fields to skill_runs
+2026-08-20 13:33:15,832 INFO alembic.runtime.migration Running upgrade h3i4j5k6l7m8 -> i5j6k7l8m9n0, add production-critical indexes
+2026-08-20 13:33:15,847 INFO alembic.runtime.migration Running upgrade i5j6k7l8m9n0 -> j6k7l8m9n0o1, Add task user_id+status composite index
+2026-08-20 13:33:15,858 INFO alembic.runtime.migration Running upgrade j6k7l8m9n0o1 -> k7l8m9n0o1p2, Add unique constraint to users.sso_id
+2026-08-20 13:33:15,863 INFO alembic.runtime.migration Running upgrade k7l8m9n0o1p2 -> m1n2o3p4q5r6, Add audit/approval/dependency/messaging indexes uncovered by round-5 audit.
+2026-08-20 13:33:15,882 INFO alembic.runtime.migration Running upgrade m1n2o3p4q5r6 -> 50bdde4cc851, p1_2 add tenant_id to tasks task_steps users
+2026-08-20 13:33:15,913 INFO alembic.runtime.migration Running upgrade 50bdde4cc851 -> p2_exec_contract, P2 add execution contract tables
+2026-08-20 13:33:16,002 INFO alembic.runtime.migration Running upgrade p2_exec_contract -> p2_approval, P2.6 add approval_requests + approval_votes

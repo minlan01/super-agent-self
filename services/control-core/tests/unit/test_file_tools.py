@@ -6,6 +6,7 @@ import pytest
 
 from packages.executor.tools.base import ExecutionContext
 from packages.executor.tools.file_tools import (
+    FileDelete,
     FileList,
     FileRead,
     FileWriteDocx,
@@ -155,6 +156,41 @@ class TestFileRead:
         ctx = _make_context(str(tmp_path))
         tool = FileRead()
         result = await tool.execute({"path": "../../../etc/passwd"}, ctx)
+        assert result.success is False
+        assert "escapes workspace" in result.error
+
+
+# ---------------------------------------------------------------------------
+# FileDelete tests
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.unit
+class TestFileDelete:
+    @pytest.mark.asyncio
+    async def test_delete_file(self, tmp_path):
+        target = tmp_path / "delete-me.txt"
+        target.write_text("temporary", encoding="utf-8")
+        result = await FileDelete().execute({"path": "delete-me.txt"}, _make_context(str(tmp_path)))
+        assert result.success is True
+        assert not target.exists()
+
+    @pytest.mark.asyncio
+    async def test_missing_file(self, tmp_path):
+        result = await FileDelete().execute({"path": "missing.txt"}, _make_context(str(tmp_path)))
+        assert result.success is False
+        assert "not found" in result.error
+
+    @pytest.mark.asyncio
+    async def test_directory_is_not_deleted(self, tmp_path):
+        (tmp_path / "folder").mkdir()
+        result = await FileDelete().execute({"path": "folder"}, _make_context(str(tmp_path)))
+        assert result.success is False
+        assert "regular files" in result.error
+
+    @pytest.mark.asyncio
+    async def test_workspace_escape_rejected(self, tmp_path):
+        result = await FileDelete().execute({"path": "../../../etc/passwd"}, _make_context(str(tmp_path)))
         assert result.success is False
         assert "escapes workspace" in result.error
 

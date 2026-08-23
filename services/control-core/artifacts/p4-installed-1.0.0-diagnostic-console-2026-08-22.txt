@@ -1,0 +1,13 @@
+{
+    "installer_exit_code":  0,
+    "desktop":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-p4-diagnostic-9020fe7cae7a469bac3b065d7bc5d159\\tauri-spike.exe",
+    "parent_pid":  9124,
+    "parent_exited":  false,
+    "parent_exit_code":  null,
+    "data_dir":  "C:\\Users\\minlan01\\AppData\\Local\\Temp\\zcode-p4-diagnostic-9020fe7cae7a469bac3b065d7bc5d159\\diagnostic-data",
+    "log_exists":  true,
+    "log_tail":  {
+
+                 },
+    "install_root_absent":  false
+}

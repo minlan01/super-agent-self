@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-08-22T11:10:50.4251873+08:00",
+  "data_backup": "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\artifacts\\p4-final-release-suite-2026-08-22\\preexisting-localappdata-zcode",
+  "preserved_data_path": "C:\\Users\\minlan01\\AppData\\Local\\zcode-pre-p4-20260822-ed79faa3615a43178e55e72ffa737b7b",
+  "old_uninstall": {
+    "uninstaller": "C:\\Users\\minlan01\\AppData\\Local\\Programs\\ZcodeDesktopAgent-P4-release-e8b1c626c72b4d5dafc0cbcde5c4d60b\\uninstall.exe",
+    "install_root": "C:\\Users\\minlan01\\AppData\\Local\\Programs\\ZcodeDesktopAgent-P4-release-e8b1c626c72b4d5dafc0cbcde5c4d60b",
+    "exit_code": 0,
+    "elapsed_s": 1.672,
+    "registry_absent": true,
+    "install_root_absent": true
+  },
+  "passed": true
+}

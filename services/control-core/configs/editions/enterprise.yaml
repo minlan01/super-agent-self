@@ -11,6 +11,7 @@ tools:
     - file.write_docx
     - file.write_markdown
     - file.read
+    - file.delete
     - file.list
   disabled:
     - shell.run

@@ -3,19 +3,122 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri Sidecar Spike</title>
+    <meta name="color-scheme" content="light" />
+    <title>Zcode Desktop Agent</title>
     <script type="module" src="/src/main.ts" defer></script>
   </head>
   <body>
-    <main class="container">
-      <h1>Tauri + Python sidecar</h1>
-      <form class="row" id="greet-form">
-        <input id="greet-input" placeholder="Enter a name..." />
-        <button type="submit">Greet</button>
-      </form>
-      <p id="greet-msg"></p>
-      <button id="sidecar-check" type="button">Check sidecar health + echo</button>
-      <p id="sidecar-msg"></p>
-    </main>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">CONTROL CORE</p>
+          <h1>Zcode Desktop Agent</h1>
+        </div>
+        <div class="topbar-actions">
+          <span id="sidecar-state" class="status-pill status-unknown">Checking sidecar</span>
+          <button id="refresh-all" class="button button-secondary" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <main>
+        <section id="auth-panel" class="panel auth-panel">
+          <div>
+            <p class="eyebrow">LOCAL SESSION</p>
+            <h2>Sign in to control-core</h2>
+            <p class="muted">Business API requests are authenticated with your local account.</p>
+          </div>
+          <form id="auth-form" class="form-grid">
+            <label>
+              Username
+              <input id="username" name="username" autocomplete="username" required minlength="3" />
+            </label>
+            <label>
+              Password
+              <input id="password" name="password" type="password" autocomplete="current-password" required minlength="8" />
+            </label>
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">Sign in</button>
+              <button id="register" class="button button-secondary" type="button">Create account</button>
+            </div>
+          </form>
+        </section>
+
+        <section id="workspace-panel" class="workspace hidden">
+          <div class="workspace-heading">
+            <div>
+              <p class="eyebrow">OPERATIONS</p>
+              <h2>Task control</h2>
+            </div>
+            <div class="session-actions">
+              <span id="current-user" class="muted"></span>
+              <button id="logout" class="button button-secondary" type="button">Sign out</button>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">NEW REQUEST</p>
+                  <h3>Create task</h3>
+                </div>
+              </div>
+              <form id="task-form" class="form-grid">
+                <label>
+                  Goal
+                  <textarea id="task-goal" name="goal" rows="5" maxlength="5000" placeholder="Describe the work control-core should plan."></textarea>
+                </label>
+                <label>
+                  Edition
+                  <select id="task-edition" name="edition">
+                    <option value="enterprise">Enterprise</option>
+                    <option value="personal">Personal</option>
+                  </select>
+                </label>
+                <button class="button button-primary" type="submit">Create task</button>
+              </form>
+            </section>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">APPROVAL QUEUE</p>
+                  <h3>Pending approvals</h3>
+                </div>
+                <span id="approval-count" class="count-badge">0</span>
+              </div>
+              <div id="approvals" class="stack-list"></div>
+            </section>
+          </div>
+
+          <section class="panel tasks-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">TASK TIMELINE</p>
+                <h3>Recent tasks</h3>
+              </div>
+              <span id="task-count" class="count-badge">0</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Goal</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th aria-label="Actions"></th>
+                  </tr>
+                </thead>
+                <tbody id="tasks"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <footer>
+        <span id="message" role="status" aria-live="polite">Starting local control-core...</span>
+      </footer>
+    </div>
   </body>
 </html>

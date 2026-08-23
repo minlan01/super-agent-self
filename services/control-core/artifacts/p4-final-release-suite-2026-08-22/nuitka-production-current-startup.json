@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-08-22T12:17:26.8529284+08:00",
+  "mode": "nuitka-production-current-db",
+  "ready": true,
+  "seconds": 7.812,
+  "data_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-a95ab3d5789a47b592227f88132433c8\\data",
+  "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-current-c5df68fbec124f7aab895add9a3cb46b",
+  "sidecar_sha256": "2B36D065CB79CCEEA3BD909C9B2BACE387D6D25A0FCFE7E16006CDEE8BD2509B"
+}

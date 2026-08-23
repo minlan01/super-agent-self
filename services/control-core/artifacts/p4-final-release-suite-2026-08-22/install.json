@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-08-22T11:11:51.6761927+08:00",
+  "installer": "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\bundle\\nsis\\Zcode Desktop Agent_0.1.0_x64-setup.exe",
+  "installer_sha256": "D8FAB3DDF1017EB4B648BEB39E5CDE6B7735F43892C5BA1006CECA769240923A",
+  "exit_code": 0,
+  "elapsed_s": 28.019,
+  "install_root": "C:\\Users\\minlan01\\AppData\\Local\\Programs\\ZcodeDesktopAgent-P4-final-73e58f4369484a1dbcfe5b8962e4f626",
+  "registry_present": true,
+  "registry_install_location": "\"C:\\Users\\minlan01\\AppData\\Local\\Programs\\ZcodeDesktopAgent-P4-final-73e58f4369484a1dbcfe5b8962e4f626\"",
+  "desktop_present": true,
+  "sidecar_present": true,
+  "installed_files": 94,
+  "installed_sidecar_files": 92,
+  "desktop_sha256": "DAE716369FEB359FC750B73F2B60D1C4B86481D9F57BA31A83D06EB21F5AFDE9",
+  "sidecar_sha256": "12AD2AAA956A8EC28C9F9E3C64922E819A82A271E9596CCC195ED72D1559E304",
+  "sidecar_matches_resource": true,
+  "passed": true
+}

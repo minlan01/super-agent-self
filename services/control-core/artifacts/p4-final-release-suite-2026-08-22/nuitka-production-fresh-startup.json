@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-08-22T12:14:46.8049890+08:00",
+  "sidecar": "D:\\agent\\Agents\\super-agent-self\\services\\control-core\\scripts\\nuitka-build\\dist-final\\control_core_sidecar.dist\\sidecar.exe",
+  "sidecar_sha256": "2B36D065CB79CCEEA3BD909C9B2BACE387D6D25A0FCFE7E16006CDEE8BD2509B",
+  "runs": [
+    {
+      "run": 1,
+      "ready": true,
+      "seconds": 9.554,
+      "data_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-dc98a033ce52454b8da112f0a55ad966\\data",
+      "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-dc98a033ce52454b8da112f0a55ad966",
+      "exit_code": -1
+    },
+    {
+      "run": 2,
+      "ready": true,
+      "seconds": 9.576,
+      "data_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-25dfec01ab85474686ea02ddefb4be97\\data",
+      "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-25dfec01ab85474686ea02ddefb4be97",
+      "exit_code": -1
+    },
+    {
+      "run": 3,
+      "ready": true,
+      "seconds": 8.383,
+      "data_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-a95ab3d5789a47b592227f88132433c8\\data",
+      "log_dir": "C:\\Users\\minlan01\\AppData\\Local\\Temp\\p4-nuitka-fresh-a95ab3d5789a47b592227f88132433c8",
+      "exit_code": -1
+    }
+  ],
+  "max_s": 9.576,
+  "all_passed": false
+}

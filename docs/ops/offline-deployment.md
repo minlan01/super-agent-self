@@ -1,12 +1,12 @@
 # Offline Deployment Guide
 
-> Updated: 2026-08-16
+> Updated: 2026-08-20
 > Scope: Windows desktop package and optional local control-core
 > Current release status: `NO-GO` for production offline distribution
 
 ## 1. Current Constraints
 
-The current desktop bundle is an NSIS `.exe`, not MSI/MSIX. Its WebView2 mode is `downloadBootstrapper`, so a truly air-gapped target must already have a supported WebView2 Runtime. The packaged sidecar is still the P-1 health/echo spike rather than the real control-core service, and the local installer is not production-signed.
+The current desktop bundle is an NSIS `.exe`, not MSI/MSIX. Its WebView2 mode is `downloadBootstrapper`, so a truly air-gapped target must already have a supported WebView2 Runtime. The packaged sidecar is the real control-core service over IPC v1, and the local installer is not production-signed.
 
 Do not distribute the current `0.1.0` artifact as a production offline release.
 
@@ -127,24 +127,17 @@ try {
 
 ## 7. Acceptance Checks
 
-Desktop spike health:
-
-```powershell
-Invoke-RestMethod 'http://127.0.0.1:9876/health' -TimeoutSec 10
-```
-
-Real control-core readiness after it is integrated:
-
-```powershell
-Invoke-RestMethod 'http://127.0.0.1:8000/api/v1/health/ready' -TimeoutSec 10
-```
+Desktop readiness is verified through the Tauri sidecar status command and
+the IPC v1 handshake. The sidecar loopback HTTP port is random and its token
+is kept inside the Rust shell. Use the packaged API smoke client for an
+automated health/task/approval check; do not assume a fixed public port.
 
 Required offline acceptance evidence:
 
 - Install completes without network access.
 - WebView2 is present or installed from the approved offline package.
 - Desktop, sidecar and installer signatures are valid.
-- Health checks pass.
+- IPC readiness and packaged API smoke checks pass.
 - One read-only task and one approval-gated task pass.
 - Uninstall removes the app, registry entry, sidecar process and port listener.
 - N-1 reinstall and database restore are exercised.
@@ -162,13 +155,15 @@ $process = Start-Process -FilePath $uninstall -ArgumentList '/S' -Wait -PassThru
 if ($process.ExitCode -ne 0) { throw "uninstall failed: $($process.ExitCode)" }
 ```
 
-Verify the registry key, install directory, desktop/sidecar processes and ports `9876`/`8000` are absent.
+Verify the registry key, install directory, desktop/sidecar processes and any
+listeners owned by those processes are absent.
 
 ## 10. Production Gate
 
 Offline production deployment remains blocked until:
 
-- The real control-core replaces the spike sidecar.
+- The real control-core sidecar and IPC v1 pass the current-host evidence
+  suite; second-account, clean-OS and UI acceptance remain required.
 - Production signing and trusted timestamping cover all executable payloads and the installer.
 - WebView2 offline distribution is configured and tested.
 - Clean Windows 10 and Windows 11 offline VMs pass install, startup, task, rollback and uninstall checks.
