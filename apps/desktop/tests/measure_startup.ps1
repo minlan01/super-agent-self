@@ -2,7 +2,15 @@ param(
   [int]$Runs = 3,
   [string]$Exe,
   [string]$Python,
-  [string]$Sidecar
+  [string]$Sidecar,
+  # Diagnostic-only wait cap: how long we keep watching for the readiness
+  # signal before declaring the app failed to start at all.
+  [ValidateRange(5, 600)]
+  [int]$ReadyTimeoutSeconds = 60,
+  # Performance Gate: startup SLO in seconds. Ready times above this but
+  # within ReadyTimeoutSeconds are FAIL_PERFORMANCE (never PASS).
+  [ValidateRange(1, 600)]
+  [int]$StartupSloSeconds = 5
 )
 
 $ErrorActionPreference = 'Stop'
@@ -24,7 +32,7 @@ function Wait-Ready {
     [System.Diagnostics.Process]$Parent,
     [string]$LogPath,
     [Diagnostics.Stopwatch]$StartupWatch,
-    [int]$TimeoutSeconds = 60  # cold install (fresh DB + migrations + first import) can exceed 15s
+    [int]$TimeoutSeconds  # diagnostic cap (ReadyTimeoutSeconds), not the SLO
   )
   $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
   while ((Get-Date) -lt $deadline) {
@@ -65,8 +73,8 @@ for ($run = 1; $run -le $Runs; $run++) {
   try {
     $watch = [Diagnostics.Stopwatch]::StartNew()
     $parent = Start-Process -FilePath $Exe -PassThru
-    $ready = Wait-Ready $parent $logPath $watch
-    if (-not $ready) { throw "Desktop did not complete sidecar startup during run $run" }
+    $ready = Wait-Ready $parent $logPath $watch $ReadyTimeoutSeconds
+    if (-not $ready) { throw "Desktop did not complete sidecar startup within ${ReadyTimeoutSeconds}s during run $run" }
     # Wait-Ready stops its own clock at the readiness log line before doing
     # the WMI process-tree lookup, so PID discovery cannot inflate startup.
     $measurements.Add([double]$ready.elapsed_s)
@@ -85,13 +93,24 @@ for ($run = 1; $run -le $Runs; $run++) {
 }
 
 $sorted = @($measurements | Sort-Object)
+$maxSeconds = [double]$sorted[-1]
+# Verdict semantics (release gate GA-1.3):
+#   PASS              — every run ready within StartupSloSeconds
+#   FAIL_PERFORMANCE  — app became ready, but slower than the SLO while still
+#                       inside the diagnostic ReadyTimeoutSeconds window
+#   FAIL_TIMEOUT      — some run never reached readiness inside the window
+#                       (thrown above before this point)
+$verdict = if ($maxSeconds -le $StartupSloSeconds) { 'PASS' } else { 'FAIL_PERFORMANCE' }
 $result = [pscustomobject]@{
   runs = $Runs
   seconds = @($measurements | ForEach-Object { [math]::Round($_, 3) })
   min_s = [math]::Round($sorted[0], 3)
   median_s = [math]::Round($sorted[[int][math]::Floor($sorted.Count / 2)], 3)
-  max_s = [math]::Round($sorted[-1], 3)
-  all_passed = (($sorted | Where-Object { $_ -gt 5 }).Count -eq 0)
+  max_s = [math]::Round($maxSeconds, 3)
+  ready_timeout_seconds = $ReadyTimeoutSeconds
+  startup_slo_seconds = $StartupSloSeconds
+  verdict = $verdict
+  all_passed = ($verdict -eq 'PASS')
 }
 $result | ConvertTo-Json
 if (-not $result.all_passed) { exit 1 }

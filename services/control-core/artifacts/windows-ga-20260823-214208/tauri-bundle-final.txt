@@ -1,0 +1,10 @@
+
+> zcode-desktop@1.0.0 tauri
+> tauri bundle --bundles nsis --no-sign
+
+        Info Patching D:\agent\Agents\super-agent-self\apps\desktop\src-tauri\target\release\tauri-spike.exe with bundle type information: nsis
+        Info Target: x64
+     Running makensis to produce D:\agent\Agents\super-agent-self\apps\desktop\src-tauri\target\release\bundle\nsis\Zcode Desktop Agent_1.0.0_x64-setup.exe
+    Finished 1 bundle at:
+        D:\agent\Agents\super-agent-self\apps\desktop\src-tauri\target\release\bundle\nsis\Zcode Desktop Agent_1.0.0_x64-setup.exe
+

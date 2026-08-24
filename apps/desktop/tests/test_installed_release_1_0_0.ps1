@@ -1,12 +1,18 @@
 param(
   [string]$Installer = (Join-Path $PSScriptRoot '..\src-tauri\target\release\bundle\nsis\Zcode Desktop Agent_1.0.0_x64-setup.exe'),
-  [string]$EvidencePath = (Join-Path $PSScriptRoot '..\..\services\control-core\artifacts\p4-installed-1.0.0-install-uninstall-2026-08-22.json')
+  # Unique evidence file per run (timestamped) — no hardcoded dates.
+  [string]$EvidencePath = ''
 )
 
 $ErrorActionPreference = 'Stop'
 $installer = [IO.Path]::GetFullPath($Installer)
 if (-not (Test-Path -LiteralPath $installer -PathType Leaf)) {
   throw "1.0.0 installer not found: $installer"
+}
+$repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\..'))
+if (-not $EvidencePath) {
+  $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+  $EvidencePath = Join-Path $repo "services\control-core\artifacts\installed-1.0.0-$stamp.json"
 }
 
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("zcode-p4-install-v100-" + [Guid]::NewGuid().ToString('N'))
@@ -37,9 +43,13 @@ $rootAbsent = -not (Test-Path -LiteralPath $tempRoot)
 $processCount = @(Get-Process -Name 'tauri-spike','sidecar' -ErrorAction SilentlyContinue).Count
 
 $result = [ordered]@{
-  date = '2026-08-22'
+  timestamp = (Get-Date).ToString('o')
+  os_version = [System.Environment]::OSVersion.VersionString
+  commit = (git -C $repo rev-parse HEAD 2>$null | Out-String).Trim()
   installer = $installer
   installer_version = (Get-Item $installer).VersionInfo.ProductVersion
+  installer_sha256 = (Get-FileHash -LiteralPath $installer -Algorithm SHA256).Hash
+  evidence_file = $evidence
   install_exit_code = $install.ExitCode
   install_root_present = $installRootPresent
   desktop_present = [bool]$desktop

@@ -1,0 +1,9 @@
+﻿{
+    "vhdx":  "C:\\HyperV\\Zcode-GA-20260823\\ZCODE-GA-W11-20260823\\ZCODE-GA-W11-20260823.vhdx",
+    "iso":  "D:\\Zcode-GA-ISO\\Win11_25H2_EnterpriseEval_x64_zh-cn.iso",
+    "next_step":  "USER installs Windows inside the VM",
+    "network":  "none",
+    "vm_name":  "ZCODE-GA-W11-20260823",
+    "state":  "Running",
+    "status":  "ok"
+}

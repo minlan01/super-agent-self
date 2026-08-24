@@ -1,0 +1,19 @@
+﻿elevated ok
+VM off
+ISO mounted at E:
+wim index chosen: 1
+VHDX mounted as disk 1, partitioned GPT
+partitions: EFI=F: Windows=G:
+applying install.wim index 1 -> G:\
+
+[===========================98.0%========================  ] 
+
+[==========================100.0%==========================] 
+操作成功完成。
+image applied
+已成功创建启动文件。
+bcdboot ok
+vhdx and iso dismounted
+NIC added to switch: Default Switch
+first boot = disk
+state after: Running

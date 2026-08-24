@@ -87,6 +87,7 @@ try {
     --include-module=apps.api_server.routes.tasks `
     --include-module=apps.api_server.routes.approvals `
     --include-module=apps.api_server.routes.gateway_approvals `
+    --include-module=apps.api_server.routes.effects `
     --include-module=packages.executor.tools._auto_import `
     "--include-data-dir=$controlCore\configs=configs" `
     "--include-data-dir=$controlCore\alembic=alembic" `

@@ -56,15 +56,10 @@ def _restore_base_env():
 
 
 def pytest_configure(config):
-    """Redirect pytest's base temp directory to avoid Windows PermissionError.
-
-    On Windows the default temp directory (pytest-of-USER) may have restrictive
-    ACLs that prevent subdirectory creation, causing WinError 5 in fixture
-    setup/teardown.  Using a project-local temp directory avoids this entirely.
-    """
-    basetemp = pathlib.Path(__file__).resolve().parent.parent / ".pytest_tmp"
-    basetemp.mkdir(parents=True, exist_ok=True)
-    config.option.basetemp = str(basetemp)
+    """Base-temp handling now lives in the repo-root conftest
+    (services/control-core/conftest.py) so ``pytest packages/...`` runs get
+    it too. Kept as a no-op here for discoverability."""
+    return
 
 
 # ── E2E env-var isolation ───────────────────────────────────────────────────

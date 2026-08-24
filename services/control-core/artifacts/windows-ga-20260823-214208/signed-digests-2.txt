@@ -1,0 +1,9 @@
+
+path                                             
+----                                             
+D:\agent\Agents\super-agent-self\apps\desktop\...
+D:\agent\Agents\super-agent-self\apps\desktop\...
+D:\agent\Agents\super-agent-self\apps\desktop\...
+
+
+SIGNED-DIGESTS-OK

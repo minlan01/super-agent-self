@@ -1,0 +1,7 @@
+﻿{
+    "status":  "ok",
+    "dvd":  "removed",
+    "state_after":  "Running",
+    "state_before":  "",
+    "next":  "USER reconnects via VMConnect and completes OOBE (local account)"
+}

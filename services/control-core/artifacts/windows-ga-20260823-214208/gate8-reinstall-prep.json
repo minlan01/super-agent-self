@@ -1,0 +1,8 @@
+﻿{
+    "state_after":  "Running",
+    "vhdx":  "C:\\HyperV\\Zcode-GA-20260823\\ZCODE-GA-W11-20260823\\ZCODE-GA-W11-20260823.vhdx",
+    "note":  "fresh empty disk; setup runs cleanly from ISO",
+    "next":  "USER: install Windows (keyboard: Tab/Enter/Alt+N), local account, then notify Zcode",
+    "status":  "ok",
+    "iso":  "D:\\Zcode-GA-ISO\\Win11_25H2_EnterpriseEval_x64_zh-cn.iso"
+}

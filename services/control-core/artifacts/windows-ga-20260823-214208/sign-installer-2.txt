@@ -1,0 +1,36 @@
+[sign] thumbprint mode (ADR-0023) -- reusing existing cert, never creating one
+[sign] Subject    : CN=Zcode Personal Release
+[sign] Thumbprint : 8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B
+[sign] Validity   : 2026/8/24 10:22:28 -> 2029/8/24 10:32:28
+
+[sign] signing Zcode Desktop Agent_1.0.0_x64-setup.exe
+The following certificate was selected:
+    Issued to: Zcode Personal Release
+
+    Issued by: Zcode Personal Release
+
+    Expires:   Fri Aug 24 10:32:28 2029
+
+    SHA1 hash: 8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B
+
+
+Done Adding Additional Store
+Successfully signed: D:\agent\Agents\super-agent-self\apps\desktop\src-tauri\target\release\bundle\nsis\Zcode Desktop Agent_1.0.0_x64-setup.exe
+
+
+Number of files successfully Signed: 1
+
+Number of warnings: 0
+
+Number of errors: 0
+
+
+[sign] summary Subject=CN=Zcode Personal Release thumbprint=8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B NotBefore=2026/8/24 10:22:28 NotAfter=2029/8/24 10:32:28
+{
+    "artifact":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\bundle\\nsis\\Zcode Desktop Agent_1.0.0_x64-setup.exe",
+    "sha256":  "D254D40B9B6C000272EDC561F6551AF71725AEA42EE8B33F1BACE86E93FEDC50",
+    "signer":  "CN=Zcode Personal Release",
+    "thumbprint":  "8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B",
+    "timestamped":  true
+}
+NEXT: register the SHA-256 values above in docs/releases/RELEASES.md

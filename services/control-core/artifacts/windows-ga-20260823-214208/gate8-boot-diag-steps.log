@@ -1,0 +1,10 @@
+﻿ERROR: 不能对 Null 值表达式调用方法。
+elevated=True
+secureboot=On template=MicrosoftWindows
+bootorder=: | :
+iso-file-exists=True
+dvd-count=1
+dvd ctrl=0 loc=1 path=D:\Zcode-GA-ISO\Win11_25H2_EnterpriseEval_x64_zh-cn.iso
+ISO already mounted
+first boot = DVD(ISO)
+ERROR: 无法将“Reset-VM”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。

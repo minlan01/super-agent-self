@@ -1,0 +1,6 @@
+﻿{
+    "status":  "ok",
+    "wim_index":  1,
+    "next":  "VM boots installed Windows -\u003e OOBE -\u003e local account",
+    "state":  "Running"
+}

@@ -1,0 +1,15 @@
+{
+    "runs":  3,
+    "seconds":  [
+                    2.903,
+                    0.655,
+                    0.593
+                ],
+    "min_s":  0.593,
+    "median_s":  0.655,
+    "max_s":  2.903,
+    "ready_timeout_seconds":  60,
+    "startup_slo_seconds":  5,
+    "verdict":  "PASS",
+    "all_passed":  true
+}

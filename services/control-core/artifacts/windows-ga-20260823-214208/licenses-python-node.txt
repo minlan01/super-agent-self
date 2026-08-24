@@ -1,0 +1,8 @@
+[python] checking environment for services\control-core\requirements-win-locked.txt
+[python] components=107
+[npm] checking manifests under apps\desktop\node_modules
+[npm] components=19
+
+[summary] python_components=107 npm_components=19 violations=0
+
+license policy PASSED (python + npm)

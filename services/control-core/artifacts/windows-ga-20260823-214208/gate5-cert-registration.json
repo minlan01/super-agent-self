@@ -1,0 +1,12 @@
+{
+  "subject": "CN=Zcode Personal Release",
+  "thumbprint_sha1": "8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B",
+  "public_cer": "C:/Users/minlan01/Documents/ZcodeReleasePublic/zcode-personal-release.cer",
+  "public_cer_sha256": "2F8494E950CADA1EACD5C5039E6266E67888F2AA49ADD429DBAD7AE17B787629",
+  "not_before": "2026-08-24T10:22:28",
+  "not_after": "2029-08-24T10:32:28",
+  "key": "RSA 3072, SHA256, CodeSigningCert, Exportable",
+  "pfx_exported": "D:/keys/zcode-release.pfx (3462 bytes, path outside repo)",
+  "verified_by_zcode_readonly": "2026-08-24",
+  "offline_backups_confirmed_by_user": "confirmed 2026-08-24 (user reply)"
+}

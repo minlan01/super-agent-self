@@ -166,7 +166,13 @@ class BackupService:
             return []
 
         backups: list[dict[str, Any]] = []
-        for f in sorted(backup_path.glob("agent_platform_*.db"), key=lambda p: p.stat().st_mtime, reverse=True):
+        # Name tiebreak keeps the order deterministic when two backups share
+        # an mtime tick (backup filenames embed their UTC timestamp).
+        for f in sorted(
+            backup_path.glob("agent_platform_*.db"),
+            key=lambda p: (p.stat().st_mtime, p.name),
+            reverse=True,
+        ):
             stat = f.stat()
             backups.append({
                 "id": f.stem,  # e.g. "agent_platform_20260512_120000"

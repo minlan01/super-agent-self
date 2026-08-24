@@ -636,7 +636,14 @@ async def test_restricted_token_cannot_read_user_profile_directory() -> None:
 
         assert rc != 0
         assert output == b""
-        assert b"Access is denied" in error
+        # cmd.exe reports denial in the console OEM codepage — accept the
+        # English and Simplified-Chinese (cp936) spellings.
+        denial_variants = (
+            b"Access is denied",
+            "拒绝访问".encode("gbk"),
+            "拒绝访问".encode("utf-8"),
+        )
+        assert any(variant in error for variant in denial_variants), error
     finally:
         if handle is not None:
             await sandbox.kill_tree(handle)

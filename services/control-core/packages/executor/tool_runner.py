@@ -19,23 +19,13 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
-_SENSITIVE_ARG_KEYS = frozenset({
-    "password", "secret", "token", "api_key", "apikey",
-    "access_token", "refresh_token", "private_key",
-    "credential", "auth", "authorization",
-})
-
 
 def _sanitize_args(args: dict[str, Any]) -> dict[str, Any]:
-    sanitized = {}
-    for k, v in args.items():
-        if k.lower() in _SENSITIVE_ARG_KEYS:
-            sanitized[k] = "***REDACTED***"
-        elif isinstance(v, dict):
-            sanitized[k] = _sanitize_args(v)
-        else:
-            sanitized[k] = v
-    return sanitized
+    # Delegate to the shared sanitizer so audit trails and operator-facing
+    # API views apply identical (fail-closed, recursive) redaction.
+    from packages.security.args_sanitizer import sanitize_args
+
+    return sanitize_args(args)
 
 
 class ToolRunner:

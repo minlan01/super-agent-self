@@ -2,9 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, release/windows-v1.0.0-rc]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 defaults:
   run:
@@ -164,19 +165,24 @@ jobs:
         working-directory: apps/web-console-src
 
   # ---------------------------------------------------------------------------
-  # License policy gate (P4 blocker #9) — fail on non-approved licenses
+  # License policy gate (P4 blocker #9 / GA-1.4) — fail-closed on every axis:
+  # missing tool, unparsable output, zero components, empty/unknown/AGPL/SSPL.
+  # Runs on windows so the locked requirements-win-locked.txt set installs
+  # exactly like the release host (the Python scan targets the real env).
   # ---------------------------------------------------------------------------
   license-policy:
     name: License policy (rust+python+npm)
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     defaults:
       run:
         working-directory: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - name: Install cargo-deny
-        run: cargo install --locked cargo-deny || cargo install cargo-deny
+      - uses: dtolnay/rust-toolchain@1.97.1
+      - name: Install cargo-deny (record exact version)
+        run: |
+          cargo install --locked cargo-deny
+          cargo deny --version
       - name: Rust license check (deny.toml)
         run: |
           cd apps/desktop/src-tauri
@@ -184,61 +190,142 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install pip-license
-        run: pip install pip-license
+      - name: Install pip-licenses + locked runtime deps (the real scan set)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-licenses==5.5.5
+          pip install -r services/control-core/requirements-win-locked.txt
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Python + Node license check
+          node-version: "24.18.0"
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - name: Install desktop deps (manifest scan needs node_modules)
+        run: npm ci
+        working-directory: apps/desktop
+      - name: Python + Node license check (fail-closed)
         run: python tools/license-policy/check_licenses.py
 
   # ---------------------------------------------------------------------------
-  # Reproducible Windows release build (P4 blocker #8) — cloud runner builds
-  # the installer from the same commit + lockfiles and publishes digests for
-  # comparison against the local build recorded in docs/releases/v1.0-gate.md
+  # Reproducible Windows release build (P4 blocker #8 / GA-1.6) — cloud runner
+  # builds the UNSIGNED sidecar + desktop EXE + NSIS from the same commit +
+  # lockfiles, and publishes digests/sizes/tool versions/Nuitka report/logs
+  # for comparison against the local build (docs/releases/v1.0-gate.md).
+  # Toolchain pinned to the release host: rust 1.97.1, node 24.18.0,
+  # python 3.12, Nuitka via scripts/nuitka-build/requirements-build.lock.
   # ---------------------------------------------------------------------------
   windows-release-build:
     name: Windows release build (reproducibility)
     runs-on: windows-latest
-    if: github.ref == 'refs/heads/main'
+    if: >-
+      github.ref == 'refs/heads/main' ||
+      github.ref == 'refs/heads/release/windows-v1.0.0-rc' ||
+      github.event_name == 'workflow_dispatch'
     defaults:
       run:
         working-directory: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@1.97.1
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "24.18.0"
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Build desktop (tauri NSIS)
-        working-directory: apps/desktop
+
+      - name: Record tool versions
+        shell: pwsh
         run: |
-          npm ci
-          npm run tauri build
-      - name: Collect digests
+          @(
+            "commit=$env:GITHUB_SHA",
+            "node=$(node --version)",
+            "npm=$(npm --version)",
+            "cargo=$(cargo --version)",
+            "rustc=$(rustc --version)",
+            "python=$(python --version)",
+            "nuitka=$(Select-String -Path services/control-core/scripts/nuitka-build/requirements-build.lock -Pattern 'Nuitka==(\S+)' | ForEach-Object { $_.Matches[0].Groups[1].Value })"
+          ) | Tee-Object -FilePath tool-versions.txt
+
+      # GA-1.6: sidecar MUST be built before npm ci / tauri build so the
+      # resources below exist; a clean checkout has none of them.
+      - name: Build sidecar (Nuitka, locked deps)
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $files = @(
-            "apps/desktop/src-tauri/target/release/tauri-spike.exe",
-            (Get-ChildItem "apps/desktop/src-tauri/target/release/bundle/nsis/*.exe" | Select-Object -First 1).FullName
+          & .\services\control-core\scripts\nuitka-build\build.ps1 -Jobs 4 2>&1 |
+            Tee-Object -FilePath nuitka-build-log.txt
+          if ($LASTEXITCODE -ne 0) { throw "sidecar build failed" }
+
+      - name: Verify sidecar resources exist (fail if missing)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $required = @(
+            "apps/desktop/src-tauri/resources/sidecar/sidecar.exe",
+            "apps/desktop/src-tauri/resources/sidecar/bootstrap/agent_platform.db",
+            "apps/desktop/src-tauri/resources/sidecar/bootstrap/manifest.json"
           )
+          foreach ($f in $required) {
+            if (-not (Test-Path $f -PathType Leaf)) { throw "MISSING release artifact: $f" }
+            "OK $f"
+          }
+
+      - name: Build unsigned desktop EXE
+        working-directory: apps/desktop
+        run: |
+          npm ci
+          npm run tauri -- build --no-bundle --no-sign 2>&1 | Tee-Object -FilePath ../../tauri-build-log.txt
+          if ($LASTEXITCODE -ne 0) { throw "unsigned desktop build failed" }
+
+      - name: Build unsigned NSIS bundle
+        working-directory: apps/desktop
+        run: |
+          npm run tauri -- bundle --bundles nsis --no-sign 2>&1 | Tee-Object -FilePath ../../tauri-bundle-log.txt
+          if ($LASTEXITCODE -ne 0) { throw "unsigned NSIS bundle failed" }
+
+      - name: Collect digests (sidecar + desktop + NSIS; fail if any missing)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $nsis = Get-ChildItem "apps/desktop/src-tauri/target/release/bundle/nsis/*1.0.0*x64-setup.exe" -File |
+            Select-Object -First 1
+          $files = @(
+            "apps/desktop/src-tauri/resources/sidecar/sidecar.exe",
+            "apps/desktop/src-tauri/target/release/tauri-spike.exe"
+          )
+          if ($nsis) { $files += $nsis.FullName } else { throw "MISSING NSIS installer" }
           $out = @()
           foreach ($f in $files) {
-            if (Test-Path $f) {
-              $h = (Get-FileHash $f -Algorithm SHA256).Hash
-              $size = (Get-Item $f).Length
-              $out += "SHA256 $h  $size  $(Split-Path $f -Leaf)"
-            }
+            if (-not (Test-Path $f -PathType Leaf)) { throw "MISSING release artifact: $f" }
+            $h = (Get-FileHash $f -Algorithm SHA256).Hash
+            $size = (Get-Item $f).Length
+            $out += "SHA256 $h  $size  $(Split-Path $f -Leaf)"
           }
           $out | Tee-Object -FilePath release-digests.txt
           "commit=$env:GITHUB_SHA" | Add-Content release-digests.txt
-      - name: Upload digests artifact
+          "built_at=$(Get-Date -Format o)" | Add-Content release-digests.txt
+
+      - name: Collect Nuitka report
+        shell: pwsh
+        run: |
+          $report = Get-ChildItem "services/control-core/scripts/nuitka-build/dist-final/reports/nuitka-compilation-*.xml" -File |
+            Sort-Object LastWriteTime | Select-Object -Last 1
+          if ($report) { Copy-Item $report.FullName nuitka-report.xml }
+          else { throw "MISSING Nuitka compilation report" }
+
+      - name: Upload digests + report + logs
         uses: actions/upload-artifact@v4
         with:
-          name: release-digests-${{ github.sha }}
-          path: release-digests.txt
+          name: release-build-${{ github.sha }}
+          path: |
+            release-digests.txt
+            tool-versions.txt
+            nuitka-report.xml
+            nuitka-build-log.txt
+            tauri-build-log.txt
+            tauri-bundle-log.txt
           retention-days: 90
+          if-no-files-found: error

@@ -13,6 +13,34 @@ from packages.security.path_safety import (
 )
 
 
+def _symlinks_supported() -> bool:
+    """Probe whether this host can create symlinks without elevation.
+
+    Windows without Developer Mode denies os.symlink with WinError 1314
+    (SeCreateSymbolicLinkPrivilege). The symlink tests below exercise real
+    link creation; skip them (with an explicit reason) on such hosts rather
+    than fail on an environment limitation.
+    """
+    with tempfile.TemporaryDirectory() as probe_dir:
+        src = os.path.join(probe_dir, "src.txt")
+        with open(src, "w") as f:
+            f.write("x")
+        try:
+            os.symlink(src, os.path.join(probe_dir, "link"))
+        except OSError:
+            return False
+        return True
+
+
+_SYMLINKS_SUPPORTED = _symlinks_supported()
+
+_SKIP_NO_SYMLINK = pytest.mark.skipif(
+    not _SYMLINKS_SUPPORTED,
+    reason="host cannot create symlinks without elevation (WinError 1314); "
+           "enable Windows Developer Mode or run elevated to exercise",
+)
+
+
 @pytest.fixture()
 def workspace():
     """Create a temp workspace dir with subdirs and a test file."""
@@ -86,6 +114,7 @@ class TestPathSafety:
         )
         assert "workspace" in str(resolved)
 
+    @_SKIP_NO_SYMLINK
     def test_symlink_escape_blocked(self, workspace):
         """A symlink inside workspace pointing outside must be rejected."""
         # Create a symlink inside workspace pointing to / (outside)
@@ -95,6 +124,7 @@ class TestPathSafety:
         with pytest.raises(PathSafetyError, match="escapes workspace|symlink.*outside"):
             resolve_path("data/escape_link", workspace)
 
+    @_SKIP_NO_SYMLINK
     def test_symlink_within_workspace_allowed(self, workspace):
         """A symlink inside workspace pointing within workspace is OK."""
         # Create a symlink: data/link -> ../data/file.txt (within workspace)

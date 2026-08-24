@@ -1,0 +1,5 @@
+apps/desktop/src-tauri/Cargo.toml:3:version = "1.0.0"
+apps/desktop/package.json:4:  "version": "1.0.0",
+apps/desktop/src-tauri/tauri.conf.json:4:  "version": "1.0.0",
+apps/desktop/package-lock.json:3:  "version": "1.0.0",
+apps/desktop/package-lock.json:9:      "version": "1.0.0",

@@ -1,0 +1,23 @@
+﻿[
+    {
+        "path":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\resources\\sidecar\\sidecar.exe",
+        "size":  97155584,
+        "sha256":  "9F550CAFD0BDB2432BFE7E052E0F19BC927E2264E6C442BD54CBA77352C63C3B",
+        "authenticode":  "NotSigned",
+        "mtime":  "2026-08-24T00:43:42.8982985+08:00"
+    },
+    {
+        "path":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\tauri-spike.exe",
+        "size":  9080320,
+        "sha256":  "666F78842727A59ECC3732DED6D205BAA0E8E4FFB959F2C612F60FAAAC6FE58D",
+        "authenticode":  "NotSigned",
+        "mtime":  "2026-08-24T00:51:52.4767788+08:00"
+    },
+    {
+        "path":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\bundle\\nsis\\Zcode Desktop Agent_1.0.0_x64-setup.exe",
+        "size":  246946327,
+        "sha256":  "09EEB6FD5E9F86746E167387E51EFCA5CB0152A92C2C9AF4AFBB74502B15EBBF",
+        "authenticode":  "NotSigned",
+        "mtime":  "2026-08-24T00:51:52.4331647+08:00"
+    }
+]

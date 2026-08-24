@@ -1,0 +1,9 @@
+node=v24.18.0
+npm=11.16.0
+cargo=cargo 1.97.1 (c980f4866 2026-06-30)
+rustc=rustc 1.97.1 (8bab26f4f 2026-07-14)
+python=Python 3.12.10
+pip-licenses=Version: 5.5.5
+signtool=C:/Program Files (x86)/Windows Kits/10/bin/10.0.26100.0/x64/signtool.exe
+cargo-deny=pending (background install)
+cargo-deny=cargo-deny 0.20.2

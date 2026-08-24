@@ -18,6 +18,9 @@ Security:
 
 from __future__ import annotations
 
+from datetime import datetime
+from typing import Any
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
@@ -30,8 +33,25 @@ from packages.approval.approval_service import (
 )
 from packages.auth.actor_scope import ActorScope
 from packages.db.models import ApprovalRequestStatus, VoteDecision
+from packages.security.args_sanitizer import sanitize_args
 
 router = APIRouter(tags=["gateway-approvals"])
+
+
+def _approval_response(req, db: Session, tenant_id: str) -> ApprovalRequestResponse:
+    """Build response incl. sanitized args snapshot from the bound TaskStep.
+
+    Approvers must see what they are approving, but never credential
+    material: args come from ``TaskStep.args`` through the shared
+    fail-closed sanitizer.  A missing/cross-tenant step yields ``None``.
+    """
+    from packages.db.models import TaskStep
+
+    resp = ApprovalRequestResponse.model_validate(req)
+    step = db.get(TaskStep, req.step_run_id)
+    if step is not None and step.tenant_id == tenant_id and step.args:
+        resp.sanitized_args = sanitize_args(step.args)
+    return resp
 
 
 # ── Request/Response schemas ──────────────────────────────────────────────
@@ -52,9 +72,25 @@ class ApprovalRequestResponse(BaseModel):
     requester_principal_id: str
     required_quorum: int
     resolution_id: str | None = None
+    sanitized_args: dict[str, Any] | None = None
 
     class Config:
         from_attributes = True
+
+
+class VoteItem(BaseModel):
+    id: str
+    voter_principal_id: str
+    decision: VoteDecision
+    reason: str | None = None
+    voted_at: datetime | None = None
+
+    class Config:
+        from_attributes = True
+
+
+class ApprovalDetailResponse(ApprovalRequestResponse):
+    votes: list[VoteItem] = []
 
 
 class VoteResponse(BaseModel):
@@ -114,26 +150,35 @@ def list_pending_approvals(
         ))
 
     return ApprovalListResponse(
-        items=[ApprovalRequestResponse.model_validate(i) for i in items],
+        items=[_approval_response(i, db, scope.tenant_id) for i in items],
         total=len(items),
     )
 
 
-@router.get("/{request_id}", response_model=ApprovalRequestResponse)
+@router.get("/{request_id}", response_model=ApprovalDetailResponse)
 def get_approval(
     request_id: str,
     db: Session = Depends(get_db),
     scope: ActorScope = Depends(get_current_actor_scope),
 ):
-    """Get a single approval request by ID."""
+    """Get a single approval request by ID, incl. votes and sanitized args."""
     from packages.db.repositories.approval_request_repo import (
+        ApprovalVoteRepository,
         ApprovalRequestRepository,
     )
 
     req = ApprovalRequestRepository.get_by_id(db, request_id)
     if req is None or req.tenant_id != scope.tenant_id:
         raise HTTPException(status_code=404, detail="Approval request not found")
-    return ApprovalRequestResponse.model_validate(req)
+
+    detail = ApprovalDetailResponse.model_validate(
+        _approval_response(req, db, scope.tenant_id)
+    )
+    detail.votes = [
+        VoteItem.model_validate(v)
+        for v in ApprovalVoteRepository.get_by_request(db, request_id=request_id)
+    ]
+    return detail
 
 
 @router.post("/{request_id}/vote", response_model=VoteResponse)

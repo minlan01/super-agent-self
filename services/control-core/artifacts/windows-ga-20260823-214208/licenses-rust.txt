@@ -1,0 +1,25 @@
+warning[license-not-encountered]: license was not encountered
+   ┌─ D:\agent\Agents\super-agent-self\tools\license-policy\deny.toml:23:4
+   │
+23 │   "BSD-2-Clause",
+   │    ━━━━━━━━━━━━ unmatched license allowance
+
+warning[license-not-encountered]: license was not encountered
+   ┌─ D:\agent\Agents\super-agent-self\tools\license-policy\deny.toml:31:4
+   │
+31 │   "BSD-Source-Code",
+   │    ━━━━━━━━━━━━━━━ unmatched license allowance
+
+warning[license-not-encountered]: license was not encountered
+   ┌─ D:\agent\Agents\super-agent-self\tools\license-policy\deny.toml:26:4
+   │
+26 │   "ISC",
+   │    ━━━ unmatched license allowance
+
+warning[license-not-encountered]: license was not encountered
+   ┌─ D:\agent\Agents\super-agent-self\tools\license-policy\deny.toml:29:4
+   │
+29 │   "Unicode-DFS-2016",
+   │    ━━━━━━━━━━━━━━━━ unmatched license allowance
+
+licenses ok

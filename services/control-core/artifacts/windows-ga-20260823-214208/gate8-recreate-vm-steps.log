@@ -1,0 +1,9 @@
+﻿elevated ok
+old VM object removed (VHDX kept)
+VM recreated (defaults + existing empty VHDX)
+cpu/memory set
+DVD with ISO added
+first boot = DVD
+integration services enabled
+network adapters removed (offline posture)
+state after: Running

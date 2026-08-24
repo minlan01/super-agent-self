@@ -1,0 +1,16 @@
+{
+  "product": "Windows 11 Enterprise Evaluation (GA, 25H2)",
+  "language": "zh-cn (Chinese Simplified)",
+  "official_entry": "https://www.microsoft.com/evalcenter/download-windows-11-enterprise",
+  "fwlink": "https://go.microsoft.com/fwlink/?linkid=2334169&clcid=0x804&culture=zh-cn&country=cn",
+  "redirect_chain": [
+    "https://aka.ms/Win11E-ISO-25H2-zh-cn",
+    "https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26200.6584.250915-1905.25h2_ge_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_zh-cn.iso"
+  ],
+  "final_host": "software-static.download.prss.microsoft.com",
+  "build": "26200.6584.250915-1905 (25H2 ge_release_svc_refresh)",
+  "declared_size_bytes": 7371034624,
+  "last_modified": "2025-09-17T17:27:38Z",
+  "verified_at": "2026-08-23T21:55+08:00",
+  "hash_reference_pdf": "https://go.microsoft.com/fwlink/?linkid=2334901 (aka.ms/Win11-Hash-PDF)"
+}

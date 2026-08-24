@@ -1,0 +1,15 @@
+{
+  "assembled": "2026-08-24T16:30+08:00",
+  "contents": {
+    "installer": "Zcode Desktop Agent_1.0.0_x64-setup.exe sha256=635F79AFEE25653B5742ADFD55970EE73D57F0BAC62B4865A326EC48C30DCCA1",
+    "public_cert": "zcode-personal-release.cer (Gate5 registered, sha256=2F8494E9...B787629)",
+    "model_gguf": "Qwen3-4B-Q4_K_M.gguf size=2497280256 sha256=7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5 (matches HF LFS oid, via hf-mirror)",
+    "llama_runtime": "llama.cpp b10604 win-cpu-x64 via ghfast.top mirror, zip sha256=3819691e5e688bc8eecabb4fe0221c1e9b379d76fc8ccf80169cf3bb22c556bd",
+    "in_vm_script": "gate9-setup-in-vm.ps1 (trust import -> signed install -> llama-server :6880 -> app launch -> evidence)"
+  },
+  "deviations": [
+    "offline/airgap VM test WAIVED by user 2026-08-24 (priority: local-LLM validation); VM now has Default Switch NIC",
+    "Ollama official download unreachable from this network; equivalent llama.cpp OpenAI-compatible server on :6880 (product has native llamacpp provider)",
+    "OS installed host-side via DISM apply (Gen2 DVD boot failed repeatedly on Insider host 26200)"
+  ]
+}

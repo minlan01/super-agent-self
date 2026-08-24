@@ -33,6 +33,7 @@ from packages.db.pagination import paginate
 from packages.db.repositories.audit_repo import AuditRepository
 from packages.db.repositories.task_repo import TaskRepository
 from packages.db.session import run_async
+from packages.security.args_sanitizer import sanitize_args
 
 router = APIRouter(dependencies=[Depends(require_permission("tasks", "read"))])
 
@@ -142,7 +143,14 @@ def get_task(
         raise HTTPException(status_code=404, detail="Task not found")
 
     resp = TaskResponse.model_validate(task)
-    resp.steps = [TaskStepResponse.model_validate(s) for s in task.steps]
+    resp.steps = []
+    for s in task.steps:
+        step_resp = TaskStepResponse.model_validate(s)
+        if step_resp.args is not None:
+            # Operator-facing view: credential material in step args must
+            # never leave the server unredacted (release gate GA-1.2).
+            step_resp.args = sanitize_args(step_resp.args)
+        resp.steps.append(step_resp)
 
     return TaskDetailResponse(data=resp)
 

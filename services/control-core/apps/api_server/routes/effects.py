@@ -60,6 +60,8 @@ class EffectDetailResponse(BaseModel):
     status: str
     effect_class: str
     tool_name: str
+    before_hash: str | None = None
+    after_hash: str | None = None
     created_at: str | None = None
     finalized_at: str | None = None
     dispatch_history: list[DispatchAttemptItem]
@@ -131,8 +133,10 @@ async def get_effect(
         lease_id=effect.lease_id,
         fencing_token=effect.fencing_token,
         status=str(getattr(effect.status, "value", effect.status)),
-        effect_class=str(getattr(effect.effect_class, "value", e_class := effect.effect_class)),
+        effect_class=str(getattr(effect.effect_class, "value", effect.effect_class)),
         tool_name=effect.tool_name,
+        before_hash=effect.before_hash,
+        after_hash=effect.after_hash,
         created_at=_iso(effect.created_at),
         finalized_at=_iso(effect.finalized_at),
         dispatch_history=[

@@ -1,0 +1,8 @@
+Gate 1 unit-test evidence (2026-08-23, run twice for stability):
+  run1: 1968 passed, 6 skipped, 0 failed  (61.13s)
+  run2: 1968 passed, 6 skipped, 0 failed  (66.60s)
+Command: TESTING=1 LLM_PROVIDER=mock .venv-win/Scripts/python.exe -m pytest tests/unit -q
+Additional suites (all green):
+  tests/test_release_gate_desktop_api.py + test_gateway_approvals_api.py + test_effects_reconciliation_api.py + test_approval_service.py: 37 passed
+  tools/license-policy/test_check_licenses.py: 14 passed
+Frontend: npm run build (tsc && vite build) OK, zcode-desktop@1.0.0

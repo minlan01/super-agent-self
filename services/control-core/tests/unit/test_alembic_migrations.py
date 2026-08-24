@@ -173,8 +173,13 @@ class TestAlembicDowngrade:
     """Verify that downgrade removes the new tables."""
 
     def test_downgrade_drops_newest_tables(self, alembic_config, engine):
-        """Downgrading by one revision should revert the newest migration
-        (p2_approval — approval_requests + approval_votes)."""
+        """Downgrading below p2_approval should revert its tables
+        (approval_requests + approval_votes).
+
+        NOTE: "-1" only reverts the chain HEAD; newer migrations
+        (p4_task_step_approval, p4_audit_chain, …) sit above p2_approval, so
+        the downgrade target is p2_approval's own down_revision.
+        """
         _upgrade(alembic_config)
 
         inspector = inspect(engine)
@@ -182,7 +187,7 @@ class TestAlembicDowngrade:
         assert "approval_requests" in tables
         assert "approval_votes" in tables
 
-        _downgrade(alembic_config, "-1")
+        _downgrade(alembic_config, "p2_exec_contract")
 
         inspector = inspect(engine)
         tables = inspector.get_table_names()

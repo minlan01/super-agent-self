@@ -1,0 +1,36 @@
+[sign] thumbprint mode (ADR-0023) -- reusing existing cert, never creating one
+[sign] Subject    : CN=Zcode Personal Release
+[sign] Thumbprint : 8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B
+[sign] Validity   : 2026/8/24 10:22:28 -> 2029/8/24 10:32:28
+
+[sign] signing tauri-spike.exe
+The following certificate was selected:
+    Issued to: Zcode Personal Release
+
+    Issued by: Zcode Personal Release
+
+    Expires:   Fri Aug 24 10:32:28 2029
+
+    SHA1 hash: 8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B
+
+
+Done Adding Additional Store
+Successfully signed: D:\agent\Agents\super-agent-self\apps\desktop\src-tauri\target\release\tauri-spike.exe
+
+
+Number of files successfully Signed: 1
+
+Number of warnings: 0
+
+Number of errors: 0
+
+
+[sign] summary Subject=CN=Zcode Personal Release thumbprint=8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B NotBefore=2026/8/24 10:22:28 NotAfter=2029/8/24 10:32:28
+{
+    "artifact":  "D:\\agent\\Agents\\super-agent-self\\apps\\desktop\\src-tauri\\target\\release\\tauri-spike.exe",
+    "sha256":  "1C23703682EFD7E9D165A7F576BF03FE393D83F90D5EE1776EAFF1FDA31B5617",
+    "signer":  "CN=Zcode Personal Release",
+    "thumbprint":  "8F430FFBFE152E18D58A0E9A4ECEBC7C9E8F4E1B",
+    "timestamped":  true
+}
+NEXT: register the SHA-256 values above in docs/releases/RELEASES.md

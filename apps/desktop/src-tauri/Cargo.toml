@@ -3,6 +3,7 @@ name = "tauri-spike"
 version = "1.0.0"
 description = "Tauri + Python sidecar spike"
 authors = ["zcode"]
+license = "LicenseRef-Proprietary-Personal"
 edition = "2021"
 
 [lib]

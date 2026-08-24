@@ -1,0 +1,13 @@
+﻿{
+    "status":  "ok",
+    "files":  [
+                  "gate9-host-prep.ps1",
+                  "gate9-setup-in-vm.ps1",
+                  "llama-cpu.zip",
+                  "Qwen3-4B-Q4_K_M.gguf",
+                  "Zcode Desktop Agent_1.0.0_x64-setup.exe",
+                  "zcode-personal-release.cer"
+              ],
+    "next":  "USER runs gate9-setup-in-vm.ps1 as Administrator INSIDE the VM",
+    "checkpoint":  "clean-os-before-zcode"
+}

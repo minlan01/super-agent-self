@@ -1,0 +1,9 @@
+﻿elevated ok
+vm state: Running
+checkpoint created: clean-os-before-zcode
+copied: gate9-host-prep.ps1 -> 
+copied: gate9-setup-in-vm.ps1 -> 
+copied: llama-cpu.zip -> 
+copied: Qwen3-4B-Q4_K_M.gguf -> 
+copied: Zcode Desktop Agent_1.0.0_x64-setup.exe -> 
+copied: zcode-personal-release.cer -> 

@@ -1,0 +1,30 @@
+﻿elevated ok 2026-08-24T11:41:09.9292732+08:00
+vmms running, Get-VM ok
+VM already exists - reusing
+Set-VMProcessor ok
+Set-VMMemory ok
+DvdDrive ok
+Firmware ok
+ERROR: 找不到具有给定名称的集成组件。
+elevated ok 2026-08-24T11:42:16.1338413+08:00
+vmms running, Get-VM ok
+VM already exists - reusing
+Set-VMProcessor ok
+Set-VMMemory ok
+DvdDrive ok
+Firmware ok
+integration services: 来宾服务接口=False, 检测信号=True, 键值对交换=True, 关闭=True, 时间同步=True, VSS=True
+WARN: no Guest Service component found - file copy via VMService will be unavailable
+Network adapters removed (offline VM)
+VM state: Running
+elevated ok 2026-08-24T11:43:18.4085000+08:00
+vmms running, Get-VM ok
+VM already exists - reusing
+Set-VMProcessor ok
+Set-VMMemory ok
+DvdDrive ok
+Firmware ok
+integration services: 来宾服务接口=False, 检测信号=True, 键值对交换=True, 关闭=True, 时间同步=True, VSS=True
+enabled: 来宾服务接口
+Network adapters removed (offline VM)
+VM state: Running

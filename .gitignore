@@ -72,3 +72,5 @@ apps/desktop/src-tauri/.cargo/
 # Nuitka sidecar build output (regenerate via scripts/nuitka-build/build.ps1)
 apps/desktop/src-tauri/resources/sidecar/
 nuitka-crash-report.xml
+docs/agent-reports/
+.mimosa/

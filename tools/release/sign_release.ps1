@@ -1,73 +1,123 @@
-# sign_release.ps1 — 统一签名入口(自签/生产证书同一脚本)
+# sign_release.ps1 -- unified signing entry (v1.0.0 GA: thumbprint reuse mode)
 #
-# 用法 A(自签,ADR-0023 v1.0 姿态):
-#   .\sign_release.ps1 -SelfSigned `
-#       -Subject "CN=Zcode Personal Release" `
-#       -Artifacts @("path\to\installer.exe", "path\to\tauri-spike.exe", "path\to\sidecar.exe")
+# Usage (the only supported path for this GA -- ADR-0023 self-sign posture):
+#   .\sign_release.ps1 -CertificateThumbprint <SHA1> `
+#       -Artifacts @("path\to\sidecar.exe", "path\to\tauri-spike.exe", "path\to\setup.exe")
 #
-# 用法 B(将来对外,生产证书):
-#   .\sign_release.ps1 -PfxPath D:\certs\zcode-ov.pfx -Password $pwd `
-#       -Artifacts @(...) -TimestampUrl http://timestamp.digicert.com
+# The certificate must already exist in Cert:\CurrentUser\My (created and
+# registered by the user in Gate 5). This script NEVER creates certificates
+# and NEVER accepts a plaintext password.
 #
-# 升级路径(ADR-0023):换参数即可,流程零改动。
+# Future production mode (PFX -- UNVERIFIED in this GA, do not claim usable):
+#   .\sign_release.ps1 -PfxPath D:\certs\zcode-ov.pfx -PfxPassword $secure -Artifacts @(...)
+#
+# NOTE: this file is ASCII-only on purpose. PowerShell 5.1 reads BOM-less
+# UTF-8 .ps1 files as ANSI/GBK, which corrupts non-ASCII comments and can
+# break parsing. Native signtool output is merged at the process level via
+# cmd /c so informational stderr cannot terminate this script.
 
 param(
-  [Parameter(Mandatory=$true)][string[]]$Artifacts,
-  [switch]$SelfSigned,
-  [string]$Subject = "CN=Zcode Personal Release",
+  [Parameter(Mandatory = $true, Position = 0)]
+  [string[]]$Artifacts,
+
+  [Parameter(ParameterSetName = 'Thumbprint', Mandatory = $true)]
+  [ValidatePattern('^[0-9A-Fa-f]{40}$')]
+  [string]$CertificateThumbprint,
+
+  [Parameter(ParameterSetName = 'Pfx', Mandatory = $true)]
   [string]$PfxPath,
-  [string]$Password,
-  [string]$TimestampUrl = "http://timestamp.digicert.com"
+
+  [Parameter(ParameterSetName = 'Pfx')]
+  [SecureString]$PfxPassword,
+
+  [string]$TimestampUrl = 'http://timestamp.digicert.com'
 )
 
 $ErrorActionPreference = 'Stop'
+$store = 'Cert:\CurrentUser\My'
+$signTool = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\bin\10.0.26100.0\x64\signtool.exe'
+if (-not (Test-Path -LiteralPath $signTool)) {
+  $signTool = (Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\bin' -Filter signtool.exe -File -Recurse |
+    Where-Object { $_.FullName -match '\\x64\\signtool\.exe$' } |
+    Sort-Object FullName -Descending | Select-Object -First 1).FullName
+}
+if (-not $signTool) { throw 'signtool.exe not found' }
 
-function Get-Cert([byte[]]$der) {
-  $r = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new(,$der)
-  return $r
+$importedThumbprint = $null
+
+if ($PSCmdlet.ParameterSetName -eq 'Thumbprint') {
+  Write-Host "[sign] thumbprint mode (ADR-0023) -- reusing existing cert, never creating one"
+  $cert = Get-Item -LiteralPath (Join-Path $store $CertificateThumbprint) -ErrorAction SilentlyContinue
+  if (-not $cert) {
+    throw "REFUSED: certificate $CertificateThumbprint not found in $store. Gate 5 must create and register it first; this script never creates certificates."
+  }
+}
+else {
+  Write-Warning "[sign] PFX mode is UNVERIFIED for this GA -- do not claim it works without an independent test."
+  if (-not (Test-Path -LiteralPath $PfxPath)) { throw "PFX not found: $PfxPath" }
+  if (-not $PfxPassword) { throw 'REFUSED: -PfxPassword must be a SecureString (never plaintext).' }
+  $imported = Import-PfxCertificate -FilePath $PfxPath -CertStoreLocation $store -Password $PfxPassword
+  $importedThumbprint = $imported.Thumbprint
+  $CertificateThumbprint = $imported.Thumbprint
+  $cert = Get-Item -LiteralPath (Join-Path $store $CertificateThumbprint)
 }
 
-$cert = $null
+try {
+  if ($cert.NotAfter -lt (Get-Date)) { throw "certificate expired at $($cert.NotAfter)" }
+  if ($cert.NotBefore -gt (Get-Date)) { throw "certificate not valid before $($cert.NotBefore)" }
 
-if ($SelfSigned) {
-  Write-Host "[sign] self-signed mode (ADR-0023) — personal-use posture"
-  $cert = New-SelfSignedCertificate -Subject $Subject -Type CodeSigningCert `
-            -KeyUsage DigitalSignature -FriendlyName "Zcode self-sign" `
-            -CertStoreLocation "Cert:\CurrentUser\My" -NotAfter (Get-Date).AddYears(3)
-} elseif ($PfxPath) {
-  Write-Host "[sign] production PFX mode"
-  $secure = ConvertTo-SecureString $Password -AsPlainText -Force
-  $cert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new(
-            $PfxPath, $secure, [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::EphemeralKeySet)
-} else {
-  throw "provide -SelfSigned or -PfxPath"
-}
+  Write-Host ("[sign] Subject    : {0}" -f $cert.Subject)
+  Write-Host ("[sign] Thumbprint : {0}" -f $cert.Thumbprint)
+  Write-Host ("[sign] Validity   : {0} -> {1}" -f $cert.NotBefore, $cert.NotAfter)
 
-Write-Host ("[sign] cert: {0}`n        thumbprint: {1}" -f $cert.Subject, $cert.Thumbprint)
-
-foreach ($artifact in $Artifacts) {
-  if (-not (Test-Path $artifact)) { throw "artifact not found: $artifact" }
-}
-
-foreach ($artifact in $Artifacts) {
-  $args = @("sign", "/fd", "SHA256", "/td", "SHA256", "/tr", $TimestampUrl,
-            "/sha1", $cert.Thumbprint, $artifact)
-  & signtool @args
-  if ($LASTEXITCODE -ne 0) { throw "signtool failed for $artifact" }
-
-  & signtool verify /pa $artifact
-  if ($LASTEXITCODE -ne 0) {
-    # 自签证书未加入机器信任时 verify /pa 预期失败 — 属正常,给出说明
-    Write-Warning "chain verify failed (expected for untrusted self-signed): $artifact"
-    Write-Warning "installers: verify the SHA-256 against docs/releases/RELEASES.md instead"
+  foreach ($artifact in $Artifacts) {
+    if (-not (Test-Path -LiteralPath $artifact)) { throw "artifact not found: $artifact" }
   }
 
-  $hash = (Get-FileHash $artifact -Algorithm SHA256).Hash
-  Write-Host ("[sign] {0}`n        SHA-256 {1}" -f (Split-Path $artifact -Leaf), $hash)
-}
+  $results = @()
+  foreach ($artifact in $Artifacts) {
+    $leaf = Split-Path $artifact -Leaf
+    Write-Host ""
+    Write-Host "[sign] signing $leaf"
+    # Merge stderr at the process level (cmd /c) so PS never sees ErrorRecords.
+    $quoted = '"' + $signTool + '" sign /fd SHA256 /td SHA256 /tr ' + $TimestampUrl +
+              ' /v /sha1 ' + $CertificateThumbprint + ' "' + $artifact + '" 2>&1'
+    $output = cmd /c $quoted
+    $output | Write-Host
+    if ($LASTEXITCODE -ne 0) { throw "signtool failed for $artifact (exit $LASTEXITCODE)" }
+    $text = $output -join "`n"
+    $timestamped = ($text -match 'successfully|RFC3161')
 
-Write-Host ""
-Write-Host "NEXT: paste the SHA-256 lines above into docs/releases/RELEASES.md"
-if ($SelfSigned) {
-  Write-Host ("      self-sign cert SHA-1 thumbprint (register in RELEASES.md): {0}" -f $cert.Thumbprint)
+    # Fail-closed identity check: signer must be exactly the registered
+    # thumbprint -- mixing certificates in one release aborts.
+    $sig = Get-AuthenticodeSignature -LiteralPath $artifact
+    if (-not $sig.SignerCertificate) { throw "no signature present after signing: $artifact" }
+    if ($sig.SignerCertificate.Thumbprint -ne $CertificateThumbprint) {
+      throw ("REFUSED: signer identity mismatch for {0}: expected {1}, got {2}" -f $artifact, $CertificateThumbprint, $sig.SignerCertificate.Thumbprint)
+    }
+
+    $hash = (Get-FileHash -LiteralPath $artifact -Algorithm SHA256).Hash
+    $results += [pscustomobject]@{
+      artifact    = $artifact
+      sha256      = $hash
+      signer      = $sig.SignerCertificate.Subject
+      thumbprint  = $sig.SignerCertificate.Thumbprint
+      timestamped = [bool]$timestamped
+    }
+  }
+
+  Write-Host ""
+  Write-Host ("[sign] summary Subject={0} thumbprint={1} NotBefore={2} NotAfter={3}" -f $cert.Subject, $CertificateThumbprint, $cert.NotBefore, $cert.NotAfter)
+  $results | ConvertTo-Json | Write-Host
+  $notTimestamped = @($results | Where-Object { -not $_.timestamped })
+  if ($notTimestamped.Count -gt 0) {
+    Write-Warning ("[sign] timestamp result not confirmed for: {0} -- review the signtool output above" -f (($notTimestamped | ForEach-Object { $_.artifact }) -join ', '))
+  }
+  Write-Host 'NEXT: register the SHA-256 values above in docs/releases/RELEASES.md'
+  exit 0
+}
+finally {
+  if ($importedThumbprint) {
+    Remove-Item -LiteralPath (Join-Path $store $importedThumbprint) -ErrorAction SilentlyContinue
+  }
 }
