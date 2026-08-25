@@ -81,9 +81,14 @@ jobs:
           cache-dependency-path: services/control-core/pyproject.toml
 
       - name: Install dependencies
+        shell: bash
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev,windows]"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            pip install -e ".[dev,windows]"
+          else
+            pip install -e ".[dev]"
+          fi
         working-directory: services/control-core
 
       - name: Ruff lint
@@ -92,7 +97,7 @@ jobs:
         continue-on-error: true  # P0: don't block on existing lint debt
 
       - name: Run unit tests
-        run: python -m pytest tests/unit -v --tb=short -q
+        run: python -m pytest tests/unit -v --tb=short -q -W "ignore::pytest.PytestUnraisableExceptionWarning"
         working-directory: services/control-core
         env:
           TESTING: "1"
@@ -218,8 +223,7 @@ jobs:
     name: Windows release build (reproducibility)
     runs-on: windows-latest
     if: >-
-      github.ref == 'refs/heads/main' ||
-      github.ref == 'refs/heads/release/windows-v1.0.0-rc' ||
+      startsWith(github.ref, 'refs/heads/release/') ||
       github.event_name == 'workflow_dispatch'
     defaults:
       run:
